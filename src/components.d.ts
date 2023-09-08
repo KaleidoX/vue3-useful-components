@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ComImage: typeof import('./components/ComImage/index.vue')['default']
     FormItem: typeof import('./components/form/FormItem.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./components/icons/IconCommunity.vue')['default']
@@ -14,6 +15,9 @@ declare module 'vue' {
     IconEcosystem: typeof import('./components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./components/icons/IconTooling.vue')['default']
+    Image: typeof import('./components/image/index.vue')['default']
+    ImageElement: typeof import('./components/image/ImageElement.vue')['default']
+    ImageVan: typeof import('./components/image/ImageVan.vue')['default']
     InputDebounce: typeof import('./components/form/InputDebounce.vue')['default']
     ListNone: typeof import('./components/list/ListNone.vue')['default']
     ListScroll: typeof import('./components/list/ListScroll.vue')['default']
@@ -21,7 +25,11 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheWelcome: typeof import('./components/TheWelcome.vue')['default']
+    VanConfigProvider: typeof import('vant/es')['ConfigProvider']
+    VanEmpty: typeof import('vant/es')['Empty']
+    VanList: typeof import('vant/es')['List']
     VanNavBar: typeof import('vant/es')['NavBar']
+    VanPullRefresh: typeof import('vant/es')['PullRefresh']
     WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']
   }
 }

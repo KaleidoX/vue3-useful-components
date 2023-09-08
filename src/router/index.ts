@@ -7,17 +7,39 @@ const router = createRouter({
   history: createWebHistory(BaseUrl),
   routes: [
     {
-      path: '/',
+      path: '',
+      redirect: '/home'
+    },
+    {
+      path: '/home',
       name: 'home',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
       component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/video',
       name: 'video',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/VideoView.vue')
+      component: () => import('@/views/VideoView.vue'),
+      meta: { title: '视频组件预览', backLink: '/home' }
+    },
+    {
+      path: '/list',
+      children: [
+        {
+          path: 'scroll',
+          name: 'ListScroll',
+          component: () => import('@/views/list/ListScrollView.vue'),
+          meta: { title: '滚动加载列表', backLink: '/home' }
+        },
+        {
+          path: 'none',
+          name: 'ListNone',
+          component: () => import('@/views/list/ListNoneView.vue'),
+          meta: { title: '无数据列表', backLink: '/home' }
+        }
+      ]
     }
   ]
 })
