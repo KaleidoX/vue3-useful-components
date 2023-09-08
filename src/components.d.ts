@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ComImage: typeof import('./components/ComImage/index.vue')['default']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     FormItem: typeof import('./components/form/FormItem.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./components/icons/IconCommunity.vue')['default']
@@ -34,6 +36,7 @@ declare module 'vue' {
     VanList: typeof import('vant/es')['List']
     VanNavBar: typeof import('vant/es')['NavBar']
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
+    VanUploader: typeof import('vant/es')['Uploader']
     WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']
   }
 }

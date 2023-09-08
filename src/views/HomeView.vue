@@ -20,6 +20,10 @@ const previewList = [
   {
     path: '/list/none',
     name: 'ListNone'
+  },
+  {
+    path: '/upload/image',
+    name: 'UploadImage'
   }
 ]
 </script>

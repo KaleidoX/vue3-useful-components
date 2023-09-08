@@ -40,6 +40,17 @@ const router = createRouter({
           meta: { title: '无数据列表', backLink: '/home' }
         }
       ]
+    },
+    {
+      path: '/upload',
+      children: [
+        {
+          path: 'image',
+          name: 'UploadImage',
+          component: () => import('@/views/upload/UploadImageView.vue'),
+          meta: { title: '上传图片组件', backLink: '/home' }
+        }
+      ]
     }
   ]
 })

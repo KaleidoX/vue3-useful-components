@@ -43,7 +43,7 @@
 export default {
   name: 'UploadImageElement',
   props: {
-    value: [String, Object, Array],
+    modelValue: [String, Object, Array],
     // 图片数量限制
     limit: {
       type: Number,
@@ -79,11 +79,11 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         if (val) {
           // 首先将值转为数组
-          const list = Array.isArray(val) ? val : this.value.split(',')
+          const list = Array.isArray(val) ? val : this.modelValue.split(',')
           // 然后将数组转为对象数组
           this.fileList = list.map((item) => {
             if (typeof item === 'string') {
@@ -115,13 +115,13 @@ export default {
     handleRemove(file) {
       const findex = this.fileList.map((f) => f.name).indexOf(file.name)
       this.fileList.splice(findex, 1)
-      this.$emit('input', this.listToString(this.fileList))
+      this.$emit('update:modelValue', this.listToString(this.fileList))
     },
     // 上传成功回调
     handleUploadSuccess(res) {
       this.fileList.push({ name: res.fileName, url: res.fileName })
-      this.$emit('input', this.listToString(this.fileList))
-      this.loading.close()
+      this.$emit('update:modelValue', this.listToString(this.fileList))
+      this.loading && this.loading.close()
     },
     // 上传前loading加载
     handleBeforeUpload(file) {
@@ -151,7 +151,7 @@ export default {
           return false
         }
       }
-      this.loading = this.$loading({
+      this.loading = ElLoading.service({
         lock: true,
         text: '上传中',
         background: 'rgba(0, 0, 0, 0.7)'
@@ -163,11 +163,8 @@ export default {
     },
     // 上传失败
     handleUploadError() {
-      ElMessage({
-        type: 'error',
-        message: '上传失败'
-      })
-      this.loading.close()
+      ElMessage.error('上传失败')
+      this.loading && this.loading.close()
     },
     // 预览
     handlePictureCardPreview(file) {
