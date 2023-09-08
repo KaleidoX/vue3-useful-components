@@ -13,16 +13,15 @@ export default {
   name: 'ImageElement',
   props: {
     src: String,
-    tag: String,
+    alt: String,
     fit: {
       type: String,
-      default: 'cover',
-      validator(value) {
+      default: 'contain',
+      validator: (value: string) => {
         // 这个值必须匹配下列字符串中的一个
         return ['fill', 'contain', 'cover', 'none', 'scale-down'].indexOf(value) !== -1
       }
     },
-    alt: String,
     previewSrcList: Array,
     lazy: {
       type: Boolean,
