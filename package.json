@@ -19,6 +19,7 @@
     "lodash-es": "^4.17.21",
     "mpegts.js": "^1.7.3",
     "normalize.css": "^8.0.1",
+    "nprogress": "^0.2.0",
     "pinia": "^2.1.6",
     "universal-cookie": "^6.1.1",
     "vant": "^4.6.7",
