@@ -1,0 +1,40 @@
+@use 'sass:map';
+
+$primary: (
+  DEFAULT: #0166ff,
+  focus: #5c9dde,
+  content: white
+);
+$base: (
+  100: #ffffff,
+  200: #f4f6fb,
+  300: #f6f6f6,
+  content: #121212
+);
+$info: (
+  DEFAULT: #5c9dde,
+  content: #333333
+);
+$success: (
+  DEFAULT: #00be6e,
+  content: #172b28
+);
+$warning: (
+  DEFAULT: #fadb39,
+  content: #312817
+);
+$error: (
+  DEFAULT: #ff4545,
+  content: #ffffff
+);
+
+:export {
+  colors: (
+    primary: $primary,
+    base: $base,
+    info: $info,
+    success: $success,
+    warning: $warning,
+    error: $error
+  );
+}
