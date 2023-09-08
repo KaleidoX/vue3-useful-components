@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { isArray, isString } from 'lodash-es'
+
 export default {
   name: 'UploadImageElement',
   props: {
@@ -173,12 +175,12 @@ export default {
     },
     // 对象转成指定字符串分隔
     listToString(list, separator) {
-      let strs = ''
       separator = separator || ','
-      for (let i in list) {
-        strs += list[i].url.replace(this.baseUrl, '') + separator
+      if (isArray(list)) {
+        return list.map((item) => (item.url || '').replace(this.baseUrl, '')).join(separator)
+      } else {
+        return isString(list) ? list : ''
       }
-      return strs != '' ? strs.substr(0, strs.length - 1) : ''
     }
   }
 }
