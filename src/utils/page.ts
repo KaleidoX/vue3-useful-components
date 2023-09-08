@@ -70,13 +70,13 @@ export const clickBack = {
 export const usePageBack = () => {
   const route = useRoute()
   const showBackNav = computed(() => {
-    return Boolean(route.meta.back)
+    return Boolean(route.meta?.backLink)
   })
   const navTitle = computed(() => {
     return route.meta?.title || ''
   })
   const navBack = () => {
-    pageBack(route.meta?.back as string, route.meta?.backType as string)
+    pageBack(route.meta?.backLink as string, route.meta?.backType as string)
   }
   return { showBackNav, navTitle, navBack }
 }
