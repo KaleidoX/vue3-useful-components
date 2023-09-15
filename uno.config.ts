@@ -21,9 +21,9 @@ export default defineConfig({
     ['pb-safe', { 'padding-bottom': 'env(safe-area-inset-bottom)' }],
     ['pl-safe', { 'padding-left': 'env(safe-area-inset-left)' }],
     ['top-safe', { top: 'env(safe-area-inset-top)' }],
-    ['right-safe', { top: 'env(safe-area-inset-right)' }],
-    ['bottom-safe', { top: 'env(safe-area-inset-bottom)' }],
-    ['left-safe', { top: 'env(safe-area-inset-left)' }]
+    ['right-safe', { right: 'env(safe-area-inset-right)' }],
+    ['bottom-safe', { bottom: 'env(safe-area-inset-bottom)' }],
+    ['left-safe', { left: 'env(safe-area-inset-left)' }]
   ],
   shortcuts: [
     // ...
