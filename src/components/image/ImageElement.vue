@@ -1,7 +1,7 @@
 <template>
-  <el-image :src="src" :fit="fit" :preview-src-list="previewSrcList" :loading="lazyLoading">
+  <el-image :src="src" :fit="fit" :previewSrcList="previewSrcList" :loading="lazyLoading">
     <template #error>
-      <div class="color-6 flex h-full w-full items-center justify-center bg-slate-100 text-3xl">
+      <div class="h-full w-full flex items-center justify-center bg-slate-100 text-3xl color-6">
         <i class="i-ep:picture"></i>
       </div>
     </template>
@@ -9,20 +9,22 @@
 </template>
 
 <script lang="ts">
-export default {
+import type { ImageFit } from 'vant'
+
+export default defineComponent({
   name: 'ImageElement',
   props: {
     src: String,
     alt: String,
     fit: {
-      type: String,
+      type: String as PropType<ImageFit>,
       default: 'contain',
       validator: (value: string) => {
         // 这个值必须匹配下列字符串中的一个
         return ['fill', 'contain', 'cover', 'none', 'scale-down'].indexOf(value) !== -1
       }
     },
-    previewSrcList: Array,
+    previewSrcList: Array as PropType<string[]>,
     lazy: {
       type: Boolean,
       default: false
@@ -33,7 +35,7 @@ export default {
       return this.lazy ? 'lazy' : 'eager'
     }
   }
-}
+})
 </script>
 
 <style>

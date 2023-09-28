@@ -187,7 +187,7 @@ export default {
 </script>
 <style scoped lang="scss">
 // .el-upload--picture-card 控制加号部分
-::v-deep() {
+:deep() {
   .hide .el-upload--picture-card {
     display: none;
   }

@@ -8,8 +8,8 @@
   </van-config-provider>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+export default defineComponent({
   name: 'ListNone',
   props: {
     description: {
@@ -24,5 +24,5 @@ export default {
     }
     return { themeVars }
   }
-}
+})
 </script>

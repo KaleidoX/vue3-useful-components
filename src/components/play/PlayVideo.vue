@@ -1,7 +1,7 @@
 <template>
   <div ref="el" class="video-box relative z-10">
     <!-- placeholder -->
-    <div class="w-full h-full"></div>
+    <div class="h-full w-full"></div>
     <!-- video container -->
     <div :class="classVideoContainer">
       <video id="videoPlayer" class="video-js vjs-big-play-centered" playsinline></video>
@@ -23,7 +23,7 @@ videojs.log.level('off')
 
 let player: Player
 
-export default {
+export default defineComponent({
   name: 'PlayVideo',
   props: {
     src: {
@@ -203,7 +203,7 @@ export default {
   beforeUnmount() {
     this.videoDestroy()
   }
-}
+})
 </script>
 
 <style lang="scss">

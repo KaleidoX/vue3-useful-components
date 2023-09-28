@@ -4,8 +4,8 @@
     accept="image/*"
     :multiple="limit > 1"
     :max-count="limit"
-    preview-image
     deletable
+    preview-image
     image-fit="container"
     result-type="file"
     :after-read="handleRead"

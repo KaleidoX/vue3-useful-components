@@ -16,8 +16,15 @@
   </van-pull-refresh>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+export interface TypeChangeListInfo {
+  type: string
+  key?: string
+  keyValue?: any
+  newValue?: any
+}
+
+export default defineComponent({
   name: 'ListScroll',
   props: {
     api: Function,
@@ -28,14 +35,14 @@ export default {
     }
   },
   setup(props) {
-    const list = ref([])
+    const list: Ref<any[]> = ref([])
     const loading = ref(false)
     const finished = ref(false)
     const error = ref(false)
     const refreshing = ref(false)
 
     let page = 1
-    let pageTotal = 1
+    let pageCount = 1
 
     if (props.params) {
       watch(() => props.params, onRefresh)
@@ -45,7 +52,7 @@ export default {
       if (!props.api) {
         return
       }
-      if (page > pageTotal) {
+      if (page > pageCount) {
         finished.value = true
         return
       }
@@ -54,13 +61,13 @@ export default {
           ...unref(props.params),
           page: page
         })
-        .then(({ list: dataList, pageCount: dataPageTotal }) => {
+        .then(({ list: dataList, pageCount: dataPageCount }: { list: []; pageCount: number }) => {
           if (refreshing.value) {
             list.value = []
             refreshing.value = false
           }
           list.value = list.value.concat(dataList)
-          pageTotal = dataPageTotal
+          pageCount = dataPageCount
           page += 1
         })
         .catch(() => {
@@ -79,16 +86,19 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       loading.value = true
       page = 1
-      pageTotal = 1
+      pageCount = 1
       onLoad()
     }
-    function handleChangeList(changeInfo) {
+    const handleChangeList = (changeInfo: TypeChangeListInfo) => {
       if (!changeInfo) {
         onRefresh()
         return
       }
       switch (changeInfo.type) {
         case 'delete': {
+          if (!changeInfo.key) {
+            return
+          }
           for (let index = 0; index < list.value.length; index++) {
             const element = list.value[index]
             if (element[changeInfo.key] === changeInfo.keyValue) {
@@ -99,6 +109,9 @@ export default {
           break
         }
         case 'update': {
+          if (!changeInfo.key) {
+            return
+          }
           for (let index = 0; index < list.value.length; index++) {
             const element = list.value[index]
             if (element[changeInfo.key] === changeInfo.keyValue) {
@@ -109,19 +122,20 @@ export default {
           break
         }
         case 'push': {
-          list.value.push(changeInfo.newValue)
+          if (changeInfo.newValue) {
+            list.value.push(changeInfo.newValue)
+          }
           break
         }
         case 'refresh':
           onRefresh()
-        default:
           break
       }
     }
     provide('changeList', handleChangeList)
     return { list, loading, finished, error, refreshing, onLoad, onRefresh, handleChangeList }
   }
-}
+})
 </script>
 
 <style lang="scss">
