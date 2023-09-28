@@ -83,8 +83,8 @@ devDependencies:
     specifier: ^0.56.4
     version: 0.56.4
   '@unocss/transformer-directives':
-    specifier: ^0.55.7
-    version: 0.55.7
+    specifier: ^0.56.4
+    version: 0.56.4
   '@vitejs/plugin-legacy':
     specifier: ^4.1.1
     version: 4.1.1(terser@5.20.0)(vite@4.4.9)
@@ -2083,10 +2083,6 @@ packages:
       unconfig: 0.3.10
     dev: true
 
-  /@unocss/core@0.55.7:
-    resolution: {integrity: sha512-c+bWe844Xjlwc1EPwHj0+n3LpntJG7ELPbEOOxNIG+CQdcEX0l1G0rkM8+nKstJ9WJmgpf1HdJQLVMF62HXvhw==}
-    dev: true
-
   /@unocss/core@0.56.4:
     resolution: {integrity: sha512-9DL+2adfjWWnFWp2QOJTq2OcfKKo++agaXnCX7CzeD8KgfWCBqxs2RDoxP3HrDbTflhDHdbjz23B+vJoVykhZw==}
     dev: true
@@ -2238,13 +2234,6 @@ packages:
     resolution: {integrity: sha512-/sPAamamhYBwg29ITrS9FOPF4Mt5r6H0ST0XdAaDVqt0JM3QmMHYUAn5YqvMS1z7c+A6FwsuZ5L0Sn55auXa+g==}
     dependencies:
       '@unocss/core': 0.56.4
-    dev: true
-
-  /@unocss/transformer-directives@0.55.7:
-    resolution: {integrity: sha512-xNmR40FssHWYJSmJv/9TQC2IdTyZPV8U3Iv/PIuke1zndMwMciclghEFiw0wSeRmhoRI7iFZck5EI/Bokyo7CQ==}
-    dependencies:
-      '@unocss/core': 0.55.7
-      css-tree: 2.3.1
     dev: true
 
   /@unocss/transformer-directives@0.56.4:
