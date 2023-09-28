@@ -36,8 +36,8 @@ dependencies:
     specifier: ^6.1.1
     version: 6.1.1
   vant:
-    specifier: ^4.6.7
-    version: 4.6.7(vue@3.3.4)
+    specifier: ^4.7.0
+    version: 4.7.0(vue@3.3.4)
   video.js:
     specifier: ^8.5.2
     version: 8.5.2
@@ -5583,8 +5583,8 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vant@4.6.7(vue@3.3.4):
-    resolution: {integrity: sha512-bnOfFGguqnSuBQOVVTCjYwbR2NmvRF0rMyDwpQAjU2ZxQHcsH8IGaptKGaJi7e1lAgmLkRmcKlcBJV0fUi8TJg==}
+  /vant@4.7.0(vue@3.3.4):
+    resolution: {integrity: sha512-oAKfVVfspsRg4MkemGMFm92MXnZb0h8RyvqonPKQkoCMDbMmZvRYmWDfXmfxOnOXVCW308Cqp5HDoDIlcMc3Ag==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
