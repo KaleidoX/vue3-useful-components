@@ -78,8 +78,8 @@ export const usePageBack = () => {
   const showBackNav = computed(() => {
     return Boolean(route.meta?.backLink)
   })
-  const navTitle = computed(() => {
-    return route.meta?.title || ''
+  const navTitle: ComputedRef<string> = computed(() => {
+    return (route.meta?.title as string) || ''
   })
   const navBack = () => {
     pageBack(route.meta?.backLink as string, route.meta?.backType as string)
