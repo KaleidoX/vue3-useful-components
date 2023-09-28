@@ -1,12 +1,14 @@
 import router from '@/router/index.js'
-import type { DirectiveBinding, VNode } from 'vue'
+import { isString } from 'lodash-es'
+import type { DirectiveBinding } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
 
 /**
  * 页面返回控制
  * @param {string} backLink 返回地址
  * @param {string} backType 返回方式
  */
-export const pageBack = (backLink = '/home', backType = 'replace') => {
+export const pageBack = (backLink: RouteLocationRaw = '/home', backType = 'replace') => {
   if (history?.state?.back === router.resolve(backLink).fullPath) {
     router.back()
     return
@@ -19,10 +21,14 @@ export const pageBack = (backLink = '/home', backType = 'replace') => {
       router.replace(backLink)
       break
     case 'target_self':
-      location.href = backLink
+      if (isString(backLink)) {
+        location.href = backLink
+      }
       break
     case 'target_blank':
-      window.open(backLink)
+      if (isString(backLink)) {
+        window.open(backLink)
+      }
       break
     default:
       break
