@@ -37,7 +37,7 @@
     "@types/lodash-es": "^4.17.9",
     "@types/md5": "^2.3.2",
     "@types/node": "^18.17.14",
-    "@unocss/transformer-compile-class": "^0.55.7",
+    "@unocss/transformer-compile-class": "^0.56.4",
     "@unocss/transformer-directives": "^0.55.7",
     "@vitejs/plugin-legacy": "^4.1.1",
     "@vitejs/plugin-vue": "^4.3.4",
