@@ -5,12 +5,16 @@
     "vitest.config.*",
     "cypress.config.*",
     "nightwatch.conf.*",
-    "playwright.config.*"
+    "playwright.config.*",
+    "src/auto-imports.d.ts",
+    "src/components.d.ts",
+    "src/env.d.ts"
   ],
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "types": ["node"],
+    "skipLibCheck": true
   }
 }

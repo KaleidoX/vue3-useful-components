@@ -38,12 +38,8 @@ export default defineConfig(({ mode }) => {
           /\.vue\?vue/ // .vue
         ],
         dts: './src/auto-imports.d.ts',
-        eslintrc: {
-          enabled: true, // <-- this
-          globalsPropValue: true
-        },
-        imports: ['vue', 'vuex', 'vue-router', '@vueuse/core'],
-        dirs: ['./src/composables/**'],
+        imports: ['vue', 'pinia', 'vue-router', '@vueuse/core'],
+        dirs: ['./src/composables/**', './src/stores/**', './src/types/**', './src/utils/**'],
         resolvers: [ElementPlusResolver()]
       }),
       Components({
@@ -81,10 +77,7 @@ export default defineConfig(({ mode }) => {
           // key自定义 value[] 插件同步package.json名称 或 src/相对路径下的指定文件 （自己可以看manualChunks ts类型）
           manualChunks: {
             // vue vue-router合并打包
-            base: ['vue', 'vue-router', 'vuex', 'nprogress', 'axios'],
-            encrypt: ['jsencrypt'],
-            swiper: ['swiper'],
-            echarts: ['echarts'],
+            base: ['vue', 'vue-router', 'pinia', 'nprogress', 'axios'],
             lodash: ['lodash-es'],
             elementPlus: ['element-plus'],
             vant: ['vant'],
