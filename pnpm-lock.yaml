@@ -71,8 +71,8 @@ devDependencies:
     specifier: ^2.3.2
     version: 2.3.2
   '@types/node':
-    specifier: ^18.17.14
-    version: 18.17.14
+    specifier: ^20.7.1
+    version: 20.7.1
   '@unocss/transformer-compile-class':
     specifier: ^0.56.4
     version: 0.56.4
@@ -135,7 +135,7 @@ devDependencies:
     version: 0.25.2(vue@3.3.4)
   vite:
     specifier: ^4.4.9
-    version: 4.4.9(@types/node@18.17.14)(sass@1.66.1)(terser@5.19.4)
+    version: 4.4.9(@types/node@20.7.1)(sass@1.66.1)(terser@5.19.4)
   vitest:
     specifier: ^0.34.3
     version: 0.34.3(jsdom@22.1.0)(sass@1.66.1)(terser@5.19.4)
@@ -1825,6 +1825,10 @@ packages:
     resolution: {integrity: sha512-ZE/5aB73CyGqgQULkLG87N9GnyGe5TcQjv34pwS8tfBs1IkCh0ASM69mydb2znqd6v0eX+9Ytvk6oQRqu8T1Vw==}
     dev: true
 
+  /@types/node@20.7.1:
+    resolution: {integrity: sha512-LT+OIXpp2kj4E2S/p91BMe+VgGX2+lfO+XTpfXhh+bCk2LkQtHZSub8ewFBMGP5ClysPjTDFa4sMI8Q3n4T0wg==}
+    dev: true
+
   /@types/semver@7.5.1:
     resolution: {integrity: sha512-cJRQXpObxfNKkFAZbJl2yjWtJCqELQIdShsogr1d2MilP8dKD9TE/nEKHkJgUNHdGKCQaf9HbIynuV2csLGVLg==}
     dev: true
@@ -1981,7 +1985,7 @@ packages:
       '@unocss/core': 0.55.7
       '@unocss/reset': 0.55.7
       '@unocss/vite': 0.55.7(vite@4.4.9)
-      vite: 4.4.9(@types/node@18.17.14)(sass@1.66.1)(terser@5.19.4)
+      vite: 4.4.9(@types/node@20.7.1)(sass@1.66.1)(terser@5.19.4)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -2169,7 +2173,7 @@ packages:
       chokidar: 3.5.3
       fast-glob: 3.3.1
       magic-string: 0.30.3
-      vite: 4.4.9(@types/node@18.17.14)(sass@1.66.1)(terser@5.19.4)
+      vite: 4.4.9(@types/node@20.7.1)(sass@1.66.1)(terser@5.19.4)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -2243,7 +2247,7 @@ packages:
       regenerator-runtime: 0.13.11
       systemjs: 6.14.2
       terser: 5.19.4
-      vite: 4.4.9(@types/node@18.17.14)(sass@1.66.1)(terser@5.19.4)
+      vite: 4.4.9(@types/node@20.7.1)(sass@1.66.1)(terser@5.19.4)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2258,7 +2262,7 @@ packages:
       '@babel/core': 7.22.15
       '@babel/plugin-transform-typescript': 7.22.15(@babel/core@7.22.15)
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.22.15)
-      vite: 4.4.9(@types/node@18.17.14)(sass@1.66.1)(terser@5.19.4)
+      vite: 4.4.9(@types/node@20.7.1)(sass@1.66.1)(terser@5.19.4)
       vue: 3.3.4
     transitivePeerDependencies:
       - supports-color
@@ -2271,7 +2275,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.4.9(@types/node@18.17.14)(sass@1.66.1)(terser@5.19.4)
+      vite: 4.4.9(@types/node@20.7.1)(sass@1.66.1)(terser@5.19.4)
       vue: 3.3.4
     dev: true
 
@@ -5479,7 +5483,7 @@ packages:
       '@unocss/transformer-directives': 0.55.7
       '@unocss/transformer-variant-group': 0.55.7
       '@unocss/vite': 0.55.7(vite@4.4.9)
-      vite: 4.4.9(@types/node@18.17.14)(sass@1.66.1)(terser@5.19.4)
+      vite: 4.4.9(@types/node@20.7.1)(sass@1.66.1)(terser@5.19.4)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -5694,6 +5698,44 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.17.14
+      esbuild: 0.18.20
+      postcss: 8.4.29
+      rollup: 3.29.0
+      sass: 1.66.1
+      terser: 5.19.4
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
+  /vite@4.4.9(@types/node@20.7.1)(sass@1.66.1)(terser@5.19.4):
+    resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 20.7.1
       esbuild: 0.18.20
       postcss: 8.4.29
       rollup: 3.29.0
