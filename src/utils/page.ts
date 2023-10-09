@@ -86,3 +86,28 @@ export const usePageBack = () => {
   }
   return { showBackNav, navTitle, navBack }
 }
+export const useMountedAndUnmounted = (funcMounted: () => void, funcUnmounted: () => void) => {
+  onMounted(() => {
+    funcMounted()
+  })
+  onBeforeUnmount(() => {
+    funcUnmounted()
+  })
+  onActivated(() => {
+    funcMounted()
+  })
+  onDeactivated(() => {
+    funcUnmounted()
+  })
+}
+
+export const toggleBodyClass = (className: string, force: boolean) => {
+  document.body.classList.toggle(className, force)
+}
+
+export const useBodyClass = (className: string) => {
+  useMountedAndUnmounted(
+    () => toggleBodyClass(className, true),
+    () => toggleBodyClass(className, false)
+  )
+}
