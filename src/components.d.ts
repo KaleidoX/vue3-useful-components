@@ -7,16 +7,19 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     FormItem: typeof import('./components/form/FormItem.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     ImageElement: typeof import('./components/image/ImageElement.vue')['default']
     ImageVan: typeof import('./components/image/ImageVan.vue')['default']
+    InputCheckbox: typeof import('./components/form/InputCheckbox.vue')['default']
     InputDebounce: typeof import('./components/form/InputDebounce.vue')['default']
     InputSearch: typeof import('./components/form/InputSearch.vue')['default']
     ListNone: typeof import('./components/list/ListNone.vue')['default']
     ListScroll: typeof import('./components/list/ListScroll.vue')['default']
+    NavBar: typeof import('./components/nav/NavBar.vue')['default']
     PlayVideo: typeof import('./components/play/PlayVideo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
