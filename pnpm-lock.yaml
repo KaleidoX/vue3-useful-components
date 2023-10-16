@@ -42,8 +42,8 @@ dependencies:
     specifier: ^4.7.1
     version: 4.7.1(vue@3.3.4)
   video.js:
-    specifier: ^8.5.2
-    version: 8.5.2
+    specifier: ^8.6.0
+    version: 8.6.0
   vue:
     specifier: ^3.3.4
     version: 3.3.4
@@ -2222,8 +2222,8 @@ packages:
       vue: 3.3.4
     dev: false
 
-  /@videojs/http-streaming@3.5.3(video.js@8.5.2):
-    resolution: {integrity: sha512-dty8lsZk9QPc0i4It79tjWsmPiaC3FpgARFM0vJGko4k3yKNZIYkAk8kjiDRfkAQH/HZ3rYi5dDTriFNzwSsIg==}
+  /@videojs/http-streaming@3.6.0(video.js@8.6.0):
+    resolution: {integrity: sha512-dK98DFM7D3j8BIGVk6Htaw5A32ciPLDiKyMlcQaxVbxDzH7DtLpkldIRlf92No8lbh0u6VS0EF9q2vv0nDwkOg==}
     engines: {node: '>=8', npm: '>=5'}
     peerDependencies:
       video.js: ^7 || ^8
@@ -2235,7 +2235,7 @@ packages:
       m3u8-parser: 7.1.0
       mpd-parser: 1.2.2
       mux.js: 7.0.0
-      video.js: 8.5.2
+      video.js: 8.6.0
     dev: false
 
   /@videojs/vhs-utils@3.0.5:
@@ -5655,11 +5655,11 @@ packages:
       vue: 3.3.4
     dev: false
 
-  /video.js@8.5.2:
-    resolution: {integrity: sha512-6/uNXQV3xSaKLpaPf/bVvr7omd+82sKUp0RMBgIt4PxHIe28GtX+O+GcNfI2fuwBvcDRDqk5Ei5AG9bJJOpulA==}
+  /video.js@8.6.0:
+    resolution: {integrity: sha512-uoX0Me0UyJuW3cB8IT0VLpEim5HwUutrXTxuQqYxPeahVr5EfFOP2IjUAlnvACpb6eA/pbmO6d4TpZXuXD+blQ==}
     dependencies:
       '@babel/runtime': 7.23.1
-      '@videojs/http-streaming': 3.5.3(video.js@8.5.2)
+      '@videojs/http-streaming': 3.6.0(video.js@8.6.0)
       '@videojs/vhs-utils': 4.0.0
       '@videojs/xhr': 2.6.0
       aes-decrypter: 4.0.1
@@ -5669,19 +5669,19 @@ packages:
       mpd-parser: 1.2.2
       mux.js: 6.3.0
       safe-json-parse: 4.0.0
-      videojs-contrib-quality-levels: 4.0.0(video.js@8.5.2)
+      videojs-contrib-quality-levels: 4.0.0(video.js@8.6.0)
       videojs-font: 4.1.0
       videojs-vtt.js: 0.15.5
     dev: false
 
-  /videojs-contrib-quality-levels@4.0.0(video.js@8.5.2):
+  /videojs-contrib-quality-levels@4.0.0(video.js@8.6.0):
     resolution: {integrity: sha512-u5rmd8BjLwANp7XwuQ0Q/me34bMe6zg9PQdHfTS7aXgiVRbNTb4djcmfG7aeSrkpZjg+XCLezFNenlJaCjBHKw==}
     engines: {node: '>=14', npm: '>=6'}
     peerDependencies:
       video.js: ^8
     dependencies:
       global: 4.4.0
-      video.js: 8.5.2
+      video.js: 8.6.0
     dev: false
 
   /videojs-font@4.1.0:
