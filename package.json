@@ -28,7 +28,7 @@
     "pinia": "^2.1.6",
     "universal-cookie": "^6.1.1",
     "vant": "^4.7.1",
-    "video.js": "^8.5.2",
+    "video.js": "^8.6.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
