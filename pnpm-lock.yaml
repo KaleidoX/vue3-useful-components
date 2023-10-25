@@ -71,8 +71,8 @@ devDependencies:
     specifier: ^4.17.10
     version: 4.17.10
   '@types/md5':
-    specifier: ^2.3.3
-    version: 2.3.3
+    specifier: ^2.3.4
+    version: 2.3.4
   '@types/node':
     specifier: ^20.8.6
     version: 20.8.6
@@ -1823,8 +1823,8 @@ packages:
   /@types/lodash@4.14.199:
     resolution: {integrity: sha512-Vrjz5N5Ia4SEzWWgIVwnHNEnb1UE1XMkvY5DGXrAeOGE9imk0hgTHh5GyDjLDJi9OTCn9oo9dXH1uToK1VRfrg==}
 
-  /@types/md5@2.3.3:
-    resolution: {integrity: sha512-4K40FjTW0tiIx9NfV+/DHJ56ih3fcdkDqBYz5CffKwJVWYho1FxzjkddGcgEEIs+fP2DqmQ3lujC5c4bUOESTQ==}
+  /@types/md5@2.3.4:
+    resolution: {integrity: sha512-e/L4hvpCK8GavKXmP02QlNilZOj8lpmZGGA9QGMMPZjCUoKgi1B4BvhXcbruIi6r+PqzpcjLfda/tocpHFKqDA==}
     dev: true
 
   /@types/node@20.8.6:
