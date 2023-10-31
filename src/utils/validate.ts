@@ -69,7 +69,7 @@ export const validTax = /^[0-9A-Z]{15,20}$/
  * @param {string} tax 税号
  * @returns {boolean}
  */
-export const checkTax = (tax: string): boolean => {
+export const isTax = (tax: string): boolean => {
   return validTax.test(tax)
 }
 
@@ -79,7 +79,7 @@ export const validTel = /^1(3[0-9]|4[5|7]|5[0-3,5-9]|66|7[0,3,5-8]|8[0-3,5-9]|9[
  * @param {string} telephone
  * @returns {boolean}
  */
-export const checkTel = (telephone: string): boolean => {
+export const isTel = (telephone: string): boolean => {
   return /^1(3[0-9]|4[5|7]|5[0-3,5-9]|66|7[0,3,5-8]|8[0-3,5-9]|9[8|9])\d{8}$/.test(telephone)
 }
 
@@ -100,6 +100,17 @@ export const validIdCard =
  * @param {string} idCard
  * @returns {boolean}
  */
-export const checkIdCard = (idCard: string): boolean => {
+export const isIdCard = (idCard: string): boolean => {
   return validIdCard.test(idCard)
+}
+
+export const validPasswordComplex =
+  /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[`~!@#$%^&*()-=_+;':",./<>?])(?=\S+$).{6,32}$/
+/**
+ * 校验身份证号
+ * @param {string} password
+ * @returns {boolean}
+ */
+export const isPasswordComplex = (password: string): boolean => {
+  return validPasswordComplex.test(password)
 }
