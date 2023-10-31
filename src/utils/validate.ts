@@ -105,7 +105,7 @@ export const isIdCard = (idCard: string): boolean => {
 }
 
 export const validPasswordComplex =
-  /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[`~!@#$%^&*()-=_+;':",./<>?])(?=\S+$).{6,32}$/
+  /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])[0-9a-zA-Z~!@#$%^&*()_+=-`{}[\]:;"'<>,.?/]{6,32}$/
 /**
  * 校验身份证号
  * @param {string} password
