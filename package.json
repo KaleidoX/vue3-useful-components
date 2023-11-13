@@ -41,7 +41,7 @@
     "@types/lodash-es": "^4.17.10",
     "@types/md5": "^2.3.4",
     "@types/node": "^20.8.6",
-    "@unocss/eslint-config": "^0.56.5",
+    "@unocss/eslint-config": "^0.57.3",
     "@unocss/transformer-compile-class": "^0.56.5",
     "@unocss/transformer-directives": "^0.56.5",
     "@vitejs/plugin-legacy": "^4.1.1",
