@@ -8,21 +8,20 @@
   </van-config-provider>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'ListNone',
-  props: {
-    description: {
-      type: String,
-      default: '暂无数据'
-    }
-  },
-  setup() {
-    const maxWidth = window.innerWidth - 60
-    const themeVars = {
-      emptyImageSize: `${maxWidth > 490 ? 490 : maxWidth}px`
-    }
-    return { themeVars }
+<script lang="ts" setup>
+defineOptions({
+  name: 'ListNone'
+})
+
+defineProps({
+  description: {
+    type: String,
+    default: '暂无数据'
   }
 })
+
+const maxWidth = window.innerWidth - 60
+const themeVars = {
+  emptyImageSize: `${maxWidth > 490 ? 490 : maxWidth}px`
+}
 </script>

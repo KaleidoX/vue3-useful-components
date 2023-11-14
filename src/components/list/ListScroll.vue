@@ -16,7 +16,7 @@
   </van-pull-refresh>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 export interface TypeChangeListInfo {
   type: string
   key?: string
@@ -24,118 +24,117 @@ export interface TypeChangeListInfo {
   newValue?: any
 }
 
-export default defineComponent({
-  name: 'ListScroll',
-  props: {
-    api: Function,
-    params: Object,
-    showNone: {
-      type: Boolean,
-      default: true
-    }
-  },
-  setup(props) {
-    const list: Ref<any[]> = ref([])
-    const loading = ref(false)
-    const finished = ref(false)
-    const error = ref(false)
-    const refreshing = ref(false)
+defineOptions({
+  name: 'ListScroll'
+})
 
-    let page = 1
-    let pageCount = 1
-
-    if (props.params) {
-      watch(() => props.params, onRefresh)
-    }
-
-    function onLoad() {
-      if (!props.api) {
-        return
-      }
-      if (page > pageCount) {
-        finished.value = true
-        return
-      }
-      props
-        .api({
-          ...unref(props.params),
-          page: page
-        })
-        .then(({ list: dataList, pageCount: dataPageCount }: { list: []; pageCount: number }) => {
-          if (refreshing.value) {
-            list.value = []
-            refreshing.value = false
-          }
-          list.value = list.value.concat(dataList)
-          pageCount = dataPageCount
-          page += 1
-        })
-        .catch(() => {
-          error.value = true
-        })
-        .finally(() => {
-          loading.value = false
-        })
-    }
-    function onRefresh() {
-      // 清空列表数据
-      refreshing.value = true
-      finished.value = false
-      error.value = false
-      // 重新加载数据
-      // 将 loading 设置为 true，表示处于加载状态
-      loading.value = true
-      page = 1
-      pageCount = 1
-      onLoad()
-    }
-    const handleChangeList = (changeInfo: TypeChangeListInfo) => {
-      if (!changeInfo) {
-        onRefresh()
-        return
-      }
-      switch (changeInfo.type) {
-        case 'delete': {
-          if (!changeInfo.key) {
-            return
-          }
-          for (let index = 0; index < list.value.length; index++) {
-            const element = list.value[index]
-            if (element[changeInfo.key] === changeInfo.keyValue) {
-              list.value.splice(index, 1)
-              break
-            }
-          }
-          break
-        }
-        case 'update': {
-          if (!changeInfo.key) {
-            return
-          }
-          for (let index = 0; index < list.value.length; index++) {
-            const element = list.value[index]
-            if (element[changeInfo.key] === changeInfo.keyValue) {
-              list.value.splice(index, 1, changeInfo.newValue)
-              break
-            }
-          }
-          break
-        }
-        case 'push': {
-          if (changeInfo.newValue) {
-            list.value.push(changeInfo.newValue)
-          }
-          break
-        }
-        case 'refresh':
-          onRefresh()
-          break
-      }
-    }
-    provide('changeList', handleChangeList)
-    return { list, loading, finished, error, refreshing, onLoad, onRefresh, handleChangeList }
+const props = defineProps({
+  api: Function,
+  params: Object,
+  showNone: {
+    type: Boolean,
+    default: true
   }
 })
+
+const list: Ref<any[]> = ref([])
+const loading = ref(false)
+const finished = ref(false)
+const error = ref(false)
+const refreshing = ref(false)
+
+let page = 1
+let pageCount = 1
+
+if (props.params) {
+  watch(() => props.params, onRefresh)
+}
+
+function onLoad() {
+  if (!props.api) {
+    return
+  }
+  if (page > pageCount) {
+    finished.value = true
+    return
+  }
+  props
+    .api({
+      ...unref(props.params),
+      page: page
+    })
+    .then(({ list: dataList, pageCount: dataPageCount }: { list: []; pageCount: number }) => {
+      if (refreshing.value) {
+        list.value = []
+        refreshing.value = false
+      }
+      list.value = list.value.concat(dataList)
+      pageCount = dataPageCount
+      page += 1
+    })
+    .catch(() => {
+      error.value = true
+    })
+    .finally(() => {
+      loading.value = false
+    })
+}
+function onRefresh() {
+  // 清空列表数据
+  refreshing.value = true
+  finished.value = false
+  error.value = false
+  // 重新加载数据
+  // 将 loading 设置为 true，表示处于加载状态
+  loading.value = true
+  page = 1
+  pageCount = 1
+  onLoad()
+}
+const handleChangeList = (changeInfo: TypeChangeListInfo) => {
+  if (!changeInfo) {
+    onRefresh()
+    return
+  }
+  switch (changeInfo.type) {
+    case 'delete': {
+      if (!changeInfo.key) {
+        return
+      }
+      for (let index = 0; index < list.value.length; index++) {
+        const element = list.value[index]
+        if (element[changeInfo.key] === changeInfo.keyValue) {
+          list.value.splice(index, 1)
+          break
+        }
+      }
+      break
+    }
+    case 'update': {
+      if (!changeInfo.key) {
+        return
+      }
+      for (let index = 0; index < list.value.length; index++) {
+        const element = list.value[index]
+        if (element[changeInfo.key] === changeInfo.keyValue) {
+          list.value.splice(index, 1, changeInfo.newValue)
+          break
+        }
+      }
+      break
+    }
+    case 'push': {
+      if (changeInfo.newValue) {
+        list.value.push(changeInfo.newValue)
+      }
+      break
+    }
+    case 'refresh':
+      onRefresh()
+      break
+  }
+}
+provide('changeList', handleChangeList)
 </script>
 
 <style lang="scss">
