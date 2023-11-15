@@ -18,48 +18,46 @@
         @focusout="$emit('focusout')"
       />
     </slot>
-    <i v-if="arrowDown" class="ml-3 i-ep:arrow-down-bold color-primary"></i>
+    <i v-if="arrowDown" class="i-ep:arrow-down-bold ml-3 color-primary"></i>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'FormItem',
-  props: {
-    modelValue: {
-      type: String,
-      default: ''
-    },
-    label: String,
-    placeholder: String,
-    autocomplete: {
-      type: String,
-      default: 'off'
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    round: {
-      type: Boolean,
-      default: true
-    },
-    background: {
-      type: Boolean,
-      default: false
-    },
-    shadow: {
-      type: Boolean,
-      default: false
-    },
-    arrowDown: {
-      type: Boolean,
-      default: false
-    }
+defineOptions({
+  name: 'FormItem'
+})
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: ''
   },
-  setup(props, { emit }) {
-    const value = useVModel(props, 'modelValue', emit)
-    return { value }
+  label: String,
+  placeholder: String,
+  autocomplete: {
+    type: String,
+    default: 'off'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  round: {
+    type: Boolean,
+    default: true
+  },
+  background: {
+    type: Boolean,
+    default: false
+  },
+  shadow: {
+    type: Boolean,
+    default: false
+  },
+  arrowDown: {
+    type: Boolean,
+    default: false
   }
-}
+})
+
+const value = useVModel(props, 'modelValue', emit)
 </script>

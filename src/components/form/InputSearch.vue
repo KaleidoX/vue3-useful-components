@@ -10,23 +10,21 @@
   </form>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'InputSearch',
-  props: {
-    modelValue: {
-      type: String,
-      default: ''
-    },
-    placeholder: String
+<script lang="ts" setup>
+defineOptions({
+  name: 'InputSearch'
+})
+defineProps({
+  modelValue: {
+    type: String,
+    default: ''
   },
-  setup(props, { emit }) {
-    const value = ref('')
-    const submitSearch = () => {
-      emit('update:modelValue', value.value)
-    }
-    return { value, submitSearch }
-  }
+  placeholder: String
+})
+
+const value = ref('')
+const submitSearch = () => {
+  emit('update:modelValue', value.value)
 }
 </script>
 

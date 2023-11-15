@@ -7,14 +7,14 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'InputCheckbox',
-  props: {
-    checked: {
-      type: Boolean,
-      default: false
-    }
+<script lang="ts" setup>
+defineOptions({
+  name: 'InputCheckbox'
+})
+defineProps({
+  checked: {
+    type: Boolean,
+    default: false
   }
-}
+})
 </script>
