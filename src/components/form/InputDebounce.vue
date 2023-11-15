@@ -17,7 +17,7 @@ const props = defineProps({
     default: 5000
   }
 })
-
+const emit = defineEmits(['update:modelValue'])
 const data = ref(props.modelValue ?? '')
 watchDebounced(
   data,

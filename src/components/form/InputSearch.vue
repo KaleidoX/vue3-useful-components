@@ -22,6 +22,7 @@ defineProps({
   placeholder: String
 })
 
+const emit = defineEmits(['update:modelValue'])
 const value = ref('')
 const submitSearch = () => {
   emit('update:modelValue', value.value)
