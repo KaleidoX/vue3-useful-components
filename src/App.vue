@@ -1,15 +1,15 @@
 <template>
-  <div v-show="showBackNav" class="sticky top-0 top-safe z-10">
+  <div v-show="showBackNav" class="sticky top-0 z-10 top-safe">
     <van-nav-bar
       :title="navTitle"
       left-text="返回"
-      left-arrow
       @click-left="navBack"
-      safeAreaInsetTop
+      safeareainsettop
+      left-arrow
     />
   </div>
   <el-config-provider :locale="localeElement">
-  <RouterView />
+    <RouterView />
   </el-config-provider>
 </template>
 

@@ -2,10 +2,8 @@
   <ListNone />
 </template>
 
-<script lang="ts">
-import { ref } from 'vue'
-
-export default {
+<script lang="ts" setup>
+defineOptions({
   name: 'ListNoneView'
-}
+})
 </script>

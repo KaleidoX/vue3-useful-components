@@ -13,7 +13,7 @@ interface interfaceResponseList {
  * @returns
  */
 export const createList = (params: interfaceParams): Promise<interfaceResponseList> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve({
       list: Array.from(new Array(params.rows).keys()).map(
         (item) => item + (params.page - 1) * params.rows

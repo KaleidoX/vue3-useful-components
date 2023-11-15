@@ -6,7 +6,7 @@ import md5 from 'md5'
  * @returns
  */
 export const uploadImage = (file: File) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve({
       name: file.name,
       url: `/upload/image/${md5(file.name)}`
