@@ -8,6 +8,10 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({
+  name: 'HomeView'
+})
+
 const previewList = [
   {
     path: '/video',

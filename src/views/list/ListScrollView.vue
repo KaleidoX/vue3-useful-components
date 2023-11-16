@@ -1,5 +1,5 @@
 <template>
-  <ListScroll :api="api" :params="params" showNone>
+  <ListScroll :api="createList" :params="params" showNone>
     <template v-slot="{ list }">
       <ul class="px-4">
         <li class="my-3 rounded-lg p-4 shadow" v-for="item in list" :key="item" v-text="item"></li>
@@ -8,15 +8,12 @@
   </ListScroll>
 </template>
 
-<script lang="ts">
-import { ref } from 'vue'
-import { createList } from '@/api/base.ts'
+<script lang="ts" setup>
+import { createList } from '@/api/base'
 
-export default {
-  name: 'ListScrollView',
-  setup() {
-    const params = ref({ rows: 20 })
-    return { params, api: createList }
-  }
-}
+defineOptions({
+  name: 'ListScrollView'
+})
+
+const params = ref({ rows: 20 })
 </script>

@@ -7,13 +7,11 @@
   </section>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'UploadImageView',
-  setup() {
-    const uploadListVant = ref([])
-    const uploadListElement = ref([])
-    return { uploadListVant, uploadListElement }
-  }
-}
+<script lang="ts" setup>
+defineOptions({
+  name: 'UploadImageView'
+})
+
+const uploadListVant = ref([])
+const uploadListElement = ref([])
 </script>
