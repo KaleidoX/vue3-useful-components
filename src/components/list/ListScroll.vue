@@ -47,7 +47,7 @@ let page = 1
 let pageCount = 1
 
 if (props.params) {
-  watch(() => props.params, onRefresh)
+  watch(() => props.params, onRefresh, { deep: true })
 }
 
 function onLoad() {
