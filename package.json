@@ -43,7 +43,7 @@
     "@types/node": "^20.9.2",
     "@unocss/eslint-config": "^0.57.4",
     "@unocss/transformer-compile-class": "^0.57.4",
-    "@unocss/transformer-directives": "^0.57.4",
+    "@unocss/transformer-directives": "^0.57.7",
     "@vitejs/plugin-legacy": "^4.1.1",
     "@vitejs/plugin-vue": "^4.4.1",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
