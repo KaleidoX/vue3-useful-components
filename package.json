@@ -33,7 +33,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.145",
+    "@iconify/json": "^2.2.147",
     "@iconify/utils": "^2.1.12",
     "@rushstack/eslint-patch": "^1.6.0",
     "@tsconfig/node18": "^18.2.2",
