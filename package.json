@@ -29,7 +29,7 @@
     "universal-cookie": "^6.1.1",
     "vant": "^4.8.0",
     "video.js": "^8.6.1",
-    "vue": "^3.3.8",
+    "vue": "^3.3.9",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
