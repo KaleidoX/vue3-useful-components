@@ -134,8 +134,8 @@ devDependencies:
     specifier: ^0.58.0
     version: 0.58.0(postcss@8.4.31)(vite@4.5.0)
   unplugin-auto-import:
-    specifier: ^0.17.1
-    version: 0.17.1(@vueuse/core@10.6.1)
+    specifier: ^0.17.2
+    version: 0.17.2(@vueuse/core@10.6.1)
   unplugin-vue-components:
     specifier: ^0.25.2
     version: 0.25.2(vue@3.3.9)
@@ -2430,12 +2430,6 @@ packages:
     resolution: {integrity: sha512-QDdBEFDE7ntfCH7+8zHRW72MIQ9NH3uYGUE7lYgr5Ap8qzBHCxMT1kUrY6gwuoo3U4dMu2wruglYRHD88hvGkw==}
     dependencies:
       '@unocss/core': 0.58.0
-    dev: true
-
-  /@unocss/transformer-compile-class@0.57.7:
-    resolution: {integrity: sha512-D+PyD7IOXUm/lzzoCt/yon0Gh1fIK9iKeSBvB6/BREF/ejscNzQ/ia0Pq0pid2cVvOULCSo0z2sO9zljsQtv9A==}
-    dependencies:
-      '@unocss/core': 0.57.7
     dev: true
 
   /@unocss/transformer-compile-class@0.58.0:
@@ -5855,7 +5849,7 @@ packages:
   /unimport@3.6.0:
     resolution: {integrity: sha512-yXW3Z30yk1vX8fxO8uHlq9wY9K+L56LHp4Hlbv8i7tW+NENSOv8AaFJUPtOQchxlT7/JBAzCtkrBtcVjKIr1VQ==}
     dependencies:
-      '@rollup/pluginutils': 5.0.5
+      '@rollup/pluginutils': 5.1.0
       escape-string-regexp: 5.0.0
       fast-glob: 3.3.2
       local-pkg: 0.5.0
@@ -5921,8 +5915,8 @@ packages:
       - supports-color
     dev: true
 
-  /unplugin-auto-import@0.17.1(@vueuse/core@10.6.1):
-    resolution: {integrity: sha512-QvdJKtFK0COSuRXzVnwjG3ir870zVhdMg6O8GKG3UO/O5W4fmJm5h71QvzI7Gp8Sx0qfCvC3f+2v0Vm489fnqQ==}
+  /unplugin-auto-import@0.17.2(@vueuse/core@10.6.1):
+    resolution: {integrity: sha512-Eu/xWI6SH4jTWXvzOfXQWAxRtiz/gMObm7wXtgMj7wBjHQKLgHTmHd4R4oha87KYGah1aKMqiqDeAxiPmfSoTg==}
     engines: {node: '>=14'}
     peerDependencies:
       '@nuxt/kit': ^3.2.2
@@ -5934,7 +5928,7 @@ packages:
         optional: true
     dependencies:
       '@antfu/utils': 0.7.6
-      '@rollup/pluginutils': 5.0.5
+      '@rollup/pluginutils': 5.1.0
       '@vueuse/core': 10.6.1(vue@3.3.9)
       fast-glob: 3.3.2
       local-pkg: 0.5.0
