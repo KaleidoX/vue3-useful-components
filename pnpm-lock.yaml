@@ -39,8 +39,8 @@ dependencies:
     specifier: ^6.1.1
     version: 6.1.1
   vant:
-    specifier: ^4.8.0
-    version: 4.8.0(vue@3.3.9)
+    specifier: ^4.8.1
+    version: 4.8.1(vue@3.3.9)
   video.js:
     specifier: ^8.6.1
     version: 8.6.1
@@ -2822,10 +2822,6 @@ packages:
       '@vue/compiler-ssr': 3.3.9
       '@vue/shared': 3.3.9
       vue: 3.3.9(typescript@5.2.2)
-
-  /@vue/shared@3.3.8:
-    resolution: {integrity: sha512-8PGwybFwM4x8pcfgqEQFy70NaQxASvOC5DJwLQfpArw1UDfUXrJkdxD3BhVTMS+0Lef/TU7YO0Jvr0jJY8T+mw==}
-    dev: false
 
   /@vue/shared@3.3.9:
     resolution: {integrity: sha512-ZE0VTIR0LmYgeyhurPTpy4KzKsuDyQbMSdM49eKkMnT5X4VfFBLysMzjIZhLEFQYjjOVVfbvUDHckwjDFiO2eA==}
@@ -6049,14 +6045,14 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vant@4.8.0(vue@3.3.9):
-    resolution: {integrity: sha512-JeEcSd1zt0+fcSo/wuyvhF+dUdd1IaaJmrG0BTiUvH/XcBJEUaTSSEaYG0V8iI38xUTUCuDG+TSfSoSeEwGVAQ==}
+  /vant@4.8.1(vue@3.3.9):
+    resolution: {integrity: sha512-SkFZM3Z3Bwi5do+iQNfRgDi7b+Ka29rUUNzck06W2KoFie3CLTqSifLa5TuZCEoXPSkqR+fRH/VE5G57mmL8sg==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
       '@vant/popperjs': 1.3.0
       '@vant/use': 1.6.0(vue@3.3.9)
-      '@vue/shared': 3.3.8
+      '@vue/shared': 3.3.9
       vue: 3.3.9(typescript@5.2.2)
     dev: false
 
