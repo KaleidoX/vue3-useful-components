@@ -25,6 +25,17 @@ const router = createRouter({
       meta: { title: '视频组件预览', backLink: '/home' }
     },
     {
+      path: '/form',
+      children: [
+        {
+          path: 'editor-quill',
+          name: 'FormEditorQuill',
+          component: () => import('@/views/form/EditorQuillView.vue'),
+          meta: { title: '富文本编辑器', backLink: '/home' }
+        }
+      ]
+    },
+    {
       path: '/list',
       children: [
         {
