@@ -99,7 +99,7 @@ devDependencies:
     version: 8.0.0(eslint@8.56.0)(prettier@3.1.0)
   '@vue/eslint-config-typescript':
     specifier: ^12.0.0
-    version: 12.0.0(eslint-plugin-vue@9.18.1)(eslint@8.56.0)(typescript@5.2.2)
+    version: 12.0.0(eslint-plugin-vue@9.19.2)(eslint@8.56.0)(typescript@5.2.2)
   '@vue/test-utils':
     specifier: ^2.4.2
     version: 2.4.2(vue@3.3.9)
@@ -110,8 +110,8 @@ devDependencies:
     specifier: ^8.56.0
     version: 8.56.0
   eslint-plugin-vue:
-    specifier: ^9.18.1
-    version: 9.18.1(eslint@8.56.0)
+    specifier: ^9.19.2
+    version: 9.19.2(eslint@8.56.0)
   jsdom:
     specifier: ^23.0.0
     version: 23.0.0
@@ -2746,7 +2746,7 @@ packages:
       - '@types/eslint'
     dev: true
 
-  /@vue/eslint-config-typescript@12.0.0(eslint-plugin-vue@9.18.1)(eslint@8.56.0)(typescript@5.2.2):
+  /@vue/eslint-config-typescript@12.0.0(eslint-plugin-vue@9.19.2)(eslint@8.56.0)(typescript@5.2.2):
     resolution: {integrity: sha512-StxLFet2Qe97T8+7L8pGlhYBBr8Eg05LPuTDVopQV6il+SK6qqom59BA/rcFipUef2jD8P2X44Vd8tMFytfvlg==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -2760,7 +2760,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 6.12.0(@typescript-eslint/parser@6.12.0)(eslint@8.56.0)(typescript@5.2.2)
       '@typescript-eslint/parser': 6.12.0(eslint@8.56.0)(typescript@5.2.2)
       eslint: 8.56.0
-      eslint-plugin-vue: 9.18.1(eslint@8.56.0)
+      eslint-plugin-vue: 9.19.2(eslint@8.56.0)
       typescript: 5.2.2
       vue-eslint-parser: 9.3.2(eslint@8.56.0)
     transitivePeerDependencies:
@@ -3106,7 +3106,7 @@ packages:
     dev: true
 
   /boolbase@1.0.0:
-    resolution: {integrity: sha1-aN/1++YMUes3cl6p4+0xDcwed24=}
+    resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
     dev: true
 
   /bplist-parser@0.2.0:
@@ -3705,8 +3705,8 @@ packages:
       synckit: 0.8.5
     dev: true
 
-  /eslint-plugin-vue@9.18.1(eslint@8.56.0):
-    resolution: {integrity: sha512-7hZFlrEgg9NIzuVik2I9xSnJA5RsmOfueYgsUGUokEDLJ1LHtxO0Pl4duje1BriZ/jDWb+44tcIlC3yi0tdlZg==}
+  /eslint-plugin-vue@9.19.2(eslint@8.56.0):
+    resolution: {integrity: sha512-CPDqTOG2K4Ni2o4J5wixkLVNwgctKXFu6oBpVJlpNq7f38lh9I80pRTouZSJ2MAebPJlINU/KTFSXyQfBUlymA==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
@@ -6035,7 +6035,7 @@ packages:
     dev: false
 
   /util-deprecate@1.0.2:
-    resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
+    resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
   /validate-npm-package-license@3.0.4:
