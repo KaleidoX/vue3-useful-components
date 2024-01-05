@@ -19,12 +19,6 @@ const router = createRouter({
       component: () => import('@/views/HomeView.vue')
     },
     {
-      path: '/video',
-      name: 'video',
-      component: () => import('@/views/VideoView.vue'),
-      meta: { title: '视频组件预览', backLink: '/home' }
-    },
-    {
       path: '/form',
       children: [
         {
@@ -49,6 +43,17 @@ const router = createRouter({
           name: 'ListNone',
           component: () => import('@/views/list/ListNoneView.vue'),
           meta: { title: '无数据列表', backLink: '/home' }
+        }
+      ]
+    },
+    {
+      path: '/play',
+      children: [
+        {
+          path: 'video',
+          name: 'PlayVideo',
+          component: () => import('@/views/play/VideoView.vue'),
+          meta: { title: '视频组件预览', backLink: '/home' }
         }
       ]
     },
