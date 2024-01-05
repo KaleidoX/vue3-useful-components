@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@iconify/json": "^2.2.147",
-    "@iconify/utils": "^2.1.12",
+    "@iconify/utils": "^2.1.14",
     "@rushstack/eslint-patch": "^1.6.0",
     "@tsconfig/node18": "^18.2.2",
     "@types/jsdom": "^21.1.6",
