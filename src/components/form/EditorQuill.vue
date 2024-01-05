@@ -147,7 +147,15 @@ const styles = computed(() => {
   return style
 })
 
-const content = ref('')
+const content = ref(props.modelValue ?? '')
+watchDebounced(
+  content,
+  () => {
+    emit('update:modelValue', content.value)
+  },
+  { debounce: 200, maxWait: 5000 }
+)
+
 watch(
   () => props.modelValue,
   (v) => {
@@ -205,7 +213,6 @@ function init() {
   quill.on('text-change', function () {
     const html = quill.root.innerHTML
     content.value = html
-    emit('update:modelValue', html)
   })
   emit('ready', quill)
 }
