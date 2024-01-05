@@ -1,49 +1,41 @@
 <template>
   <div class="editor" :class="{ 'editor-simple': simple, 'hidden-toolbar': hiddenToolbar }">
-    <quill-editor
-      ref="quillEditorRef"
-      theme="snow"
-      v-model:content="content"
-      contentType="html"
-      @textChange="(e) => $emit('update:modelValue', content)"
-      :modules="modules"
-      :options="options"
-      :toolbar="toolbar"
-      :style="styles"
-    />
+    <div class="editor" ref="editor" :style="styles"></div>
     <div class="text-right" v-if="maxLength">限制{{ maxLength }}个字</div>
   </div>
 </template>
 
 <script setup>
 import { ElMessage } from 'element-plus'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { QuillEditor, Quill } from '@vueup/vue-quill'
-import ImageUploader from 'quill-image-uploader'
+import 'quill/dist/quill.snow.css'
+import Quill from 'quill'
 import 'quill-image-uploader/dist/quill.imageUploader.min.css'
-import BlotFormatter from 'quill-blot-formatter'
-import Mention from 'quill-mention'
+import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
+import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
+import Mention from 'quill-mention/dist/quill.mention.esm.js'
 import { uploadImage } from '@/api/upload.ts'
-import { formatUploadBase } from '@/utils/format.ts'
+import { formatUploadBase } from '@/utils/format.js'
 
 defineOptions({
   name: 'EditorQuill'
 })
 
-const quillEditorRef = ref()
 // console.log(Quill, Quill.register)
-// if (!Quill.imports['modules/ImageUploader']) {
-//   Quill.register('modules/imageUploader', ImageUploader)
-// }
-// if (!Quill.imports['modules/BlotFormatter']) {
-//   Quill.register('modules/blotFormatter', BlotFormatter)
-// }
-
-const getEditor = () => {
-  return quillEditorRef.value
+if (!Quill.imports['modules/imageUploader']) {
+  Quill.register('modules/imageUploader', ImageUploader)
 }
+if (!Quill.imports['modules/blotFormatter']) {
+  Quill.register('modules/blotFormatter', BlotFormatter)
+}
+if (!Quill.imports['modules/mention']) {
+  Quill.register('modules/mention', Mention)
+}
+
+const editor = ref()
+let quill
+
 const getQuill = () => {
-  return toRaw(quillEditorRef.value)?.getQuill()
+  return quill
 }
 const getModule = (moduleName) => {
   return getQuill().getModule(moduleName)
@@ -94,45 +86,7 @@ const props = defineProps({
     default: false
   }
 })
-const modules = [
-  {
-    name: 'imageUploader',
-    module: ImageUploader,
-    options: {
-      upload: (file) => {
-        return new Promise((resolve, reject) => {
-          if (!handleBeforeUpload(file)) {
-            return reject('error')
-          }
-          uploadImage(file)
-            .then((res) => {
-              resolve(formatUploadBase(res.url))
-            })
-            .catch((err) => {
-              reject(err)
-            })
-        })
-      }
-    }
-  },
-  {
-    name: 'blotFormatter',
-    module: BlotFormatter,
-    options: {
-      /* options */
-    }
-  },
-  {
-    name: 'mention',
-    module: Mention,
-    options: {
-      mentionDenotationChars: ['@'],
-      spaceAfterInsert: false,
-      // eslint-disable-next-line no-unused-vars
-      source: function (searchTerm, renderList, mentionChar) {}
-    }
-  }
-]
+const emit = defineEmits(['ready', 'update:modelValue'])
 const toolbar = props.simple
   ? [['image']]
   : [
@@ -152,7 +106,33 @@ const options = {
   bounds: document.body,
   debug: 'error',
   placeholder: props.placeholder,
-  readOnly: props.readOnly
+  readOnly: props.readOnly,
+  modules: {
+    toolbar,
+    imageUploader: {
+      upload: (file) => {
+        return new Promise((resolve, reject) => {
+          if (!handleBeforeUpload(file)) {
+            return reject('error')
+          }
+          uploadEditorFile(file)
+            .then((res) => {
+              resolve(formatUploadBase(res.url))
+            })
+            .catch((err) => {
+              reject(err)
+            })
+        })
+      }
+    },
+    blotFormatter: {},
+    mention: {
+      mentionDenotationChars: ['@'],
+      spaceAfterInsert: false,
+      // eslint-disable-next-line no-unused-vars
+      source: function (searchTerm, renderList, mentionChar) {}
+    }
+  }
   // formats: ['bold', 'italic', 'mention']
 }
 
@@ -174,26 +154,11 @@ watch(
     if (!v) {
       clearContent()
     } else if (v !== content.value) {
-      content.value = v === undefined ? '<p></p>' : v
+      quill.pasteHTML(v || '<p></p>')
     }
   },
   { immediate: true }
 )
-
-// 如果设置了上传地址则自定义图片上传事件
-onMounted(() => {
-  // if (props.type == 'url') {
-  //   const quill = getQuill()
-  //   const toolbar = quill.getModule('toolbar')
-  //   toolbar.addHandler('image', (value) => {
-  //     if (value) {
-  //       uploadRef.value.click()
-  //     } else {
-  //       quill.format('image', false)
-  //     }
-  //   })
-  // }
-})
 
 // 上传前校检格式和大小
 function handleBeforeUpload(file) {
@@ -217,10 +182,9 @@ function handleBeforeUpload(file) {
 
 // 清空内容
 function clearContent() {
-  const editor = getEditor()
-  if (editor) {
-    editor.setContents('')
-    const quill = getQuill()
+  const quill = getQuill()
+  if (quill) {
+    quill.pasteHTML('')
     quill.setSelection(0, 0)
   }
 }
@@ -235,9 +199,23 @@ function addMention(mention) {
   quill.setSelection(quill.getLength() + 1)
 }
 
+function init() {
+  quill = new Quill(editor.value, options)
+  quill.pasteHTML(content.value)
+  quill.on('text-change', function () {
+    const html = quill.root.innerHTML
+    content.value = html
+    emit('update:modelValue', html)
+  })
+  emit('ready', quill)
+}
+
+onMounted(() => {
+  init()
+})
+
 // 定义组件接口
 defineExpose({
-  getEditor,
   getQuill,
   getModule,
   addMention,
