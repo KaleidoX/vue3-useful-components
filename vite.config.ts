@@ -81,7 +81,13 @@ export default defineConfig(({ mode }) => {
             lodash: ['lodash-es'],
             elementPlus: ['element-plus'],
             vant: ['vant'],
-            videoJs: ['video.js', 'mpegts.js']
+            videoJs: ['video.js', 'mpegts.js'],
+            quill: [
+              '@vueup/vue-quill',
+              'quill-blot-formatter',
+              'quill-image-uploader',
+              'quill-mention'
+            ]
           }
         }
       }
