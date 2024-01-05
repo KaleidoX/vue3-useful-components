@@ -53,8 +53,8 @@ dependencies:
 
 devDependencies:
   '@iconify/json':
-    specifier: ^2.2.147
-    version: 2.2.147
+    specifier: ^2.2.164
+    version: 2.2.164
   '@iconify/utils':
     specifier: ^2.1.14
     version: 2.1.14
@@ -132,7 +132,7 @@ devDependencies:
     version: 5.2.2
   unocss:
     specifier: ^0.58.0
-    version: 0.58.0(postcss@8.4.31)(vite@4.5.1)
+    version: 0.58.0(postcss@8.4.32)(vite@4.5.1)
   unplugin-auto-import:
     specifier: ^0.17.2
     version: 0.17.2(@vueuse/core@10.6.1)
@@ -2050,8 +2050,8 @@ packages:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
     dev: true
 
-  /@iconify/json@2.2.147:
-    resolution: {integrity: sha512-VTW1vVivOq5RVcZu7xqCXWptGH7fo6VPsUxT5QBlbBS042859YZnK1JTXHJu4InMuTwQC/3KLP+InJJ5kawOGg==}
+  /@iconify/json@2.2.164:
+    resolution: {integrity: sha512-gN7s75R0vnru9plnNKaAPj8A8NEE06bX2Gqf0LPt9K3gXGLgJ5BNO6Ac4W4JAn2W55ZdGPgMNFFNTOupiv+CuA==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.1
@@ -2665,7 +2665,7 @@ packages:
       sirv: 2.0.3
     dev: true
 
-  /@unocss/postcss@0.58.0(postcss@8.4.31):
+  /@unocss/postcss@0.58.0(postcss@8.4.32):
     resolution: {integrity: sha512-2hAwLbfUFqysi8FN1cn3xkHy5GhLMlYy6W4NrAZ2ws7F2MKpsCT2xCj7dT5cI2tW8ulD2YoVbKH15dBhNsMNUA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -2677,7 +2677,7 @@ packages:
       css-tree: 2.3.1
       fast-glob: 3.3.2
       magic-string: 0.30.5
-      postcss: 8.4.31
+      postcss: 8.4.32
     dev: true
 
   /@unocss/preset-attributify@0.58.0:
@@ -6286,7 +6286,7 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: true
 
-  /unocss@0.58.0(postcss@8.4.31)(vite@4.5.1):
+  /unocss@0.58.0(postcss@8.4.32)(vite@4.5.1):
     resolution: {integrity: sha512-MSPRHxBqWN+1AHGV+J5uUy4//e6ZBK6O+ISzD0qrXcCD/GNtxk1+lYjOK2ltkUiKX539+/KF91vNxzhhwEf+xA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -6302,7 +6302,7 @@ packages:
       '@unocss/cli': 0.58.0
       '@unocss/core': 0.58.0
       '@unocss/extractor-arbitrary-variants': 0.58.0
-      '@unocss/postcss': 0.58.0(postcss@8.4.31)
+      '@unocss/postcss': 0.58.0(postcss@8.4.32)
       '@unocss/preset-attributify': 0.58.0
       '@unocss/preset-icons': 0.58.0
       '@unocss/preset-mini': 0.58.0
