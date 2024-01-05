@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 defineOptions({
   name: 'FormItem'
 })
