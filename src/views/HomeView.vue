@@ -2,7 +2,7 @@
   <h1 class="px-4">preview all components used</h1>
   <ul class="px-4">
     <li class="my-4" v-for="item in previewList" :key="item.path">
-      <router-link :to="item.path">{{ item.name }}</router-link>
+      <router-link class="block" :to="item.path">{{ item.name }}</router-link>
     </li>
   </ul>
 </template>
@@ -12,22 +12,16 @@ defineOptions({
   name: 'HomeView'
 })
 
-const previewList = [
-  {
-    path: '/video',
-    name: 'PlayVideo'
-  },
-  {
-    path: '/list/scroll',
-    name: 'ListScroll'
-  },
-  {
-    path: '/list/none',
-    name: 'ListNone'
-  },
-  {
-    path: '/upload/image',
-    name: 'UploadImage'
-  }
-]
+const router = useRouter()
+
+const previewList = router
+  .getRoutes()
+  .filter((item) => item.name)
+  .map((item) => {
+    return {
+      path: item.path,
+      name: item.name,
+      title: item.meta?.title
+    }
+  })
 </script>
