@@ -83,12 +83,7 @@ export default defineConfig(({ mode }) => {
             vant: ['vant'],
             videoJs: ['video.js', 'mpegts.js'],
             xgplayer: ['xgplayer', 'xgplayer-flv', 'xgplayer-hls', 'xgplayer-mp4'],
-            quill: [
-              '@vueup/vue-quill',
-              'quill-blot-formatter',
-              'quill-image-uploader',
-              'quill-mention'
-            ]
+            quill: ['quill', 'quill-blot-formatter', 'quill-image-uploader', 'quill-mention']
           }
         }
       }
