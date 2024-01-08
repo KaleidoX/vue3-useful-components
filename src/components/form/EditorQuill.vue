@@ -87,6 +87,7 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['ready', 'update:modelValue'])
+
 const toolbar = props.simple
   ? [['image']]
   : [
@@ -192,7 +193,7 @@ function handleBeforeUpload(file) {
 function clearContent() {
   const quill = getQuill()
   if (quill) {
-    quill.pasteHTML('')
+    quill.setContents('')
     quill.setSelection(0, 0)
   }
 }
