@@ -220,6 +220,9 @@ function init() {
 onMounted(() => {
   init()
 })
+onUnmounted(() => {
+  quill = null
+})
 
 // 定义组件接口
 defineExpose({
