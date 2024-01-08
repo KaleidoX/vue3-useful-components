@@ -14,7 +14,7 @@ import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
 import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
 import Mention from 'quill-mention/dist/quill.mention.esm.js'
 import { uploadImage } from '@/api/upload.ts'
-import { formatUploadBase } from '@/utils/format.js'
+import { formatUploadBase } from '@/utils/format.ts'
 
 defineOptions({
   name: 'EditorQuill'
