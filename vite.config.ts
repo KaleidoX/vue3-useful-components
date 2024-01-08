@@ -61,6 +61,12 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       minify: 'terser',
+      commonjsOptions: {
+        include: [/node_modules/],
+        transformMixedEsModules: true,
+        defaultIsModuleExports: 'auto',
+        sourceMap: false
+      },
       terserOptions: {
         // 生产环境下移除console
         compress: {
