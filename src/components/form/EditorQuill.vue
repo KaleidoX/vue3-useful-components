@@ -115,7 +115,7 @@ const options = {
           if (!handleBeforeUpload(file)) {
             return reject('error')
           }
-          uploadEditorFile(file)
+          uploadImage(file)
             .then((res) => {
               resolve(formatUploadBase(res.url))
             })
