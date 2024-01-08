@@ -54,6 +54,12 @@ const router = createRouter({
           name: 'PlayVideo',
           component: () => import('@/views/play/VideoView.vue'),
           meta: { title: '视频组件预览', backLink: '/home' }
+        },
+        {
+          path: 'xg',
+          name: 'PlayXG',
+          component: () => import('@/views/play/XGView.vue'),
+          meta: { title: '西瓜视频组件预览', backLink: '/home' }
         }
       ]
     },

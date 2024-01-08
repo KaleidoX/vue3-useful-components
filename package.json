@@ -34,7 +34,11 @@
     "vant": "^4.8.2",
     "video.js": "^8.9.0",
     "vue": "^3.4.5",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "xgplayer": "^3.0.11",
+    "xgplayer-flv": "^3.0.11",
+    "xgplayer-hls": "^3.0.11",
+    "xgplayer-mp4": "^3.0.11"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.164",
