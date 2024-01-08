@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { BaseUrl } from './base'
 
 import NProgress from '@/utils/nprogress'
 
 const router = createRouter({
-  history: createWebHistory(BaseUrl),
+  history: createWebHashHistory(BaseUrl),
   routes: [
     {
       path: '',
