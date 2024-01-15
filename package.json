@@ -53,7 +53,7 @@
     "@unocss/transformer-compile-class": "^0.58.3",
     "@unocss/transformer-directives": "^0.58.3",
     "@vitejs/plugin-legacy": "^5.2.0",
-    "@vitejs/plugin-vue": "^5.0.2",
+    "@vitejs/plugin-vue": "^5.0.3",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
