@@ -1,4 +1,4 @@
-import './square.scss'
+import './index.scss'
 
 export default {
   functional: true,

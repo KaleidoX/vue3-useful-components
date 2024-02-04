@@ -5,8 +5,8 @@
   </div>
 </template>
 
-<script>
-import './square.scss'
+<script lang="ts">
+import './index.scss'
 
 export default {
   name: 'LayoutSquare',
@@ -16,7 +16,7 @@ export default {
   computed: {
     aspectStyle() {
       const computedRatio = Number(this.ratio)
-      return computedRatio ? { paddingBottom: (1 / computedRatio) * 100 + '%' } : undefined
+      return computedRatio ? { paddingBottom: (1 / computedRatio) * 100 + '%' } : void 0
     }
   }
 }
