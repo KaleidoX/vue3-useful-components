@@ -5,15 +5,13 @@ import transformerCompileClass from '@unocss/transformer-compile-class'
 // loader helpers
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 
-import { colors } from './src/assets/styles/variable'
+import { colors, fontSize } from './src/assets/styles/variable'
 
 // https://unocss.dev/guide/config-file
 export default defineConfig({
   // ...UnoCSS options
   // darkMode: 'class',
-  theme: {
-    colors
-  },
+  theme: { colors, fontSize },
   rules: [
     [/^color-(\d+)$/, ([, d]) => ({ color: `#${d.toString().repeat(3)}` })],
     ['pt-safe', { 'padding-top': 'env(safe-area-inset-top)' }],

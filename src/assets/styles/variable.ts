@@ -11,3 +11,11 @@ export const colors = {
   warning: { DEFAULT: '#ffbf1c', content: '#0b0b23' },
   error: { DEFAULT: '#fe7649', content: '#ffffff' }
 }
+export const fontSize = {
+  '2xl': '1.5rem',
+  '3xl': '1.75rem',
+  '4xl': '2rem',
+  '5xl': '2.5rem',
+  '6xl': '3rem',
+  '7xl': '4rem'
+}
