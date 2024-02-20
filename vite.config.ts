@@ -1,5 +1,7 @@
-import { fileURLToPath, URL } from 'node:url'
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
 
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -59,14 +61,15 @@ export default defineConfig(({ mode }) => {
       },
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
     },
+    // optimizeDeps: { disabled: true },
     build: {
       minify: 'terser',
-      commonjsOptions: {
-        include: [/node_modules/],
-        transformMixedEsModules: true,
-        defaultIsModuleExports: 'auto',
-        sourceMap: false
-      },
+      // commonjsOptions: {
+      //   include: [/node_modules/],
+      //   transformMixedEsModules: true,
+      //   defaultIsModuleExports: 'auto',
+      //   sourceMap: false
+      // },
       terserOptions: {
         // 生产环境下移除console
         compress: {
