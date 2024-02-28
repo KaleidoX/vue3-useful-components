@@ -130,7 +130,7 @@ const options = {
     mention: {
       mentionDenotationChars: ['@'],
       spaceAfterInsert: false,
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
       source: function (searchTerm, renderList, mentionChar) {}
     }
   }
@@ -189,6 +189,7 @@ function handleBeforeUpload(file) {
   return true
 }
 // 获取内容
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getContents() {
   const quill = getQuill()
   if (quill) {
