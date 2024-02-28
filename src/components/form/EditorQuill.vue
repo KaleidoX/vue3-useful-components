@@ -163,7 +163,7 @@ watch(
     if (!v) {
       clearContent()
     } else if (v !== content.value) {
-      quill.pasteHTML(v || '<p></p>')
+      setContents(v)
     }
   },
   { immediate: true }
@@ -188,7 +188,22 @@ function handleBeforeUpload(file) {
   }
   return true
 }
-
+// 获取内容
+function getContents() {
+  const quill = getQuill()
+  if (quill) {
+    return quill.root.innerHTML
+  } else {
+    return ''
+  }
+}
+// 设置内容
+function setContents(html) {
+  const quill = getQuill()
+  if (quill) {
+    quill.clipboard.dangerouslyPasteHTML(html || '<p></p>')
+  }
+}
 // 清空内容
 function clearContent() {
   const quill = getQuill()
@@ -210,7 +225,7 @@ function addMention(mention) {
 
 function init() {
   quill = new Quill(editor.value, options)
-  quill.pasteHTML(content.value)
+  setContents(content.value)
   quill.on('text-change', function () {
     const html = quill.root.innerHTML
     content.value = html
