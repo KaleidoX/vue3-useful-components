@@ -44,7 +44,7 @@
     "xgplayer-mp4": "^3.0.13"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.187",
+    "@iconify/json": "^2.2.188",
     "@iconify/utils": "^2.1.22",
     "@rushstack/eslint-patch": "^1.7.2",
     "@tsconfig/node18": "^18.2.2",
