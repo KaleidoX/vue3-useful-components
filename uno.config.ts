@@ -36,6 +36,10 @@ export default defineConfig({
     // }),
     presetUno(),
     presetIcons({
+      extraProperties: {
+        display: 'inline-block',
+        'vertical-align': 'middle'
+      },
       collections: {
         custom: FileSystemIconLoader('./src/assets/icons', (svg) =>
           svg.replace(/#fff/, 'currentColor')
