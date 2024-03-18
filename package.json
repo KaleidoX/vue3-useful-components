@@ -41,7 +41,7 @@
     "xgplayer": "^3.0.13",
     "xgplayer-flv": "^3.0.13",
     "xgplayer-hls": "^3.0.13",
-    "xgplayer-mp4": "^3.0.13"
+    "xgplayer-mp4": "^3.0.14"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.189",

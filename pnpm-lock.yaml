@@ -78,8 +78,8 @@ dependencies:
     specifier: ^3.0.13
     version: 3.0.13(core-js@3.36.0)(xgplayer@3.0.13)
   xgplayer-mp4:
-    specifier: ^3.0.13
-    version: 3.0.13(core-js@3.36.0)(xgplayer@3.0.13)
+    specifier: ^3.0.14
+    version: 3.0.14(core-js@3.36.0)(xgplayer@3.0.13)
 
 devDependencies:
   '@iconify/json':
@@ -6780,19 +6780,19 @@ packages:
       xgplayer-transmuxer: 3.0.13(core-js@3.36.0)
     dev: false
 
-  /xgplayer-mp4-loader@3.0.13(core-js@3.36.0):
-    resolution: {integrity: sha512-9tcy2vFLeuM4aDeJWJDrVbjACQs+O2CdVUGQSIl69gjo6s27yqYec6nTPY/ND/d6x6HrKwL1k3BEnpsrkJmq9Q==}
+  /xgplayer-mp4-loader@3.0.14(core-js@3.36.0):
+    resolution: {integrity: sha512-cCPH7I/i+saP5i+vivfnu7Bekxm1sS3JlTzaqX2crUL9a4MfWi/r7Yumqsn52lyQGyb+lGKOsvbHeR3wTwUx1w==}
     peerDependencies:
       core-js: '>=3.12.1'
     dependencies:
       core-js: 3.36.0
       eventemitter3: 4.0.7
-      xgplayer-streaming-shared: 3.0.13(core-js@3.36.0)
-      xgplayer-transmuxer: 3.0.13(core-js@3.36.0)
+      xgplayer-streaming-shared: 3.0.14(core-js@3.36.0)
+      xgplayer-transmuxer: 3.0.14(core-js@3.36.0)
     dev: false
 
-  /xgplayer-mp4@3.0.13(core-js@3.36.0)(xgplayer@3.0.13):
-    resolution: {integrity: sha512-c0eQJuriqOZjynpX6IZyjrYH4qYHx1Bo/Ws1Q964xh8VvPIXD3uj1rqgEGkONgDstCVTtytMztsccgGEdIquUA==}
+  /xgplayer-mp4@3.0.14(core-js@3.36.0)(xgplayer@3.0.13):
+    resolution: {integrity: sha512-EEZ3KtG7JbOBL33P+Uv98PaIft9tI9zw2rfyS7Sip57hT/9tJ2az4qz9qNSRcrrlLTo0DTYGR/JzADu7l/IyUQ==}
     peerDependencies:
       core-js: '>=3.12.1'
       xgplayer: '>=3.0.0'
@@ -6802,13 +6802,22 @@ packages:
       deepmerge: 2.2.1
       eventemitter3: 4.0.7
       xgplayer: 3.0.13(core-js@3.36.0)
-      xgplayer-mp4-loader: 3.0.13(core-js@3.36.0)
-      xgplayer-streaming-shared: 3.0.13(core-js@3.36.0)
-      xgplayer-transmuxer: 3.0.13(core-js@3.36.0)
+      xgplayer-mp4-loader: 3.0.14(core-js@3.36.0)
+      xgplayer-streaming-shared: 3.0.14(core-js@3.36.0)
+      xgplayer-transmuxer: 3.0.14(core-js@3.36.0)
     dev: false
 
   /xgplayer-streaming-shared@3.0.13(core-js@3.36.0):
     resolution: {integrity: sha512-ovNk439/+6uVpMBKDzKq00bXMrDX6s+YHVt/Nl1vpawlgM3IoHKxezBki2FETlXvMYXF4X42/KVtbM3qTd2ScA==}
+    peerDependencies:
+      core-js: '>=3.12.1'
+    dependencies:
+      core-js: 3.36.0
+      eventemitter3: 4.0.7
+    dev: false
+
+  /xgplayer-streaming-shared@3.0.14(core-js@3.36.0):
+    resolution: {integrity: sha512-XBXNjnMfFDl15kQfXNgmAkaDqRdN0PhxVFBm7+TezillpTdLmqj+HD90F6BargdZVJ4I20/YHYdb9qBg+hUDhg==}
     peerDependencies:
       core-js: '>=3.12.1'
     dependencies:
@@ -6827,6 +6836,17 @@ packages:
 
   /xgplayer-transmuxer@3.0.13(core-js@3.36.0):
     resolution: {integrity: sha512-xncc9HYIRK9glHpalQRXlfLoeJkoq7OimvhWZ+CXdJFWYNG2toHCI5ttSRs8R0nRm07X3sxkXzQUJcZy7y6qNA==}
+    peerDependencies:
+      core-js: '>=3.12.1'
+    dependencies:
+      '@babel/runtime': 7.24.0
+      concat-typed-array: 1.0.2
+      core-js: 3.36.0
+      crypto-es: 1.2.7
+    dev: false
+
+  /xgplayer-transmuxer@3.0.14(core-js@3.36.0):
+    resolution: {integrity: sha512-lMS2EwuA6tToCC4NuyJ5Ax0UDaaWU/YuaSkI/Bsj+vHkEzO42vgi2EerSPr91Moz05KhG/+4Vt8qMKUVFjhGTw==}
     peerDependencies:
       core-js: '>=3.12.1'
     dependencies:
