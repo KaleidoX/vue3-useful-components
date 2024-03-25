@@ -21,7 +21,7 @@
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.7",
     "dayjs": "^1.11.10",
-    "element-plus": "^2.6.0",
+    "element-plus": "^2.6.2",
     "file-saver": "^2.0.5",
     "lodash-es": "^4.17.21",
     "md5": "^2.3.0",
