@@ -54,8 +54,8 @@ dependencies:
     specifier: ^4.1.0
     version: 4.1.0
   universal-cookie:
-    specifier: ^6.1.3
-    version: 6.1.3
+    specifier: ^7.1.2
+    version: 7.1.2
   vant:
     specifier: ^4.8.5
     version: 4.8.5(vue@3.4.21)
@@ -6230,8 +6230,8 @@ packages:
       - rollup
     dev: true
 
-  /universal-cookie@6.1.3:
-    resolution: {integrity: sha512-AETYRrhpRgl9T1YtnODmQE32G81U3A+f3HO3ZeK7efbXqe3x+RNOW4RTpV0iff7zJWhGYJA6EI0Mm+w50aFTAw==}
+  /universal-cookie@7.1.2:
+    resolution: {integrity: sha512-GK9ygNUNk+u1umTtFoWItePuIGYy0TEu2w084mfjBpIIg9pikcN18EM6IMt+9VJCyR3uftu3yF2fFUMbwH1Kdw==}
     dependencies:
       '@types/cookie': 0.6.0
       cookie: 0.6.0
