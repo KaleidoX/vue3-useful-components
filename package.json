@@ -54,7 +54,7 @@
     "@types/md5": "^2.3.5",
     "@types/node": "^20.11.25",
     "@unocss/eslint-config": "^0.58.5",
-    "@unocss/transformer-compile-class": "^0.58.5",
+    "@unocss/transformer-compile-class": "^0.58.8",
     "@unocss/transformer-directives": "^0.58.5",
     "@vitejs/plugin-legacy": "^5.3.1",
     "@vitejs/plugin-vue": "^5.0.4",
