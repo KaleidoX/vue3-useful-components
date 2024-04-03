@@ -4,7 +4,7 @@
     <div class="h-full w-full"></div>
     <!-- video container -->
     <div :class="classVideoContainer">
-      <video id="videoPlayer" class="video-js vjs-big-play-centered" playsinline></video>
+      <video ref="refVideo" class="video-js vjs-big-play-centered" playsinline></video>
     </div>
   </div>
 </template>
@@ -75,14 +75,15 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const el = ref(null)
+    const el = shallowRef(null)
+    const refVideo = shallowRef(null)
     const { top } = useElementBounding(el)
     const topDebounced = refDebounced(top, 200)
     const isFloat = computed(() => (props.autoFloat && topDebounced.value < 0 ? true : false))
     const classVideoContainer = computed(() =>
       isFloat.value ? 'fixed w-128 h-72 bottom-10 right-10' : 'absolute inset-0 w-full h-full'
     )
-    return { el, classVideoContainer }
+    return { el, refVideo, classVideoContainer }
   },
   data() {
     return {}
@@ -132,7 +133,7 @@ export default defineComponent({
         return false
       }
       this.$nextTick().then(() => {
-        const videoElement = document.getElementById('videoPlayer')
+        const videoElement = this.$refs.refVideo as HTMLVideoElement
         if (!videoElement) {
           return
         }
