@@ -113,8 +113,8 @@ devDependencies:
     specifier: ^0.58.9
     version: 0.58.9(eslint@8.57.0)(typescript@5.4.3)
   '@unocss/transformer-compile-class':
-    specifier: ^0.58.9
-    version: 0.58.9
+    specifier: ^0.59.2
+    version: 0.59.2
   '@unocss/transformer-directives':
     specifier: ^0.58.9
     version: 0.58.9
@@ -2234,6 +2234,10 @@ packages:
     resolution: {integrity: sha512-wYpPIPPsOIbIoMIDuH8ihehJk5pAZmyFKXIYO/Kro98GEOFhz6lJoLsy6/PZuitlgp2/TSlubUuWGjHWvp5osw==}
     dev: true
 
+  /@unocss/core@0.59.2:
+    resolution: {integrity: sha512-0NtauY7v5bG0UIcvIABWnD2ssD5b9UcFkyw4iRIsT9NvR0e7QqGIOvZEg5XN0j25o50GtxlotMmTAAiaazHZ0Q==}
+    dev: true
+
   /@unocss/eslint-config@0.58.9(eslint@8.57.0)(typescript@5.4.3):
     resolution: {integrity: sha512-7Cf9NVPQqdhd6rbe2JDlqY9bBwuFfxvZOmeEUcKaI10QNNrDNvnMKd8rToxCdm5RToSjNeuj66V/scl8Kv8rfQ==}
     engines: {node: '>=14'}
@@ -2388,6 +2392,12 @@ packages:
     resolution: {integrity: sha512-l2VpCqelJ6Tgc1kfSODxBtg7fCGPVRr2EUzTg1LrGYKa2McbKuc/wV/2DWKHGxL6+voWi7a2C9XflqGDXXutuQ==}
     dependencies:
       '@unocss/core': 0.58.9
+    dev: true
+
+  /@unocss/transformer-compile-class@0.59.2:
+    resolution: {integrity: sha512-yXKoAJU0QcRx3c2XAalHgcVculIPDRCanBm5A3XZPp35eKhcni3VedzUQY6RYFfoETOgQ5x0SV73Ttbj/zvZBQ==}
+    dependencies:
+      '@unocss/core': 0.59.2
     dev: true
 
   /@unocss/transformer-directives@0.58.9:
