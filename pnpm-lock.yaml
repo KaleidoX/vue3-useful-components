@@ -72,8 +72,8 @@ dependencies:
     specifier: ^3.0.15
     version: 3.0.15(core-js@3.36.1)
   xgplayer-flv:
-    specifier: ^3.0.15
-    version: 3.0.15(core-js@3.36.1)(xgplayer@3.0.15)
+    specifier: ^3.0.16
+    version: 3.0.16(core-js@3.36.1)(xgplayer@3.0.15)
   xgplayer-hls:
     specifier: ^3.0.15
     version: 3.0.15(core-js@3.36.1)(xgplayer@3.0.15)
@@ -6600,8 +6600,8 @@ packages:
         optional: true
     dev: true
 
-  /xgplayer-flv@3.0.15(core-js@3.36.1)(xgplayer@3.0.15):
-    resolution: {integrity: sha512-GlMKAUIcMpsg4wUxz+C9UabkjoWk2PjO4fFhn2QRdC5qujXS1I1nhBdcQHL5CNa4Yu5/rHSEUSBriTwE1VxmCw==}
+  /xgplayer-flv@3.0.16(core-js@3.36.1)(xgplayer@3.0.15):
+    resolution: {integrity: sha512-/wZnRvM5xb3gKZ1cp13/poXJJZBSPfREq2IvV+D3huY0/R1sQGl+7GqZBdnk2O94fWzW6kpN0kVUt2xjWUgOZw==}
     peerDependencies:
       core-js: '>=3.12.1'
       xgplayer: '>=3.0.1'
@@ -6609,8 +6609,8 @@ packages:
       core-js: 3.36.1
       eventemitter3: 4.0.7
       xgplayer: 3.0.15(core-js@3.36.1)
-      xgplayer-streaming-shared: 3.0.15(core-js@3.36.1)
-      xgplayer-transmuxer: 3.0.15(core-js@3.36.1)
+      xgplayer-streaming-shared: 3.0.16(core-js@3.36.1)
+      xgplayer-transmuxer: 3.0.16(core-js@3.36.1)
     dev: false
 
   /xgplayer-hls@3.0.15(core-js@3.36.1)(xgplayer@3.0.15):
@@ -6662,6 +6662,15 @@ packages:
       eventemitter3: 4.0.7
     dev: false
 
+  /xgplayer-streaming-shared@3.0.16(core-js@3.36.1):
+    resolution: {integrity: sha512-GfYCfFCSqQOq7q+tETSqhzPsEb9aPlVj8K9v5BVQ2g0syLxR6ZwKSB/lNTaONoIViWxXdghOUpDjGrCbQ7It7g==}
+    peerDependencies:
+      core-js: '>=3.12.1'
+    dependencies:
+      core-js: 3.36.1
+      eventemitter3: 4.0.7
+    dev: false
+
   /xgplayer-subtitles@3.0.15(core-js@3.36.1):
     resolution: {integrity: sha512-cn5/iULr8N4Vx9aak6xrO6LUm0JXT4PwKzeZhxY/yuryLcaywhV8cLRgcFm2kje3s0rfDfnENXcCtywnC62cIQ==}
     peerDependencies:
@@ -6673,6 +6682,17 @@ packages:
 
   /xgplayer-transmuxer@3.0.15(core-js@3.36.1):
     resolution: {integrity: sha512-c2g6BmN/kvRA1KGiIPr/VKfazRmqfLr7y44SiyCS2C/2ePgHZF7Kp6z7WEm8bl/oQWMmVUomSkadk/B66JxX6g==}
+    peerDependencies:
+      core-js: '>=3.12.1'
+    dependencies:
+      '@babel/runtime': 7.24.1
+      concat-typed-array: 1.0.2
+      core-js: 3.36.1
+      crypto-es: 1.2.7
+    dev: false
+
+  /xgplayer-transmuxer@3.0.16(core-js@3.36.1):
+    resolution: {integrity: sha512-wSeY9tX4rxikMAhcx2t3jf1ELQusrYz+vRdIuq+RpA3CroWu/R46WMSUIBcbKwO/aDeWzpV/nK0WXo4/gI0wmg==}
     peerDependencies:
       core-js: '>=3.12.1'
     dependencies:
