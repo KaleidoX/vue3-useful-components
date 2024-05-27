@@ -42,7 +42,7 @@ dependencies:
     specifier: ^2.1.7
     version: 2.1.7(typescript@5.4.5)(vue@3.4.27)
   quill:
-    specifier: 2.0.1
+    specifier: ^2.0.1
     version: 2.0.1
   quill-blot-formatter:
     specifier: ^1.0.5
@@ -113,8 +113,8 @@ devDependencies:
     specifier: ^0.59.4
     version: 0.59.4(eslint@8.57.0)(typescript@5.4.5)
   '@unocss/transformer-compile-class':
-    specifier: ^0.59.4
-    version: 0.59.4
+    specifier: ^0.60.3
+    version: 0.60.3
   '@unocss/transformer-directives':
     specifier: ^0.59.4
     version: 0.59.4
@@ -2251,6 +2251,10 @@ packages:
     resolution: {integrity: sha512-bBZ1sgcAtezQVZ1BST9IS3jqcsTLyqKNjiIf7FTnX3DHpfpYuMDFzSOtmkZDzBleOLO/CtcRWjT0HwTSQAmV0A==}
     dev: true
 
+  /@unocss/core@0.60.3:
+    resolution: {integrity: sha512-4bBX1pavDl2DSCozEII7bxYGT0IkyO7kKlUuCtooTePWyLjf2F7essdzHkJ00EpNR64kkebR9V0lqBMBo07VPw==}
+    dev: true
+
   /@unocss/eslint-config@0.59.4(eslint@8.57.0)(typescript@5.4.5):
     resolution: {integrity: sha512-a0FWOXQtdheYplZI+Oba2QMNWzCsfTUV/EuYEUDuKFARcsqpzO0PgRSH0MDHz0nROYmxeKkEKW/56dbAXmjBFQ==}
     engines: {node: '>=14'}
@@ -2405,6 +2409,12 @@ packages:
     resolution: {integrity: sha512-Vgk2OCLPW0pU+Uzr1IgDtHVspSBb+gPrQFkV+5gxHk9ZdKi3oYKxLuufVWYDSwv7o9yfQGbYrMH9YLsjRsnA7Q==}
     dependencies:
       '@unocss/core': 0.59.4
+    dev: true
+
+  /@unocss/transformer-compile-class@0.60.3:
+    resolution: {integrity: sha512-j6wiYgtNqMlrctaZUuN4S+vANW0DMb9wW3KbJ2XvB7lXftfY1bbZ3IKenAyFp0ZLdKs69B6irJbCbIS5OAKKXQ==}
+    dependencies:
+      '@unocss/core': 0.60.3
     dev: true
 
   /@unocss/transformer-directives@0.59.4:
