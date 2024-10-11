@@ -19,7 +19,7 @@
   "dependencies": {
     "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.9.0",
-    "axios": "^1.6.8",
+    "axios": "^1.7.4",
     "dayjs": "^1.11.11",
     "element-plus": "^2.7.2",
     "file-saver": "^2.0.5",
