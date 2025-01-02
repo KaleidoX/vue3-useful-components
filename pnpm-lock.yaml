@@ -115,8 +115,8 @@ importers:
         specifier: ^0.63.4
         version: 0.63.4(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
       '@unocss/transformer-compile-class':
-        specifier: ^0.63.4
-        version: 0.63.4
+        specifier: ^0.65.3
+        version: 0.65.3
       '@unocss/transformer-directives':
         specifier: ^0.63.4
         version: 0.63.4
@@ -1399,6 +1399,9 @@ packages:
   '@unocss/core@0.63.4':
     resolution: {integrity: sha512-VB4DJ5DsRWpX64si5tWYRXf1n5UkYQqe2s1V22qFiWmXa7Ec+Vf9s3cxWZmoWFC5P9RQiwM9kAqxdg1G+elVkQ==}
 
+  '@unocss/core@0.65.3':
+    resolution: {integrity: sha512-xYkJ63lIadL6KqvGcaE2fFeLvo6rC1F+e+R9EFn0Aj0ArMRhiltZk8vvLFHP7iYjjdTdqDkAr/7IdrTosTo8Pg==}
+
   '@unocss/eslint-config@0.63.4':
     resolution: {integrity: sha512-H7W6yx17t23ZTtvdJ1j+oRmPNi12k109m5H+tee6g92vjM9s82ZZmPNY/92XM0ZrObS7XaMxQkB3yF92Skw9Ew==}
     engines: {node: '>=14'}
@@ -1455,6 +1458,9 @@ packages:
 
   '@unocss/transformer-compile-class@0.63.4':
     resolution: {integrity: sha512-ta6mqq2S5OWcfBzzYnaiMt3ekn2ECNZTqzzqMglnIKPkE+GmqUmmRavRnpc+NGobuqMRcI4F6x8MSSHf4MV0jw==}
+
+  '@unocss/transformer-compile-class@0.65.3':
+    resolution: {integrity: sha512-cndbJUYqOACeFvldCAVd8edD56XcufFCAwbCm4uio1DjwpqJmtoaJHnLlrE2Pytleej1IAhDuoyaJAnSU9hIDA==}
 
   '@unocss/transformer-directives@0.63.4':
     resolution: {integrity: sha512-N/dNhmn3e9/Z4IvAujxCdwhNMfx2SihPA2/7GFSMMRi7F0Hn/o2hOqQquRqIJbQwIvi6bJtKwyasxjDoUhJqBA==}
@@ -4912,6 +4918,8 @@ snapshots:
 
   '@unocss/core@0.63.4': {}
 
+  '@unocss/core@0.65.3': {}
+
   '@unocss/eslint-config@0.63.4(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)':
     dependencies:
       '@unocss/eslint-plugin': 0.63.4(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
@@ -5013,6 +5021,10 @@ snapshots:
   '@unocss/transformer-compile-class@0.63.4':
     dependencies:
       '@unocss/core': 0.63.4
+
+  '@unocss/transformer-compile-class@0.65.3':
+    dependencies:
+      '@unocss/core': 0.65.3
 
   '@unocss/transformer-directives@0.63.4':
     dependencies:
