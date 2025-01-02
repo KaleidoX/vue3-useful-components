@@ -60,8 +60,8 @@ importers:
         specifier: ^7.2.1
         version: 7.2.1
       vant:
-        specifier: ^4.9.7
-        version: 4.9.7(vue@3.5.11(typescript@5.6.3))
+        specifier: ^4.9.15
+        version: 4.9.15(vue@3.5.11(typescript@5.6.3))
       video.js:
         specifier: ^8.18.1
         version: 8.18.1
@@ -1629,6 +1629,9 @@ packages:
 
   '@vue/shared@3.5.11':
     resolution: {integrity: sha512-W8GgysJVnFo81FthhzurdRAWP/byq3q2qIw70e0JWblzVhjgOMiC2GyovXrZTFQJnFVryYaKGP3Tc9vYzYm6PQ==}
+
+  '@vue/shared@3.5.13':
+    resolution: {integrity: sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==}
 
   '@vue/test-utils@2.4.6':
     resolution: {integrity: sha512-FMxEjOpYNYiFe0GkaHsnJPXFHxQ6m4t8vI/ElPGpMWxZKpmRvQ33OIrvRXemy6yha03RxhOlQuy+gZMC3CQSow==}
@@ -3418,8 +3421,8 @@ packages:
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
-  vant@4.9.7:
-    resolution: {integrity: sha512-bFkjF6zZf8l6WxPwDn6vd2PZISpUhm4u3fBJStUh+BDll7yaAv610j56DDYoL3HM8tws9nanGN4WBbTrKToMrA==}
+  vant@4.9.15:
+    resolution: {integrity: sha512-XyIAnoGu2P/dc5R2NnjIJgKwfOTTVM2FJW/8WpsZA0FUBL6Lu+KHBaAY/x3IduwbowkaCIUUPViUopI2JSjbug==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -5286,6 +5289,8 @@ snapshots:
       vue: 3.5.11(typescript@5.6.3)
 
   '@vue/shared@3.5.11': {}
+
+  '@vue/shared@3.5.13': {}
 
   '@vue/test-utils@2.4.6':
     dependencies:
@@ -7277,11 +7282,11 @@ snapshots:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
 
-  vant@4.9.7(vue@3.5.11(typescript@5.6.3)):
+  vant@4.9.15(vue@3.5.11(typescript@5.6.3)):
     dependencies:
       '@vant/popperjs': 1.3.0
       '@vant/use': 1.6.0(vue@3.5.11(typescript@5.6.3))
-      '@vue/shared': 3.5.11
+      '@vue/shared': 3.5.13
       vue: 3.5.11(typescript@5.6.3)
 
   video.js@8.18.1:
