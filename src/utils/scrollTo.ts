@@ -18,7 +18,9 @@ const easeInOutQuad = function (t: number, b: number, c: number, d: number) {
 export const requestAnimFrame = (function () {
   return (
     window.requestAnimationFrame ||
+    // @ts-ignore polyfill
     window.webkitRequestAnimationFrame ||
+    // @ts-ignore polyfill
     window.mozRequestAnimationFrame ||
     function (callback) {
       window.setTimeout(callback, 1000 / 60)
@@ -33,7 +35,8 @@ export const requestAnimFrame = (function () {
 function move(amount: number) {
   document.documentElement.scrollTop = amount
   if (document.body.parentNode) {
-    document.body.parentNode.scrollTop = amount
+    // @ts-ignore polyfill
+    document.body.parentNode.scrollTop(amount)
   }
   document.body.scrollTop = amount
 }
@@ -41,6 +44,7 @@ function move(amount: number) {
 function position() {
   return (
     document.documentElement.scrollTop ||
+    // @ts-ignore polyfill
     document.body.parentNode?.scrollTop ||
     document.body.scrollTop
   )
