@@ -10,13 +10,15 @@
 <script lang="ts" setup>
 import 'xgplayer/dist/index.min.css'
 import Player, { Events } from 'xgplayer'
+import type { IPlayerOptions } from 'xgplayer'
 import Mp4Plugin from 'xgplayer-mp4'
 import FlvPlugin from 'xgplayer-flv'
 import HlsPlugin from 'xgplayer-hls'
 
 import { events } from './event'
+import { isEmpty } from 'lodash-es'
 
-let player: Player = null
+let player: Player | null = null
 
 defineOptions({
   name: 'PlayXG'
@@ -24,7 +26,7 @@ defineOptions({
 
 const props = defineProps({
   src: {
-    type: [String, Array],
+    type: [String, Array] as PropType<IPlayerOptions['url']>,
     default: ''
   },
   coverImage: {
@@ -106,57 +108,59 @@ const videoPlugins = computed(() => {
   }
 })
 
-const videoPlayer = ref<HTMLDivElement | null>(null)
-const videoOptions = computed(() => {
+const videoPlayer = ref<HTMLDivElement>()
+const videoOptions = computed((): IPlayerOptions => {
   return {
-    plugins: videoPlugins.value,
     el: videoPlayer.value,
     url: props.src,
-    height: '100%',
+    domEventType: 'default', // 'default' | 'touch' | 'mouse'
     width: '100%',
-    isLive: props.isLive,
-    autoplay: props.autoplay,
-    autoplayMuted: props.muted,
-    playsinline: true,
-    defaultPlaybackRate: 1,
-    volume: 1,
-    loop: false,
-    poster: props.coverImage,
-    lang: 'zh-cn',
+    height: '100%',
     fluid: false,
     fitVideoSize: 'fixed',
-    videoFillMode: 'contain', // 'auto' | 'fill' | 'fillWidth' | 'fillHeight'
+    videoFillMode: 'contain', // 'auto' | 'fillHeight' | 'fillWidth' | 'fill' | 'cover' | 'contain'
+    volume: 1,
+    autoplay: Boolean(props.autoplay),
+    autoplayMuted: props.muted,
+    loop: false,
+    isLive: props.isLive,
+    poster: props.coverImage,
+    defaultPlaybackRate: 1,
+    playsinline: true,
     seekedStatus: 'play',
+    miniprogress: true,
+    lang: 'zh-cn',
+    controls: props.controls,
+    marginControls: false,
+    download: false,
+    keyShortcut: true,
+    plugins: videoPlugins.value,
     /**
      * 播放进度点
-     * [{time: 10, text: 'Demo', duration: 5, style: {backgroundColor: 'red'}}]
+     * [{time: 10, text: 'Demo', duration: 5, color: 'red', style: {backgroundColor: 'red'}}]
      * id: 0,         // 唯一标识，用于删除的时候索引
      * time: 10,      // 展示的时间点，例子为在播放到10s钟的时候展示
      * text: 'Demo',  // hover的时候展示文案，可以为空
+     * color: 'red',  // Mark color
      * duration: 5,   // 展示时间跨度，单位为s
      * style: { backgroundColor: 'red' }// 指定样式
      */
     progressDot: [],
     /**
      * 预览图
-     * {}
-     * urls: [],      // 雪碧图url列表
+     * [{ urls: [], pic_num: 0, row: 0, col: 0, height: 160, width: 90 }]
+     * urls: [],      // 雪碧图url列表 Array<string>
      * pic_num: 128,  // 预览图总帧数
      * row: 10,       // 每张雪碧图包含的预览图行数
      * col: 10,       // 每张雪碧图包含的预览图列数
      * height: 160,   // 预览图每一帧的高度（单位：px）
      * width: 90      // 预览图每一帧的宽度（单位：px）
      */
-    thumbnail: null,
-    marginControls: false,
-    domEventType: 'default',
-    controls: props.controls,
-    miniprogress: true,
-    keyShortcut: true,
+    thumbnail: undefined,
     'x5-video-player-type': 'h5',
     'x5-video-player-fullscreen': false,
     'x5-video-orientation': 'portraint',
-    mp4plugin: {
+    mp4Plugin: {
       maxBufferLength: 40, // default 40 播放的最大的buffer长度（s）
       minBufferLength: 5, // default 10 播放的最小的buffer长度（s）
       disableBufferBreakCheck: false, // default false 是否开启卡顿超时检测
@@ -185,7 +189,7 @@ const videoOptions = computed(() => {
 })
 
 const videoInit = async () => {
-  if (!props.src.length) {
+  if (isEmpty(props.src)) {
     return false
   }
   await nextTick()
@@ -204,6 +208,9 @@ const videoInit = async () => {
       def.textContent = e.to.name
     })
     events.forEach((eventKey: string) => {
+      if (!player) {
+        return
+      }
       player.on(eventKey, (payload: any) => {
         emit(eventKey, payload)
       })
@@ -212,6 +219,8 @@ const videoInit = async () => {
 }
 const videoDestroy = () => {
   if (player) {
+    // player = undefined
+    player.destroy()
     player = null
   }
 }
@@ -220,17 +229,22 @@ const getVideoShot = () => {
     return
   }
   const canvas = document.createElement('canvas')
-  canvas.width = player.tech_.el_.clientWidth / 2
-  canvas.height = player.tech_.el_.clientHeight / 2
-  canvas.getContext('2d')?.drawImage(player.tech_.el_, 0, 0, canvas.width, canvas.height)
+  const MediaDom = player.media as HTMLVideoElement
+  if (!MediaDom) {
+    return canvas
+  }
+  canvas.width = MediaDom.clientWidth / 2
+  canvas.height = MediaDom.clientHeight / 2
+  canvas.getContext('2d')?.drawImage(MediaDom, 0, 0, canvas.width, canvas.height)
+  console.log('canvas :>> ', canvas.toDataURL());
   return canvas
 }
 
 const getTotalTime = () => {
-  return Math.floor(player?.duration())
+  return Math.floor(player?.duration || 0)
 }
 const getPlayTime = () => {
-  return Math.floor(player?.currentTime())
+  return Math.floor(player?.currentTime || 0)
 }
 const setPlayTime = (seconds: number) => {
   player?.currentTime(seconds)
