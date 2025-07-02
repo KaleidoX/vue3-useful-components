@@ -11,11 +11,11 @@ import 'quill/dist/quill.snow.css'
 import Quill from 'quill'
 import 'quill-image-uploader/dist/quill.imageUploader.min.css'
 // import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
-import ImageUploader from "quill-image-uploader";
+import ImageUploader from 'quill-image-uploader'
 import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
 // import BlotFormatter from 'quill-blot-formatter';
 // import Mention from 'quill-mention/dist/quill.mention.esm.js'
-import { Mention, MentionBlot } from "quill-mention";
+import { Mention, MentionBlot } from 'quill-mention'
 import { uploadImage } from '@/api/upload.ts'
 import { formatUploadBase } from '@/utils/format.ts'
 
@@ -32,8 +32,8 @@ if (!Quill.imports['modules/blotFormatter']) {
 }
 if (!Quill.imports['modules/mention']) {
   Quill.register({
-    "blots/mention": MentionBlot,
-    "modules/mention": Mention
+    'blots/mention': MentionBlot,
+    'modules/mention': Mention
   })
 }
 
@@ -110,13 +110,13 @@ const toolbar = props.simple
     ]
 
 const mentionAtValues = [
-  { id: 1, value: "Fredrik Sundqvist" },
-  { id: 2, value: "Patrik Sjölin" }
-];
+  { id: 1, value: 'Fredrik Sundqvist' },
+  { id: 2, value: 'Patrik Sjölin' }
+]
 const mentionHashValues = [
-  { id: 3, value: "Fredrik Sundqvist 2" },
-  { id: 4, value: "Patrik Sjölin 2" }
-];
+  { id: 3, value: 'Fredrik Sundqvist 2' },
+  { id: 4, value: 'Patrik Sjölin 2' }
+]
 
 const options = {
   theme: 'snow',
@@ -148,25 +148,22 @@ const options = {
       spaceAfterInsert: false,
       // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
       source: function (searchTerm, renderList, mentionChar) {
-        let values;
-      
+        let values
 
-        if (mentionChar === "@") {
-          values = mentionAtValues;
+        if (mentionChar === '@') {
+          values = mentionAtValues
         } else {
-          values = mentionHashValues;
+          values = mentionHashValues
         }
 
         if (searchTerm.length === 0) {
-          renderList(values, searchTerm);
+          renderList(values, searchTerm)
         } else {
-          const matches = [];
+          const matches = []
           for (let i = 0; i < values.length; i++)
-            if (
-              ~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())
-            )
-              matches.push(values[i]);
-          renderList(matches, searchTerm);
+            if (~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase()))
+              matches.push(values[i])
+          renderList(matches, searchTerm)
         }
       }
     }

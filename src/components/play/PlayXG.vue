@@ -236,7 +236,7 @@ const getVideoShot = () => {
   canvas.width = MediaDom.clientWidth / 2
   canvas.height = MediaDom.clientHeight / 2
   canvas.getContext('2d')?.drawImage(MediaDom, 0, 0, canvas.width, canvas.height)
-  console.log('canvas :>> ', canvas.toDataURL());
+  console.log('canvas :>> ', canvas.toDataURL())
   return canvas
 }
 
