@@ -17,7 +17,7 @@ export function parseXml(xmlString: string) {
   } catch (e) {
     //Internet Explorer
     try {
-      // eslint-disable-next-line no-undef, no-redeclare
+      // @ts-ignore eslint-disable-next-line no-undef, no-redeclare
       const xmlDoc = new ActiveXObject('Microsoft.XMLDOM')
       xmlDoc.async = 'false'
       xmlDoc.loadXML(xmlString)
