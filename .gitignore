@@ -29,3 +29,5 @@ src/auto-imports.d.ts
 *.njsproj
 *.sln
 *.sw?
+
+pnpm-lock.yaml
