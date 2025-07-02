@@ -48,7 +48,7 @@ export default {
           const blob = new Blob([res.data], {
             type: res.headers['content-type']
           })
-          this.saveAs(blob, getFileNameFormHeaders(res) || name)
+          this.save(blob, getFileNameFormHeaders(res) || name)
         } else {
           this.printErrMsg(res.data)
         }
@@ -73,7 +73,7 @@ export default {
         const isBlob = blobValidate(res.data)
         if (isBlob) {
           const blob = new Blob([res.data], { type: 'application/zip' })
-          this.saveAs(blob, getFileNameFormHeaders(res) || name)
+          this.save(blob, getFileNameFormHeaders(res) || name)
         } else {
           this.printErrMsg(res.data)
         }
@@ -86,9 +86,7 @@ export default {
         loadingClose()
       })
   },
-  saveAs(text: Blob | File | string, name?: string, opts?: Object) {
-    saveAs(text, name, opts)
-  },
+  save: saveAs,
   async printErrMsg(data: any) {
     const resText = await data.text()
     const rspObj = JSON.parse(resText)
