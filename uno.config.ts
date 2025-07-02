@@ -1,4 +1,4 @@
-import { defineConfig, presetUno, presetIcons, transformerVariantGroup } from 'unocss'
+import { defineConfig, presetWind3, presetIcons, transformerVariantGroup } from 'unocss'
 // import presetTheme from 'unocss-preset-theme'
 import transformerDirectives from '@unocss/transformer-directives'
 import transformerCompileClass from '@unocss/transformer-compile-class'
@@ -34,7 +34,7 @@ export default defineConfig({
     // presetUno({
     //   preflight: false
     // }),
-    presetUno(),
+    presetWind3(),
     presetIcons({
       extraProperties: {
         display: 'inline-block',
