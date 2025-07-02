@@ -10,9 +10,12 @@ import { ElMessage } from 'element-plus'
 import 'quill/dist/quill.snow.css'
 import Quill from 'quill'
 import 'quill-image-uploader/dist/quill.imageUploader.min.css'
-import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
-import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
-import Mention from 'quill-mention/dist/quill.mention.esm.js'
+// import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
+import ImageUploader from "quill-image-uploader";
+// import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
+import BlotFormatter from 'quill-blot-formatter';
+// import Mention from 'quill-mention/dist/quill.mention.esm.js'
+import { Mention, MentionBlot } from "quill-mention";
 import { uploadImage } from '@/api/upload.ts'
 import { formatUploadBase } from '@/utils/format.ts'
 
@@ -28,7 +31,10 @@ if (!Quill.imports['modules/blotFormatter']) {
   Quill.register('modules/blotFormatter', BlotFormatter)
 }
 if (!Quill.imports['modules/mention']) {
-  Quill.register('modules/mention', Mention)
+  Quill.register({
+    "blots/mention": MentionBlot,
+    "modules/mention": Mention
+  })
 }
 
 const editor = ref()
@@ -102,6 +108,16 @@ const toolbar = props.simple
       ['clean'], // 清除文本格式
       ['link', 'image', 'video'] // 链接、图片、视频
     ]
+
+const mentionAtValues = [
+  { id: 1, value: "Fredrik Sundqvist" },
+  { id: 2, value: "Patrik Sjölin" }
+];
+const mentionHashValues = [
+  { id: 3, value: "Fredrik Sundqvist 2" },
+  { id: 4, value: "Patrik Sjölin 2" }
+];
+
 const options = {
   theme: 'snow',
   bounds: document.body,
@@ -128,10 +144,31 @@ const options = {
     },
     blotFormatter: {},
     mention: {
-      mentionDenotationChars: ['@'],
+      mentionDenotationChars: ['@', '#'],
       spaceAfterInsert: false,
       // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-      source: function (searchTerm, renderList, mentionChar) {}
+      source: function (searchTerm, renderList, mentionChar) {
+        let values;
+      
+
+        if (mentionChar === "@") {
+          values = mentionAtValues;
+        } else {
+          values = mentionHashValues;
+        }
+
+        if (searchTerm.length === 0) {
+          renderList(values, searchTerm);
+        } else {
+          const matches = [];
+          for (let i = 0; i < values.length; i++)
+            if (
+              ~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())
+            )
+              matches.push(values[i]);
+          renderList(matches, searchTerm);
+        }
+      }
     }
   }
   // formats: ['bold', 'italic', 'mention']
