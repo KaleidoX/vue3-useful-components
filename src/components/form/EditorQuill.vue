@@ -12,8 +12,8 @@ import Quill from 'quill'
 import 'quill-image-uploader/dist/quill.imageUploader.min.css'
 // import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
 import ImageUploader from "quill-image-uploader";
-// import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
-import BlotFormatter from 'quill-blot-formatter';
+import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
+// import BlotFormatter from 'quill-blot-formatter';
 // import Mention from 'quill-mention/dist/quill.mention.esm.js'
 import { Mention, MentionBlot } from "quill-mention";
 import { uploadImage } from '@/api/upload.ts'
