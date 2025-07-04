@@ -8,7 +8,6 @@
       left-arrow
     />
   </div>
-  <i class="i-custom:logo text-xl"></i>
   <el-config-provider :locale="localeElement">
     <RouterView />
   </el-config-provider>
