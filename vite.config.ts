@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
     base: EnvConfig.BASE_URL,
     // base: "./",
     server: {
-      port: '8000',
+      port: 8000,
       open: false,
       proxy: {
         [EnvConfig.VITE_BASE_API]: {
