@@ -4,7 +4,11 @@
     <div class="info clip">loading...</div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineOptions({
+  name: 'LoadingType1'
+})
+</script>
 <style scoped lang="scss">
 .loading-box {
   width: 100%;

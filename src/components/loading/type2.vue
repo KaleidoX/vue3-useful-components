@@ -15,7 +15,11 @@
     </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineOptions({
+  name: 'LoadingType2'
+})
+</script>
 <style scoped lang="scss">
 .loading-next {
   width: 100%;

@@ -1,5 +1,5 @@
 <template>
-  <div class=''>
+  <div class="">
     <div class="h-40 w-40">
       <LoadingType1 />
     </div>
@@ -8,9 +8,12 @@
     </div>
   </div>
 </template>
-<script setup lang='ts'>
+<script setup lang="ts">
 import LoadingType1 from '@/components/loading/type1.vue'
 import LoadingType2 from '@/components/loading/type2.vue'
+
+defineOptions({
+  name: 'LoadingView'
+})
 </script>
-<style scoped lang='scss'>
-</style>
+<style scoped lang="scss"></style>
