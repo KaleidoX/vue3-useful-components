@@ -14,10 +14,10 @@
   </el-config-provider>
 </template>
 
-<script>
+<script lang="ts">
 import { usePageBack } from '@/utils/page'
 
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
 import 'dayjs/locale/zh-cn'
 
 export default {

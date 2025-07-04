@@ -5,19 +5,29 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+import type { CSSProperties } from 'vue'
 import { ElMessage } from 'element-plus'
 import 'quill/dist/quill.snow.css'
-import Quill from 'quill'
+import Quill, { Delta } from 'quill'
+import type { QuillOptions } from 'quill'
 import 'quill-image-uploader/dist/quill.imageUploader.min.css'
 // import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
+// @ts-expect-error 缺少ts类型
 import ImageUploader from 'quill-image-uploader'
+// @ts-expect-error 缺少ts类型
 import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
 // import BlotFormatter from 'quill-blot-formatter';
 // import Mention from 'quill-mention/dist/quill.mention.esm.js'
-import { Mention, MentionBlot } from 'quill-mention'
-import { uploadImage } from '@/api/upload.ts'
-import { formatUploadBase } from '@/utils/format.ts'
+import { Mention, MentionBlot, type MentionOption } from 'quill-mention'
+import { uploadImage } from '@/api/upload'
+import { formatUploadBase } from '@/utils/format'
+
+interface IMentionData {
+  id: string
+  value: string
+  [key: string]: string | undefined
+}
 
 defineOptions({
   name: 'EditorQuill'
@@ -38,12 +48,16 @@ if (!Quill.imports['modules/mention']) {
 }
 
 const editor = ref()
-let quill
+let quill: Quill
 
 const getQuill = () => {
   return quill
 }
-const getModule = (moduleName) => {
+
+function getModule(moduleName: 'imageUploader'): ImageUploader
+function getModule(moduleName: 'blotFormatter'): BlotFormatter
+function getModule(moduleName: 'mention'): Mention
+function getModule(moduleName: string) {
   return getQuill().getModule(moduleName)
 }
 
@@ -109,16 +123,16 @@ const toolbar = props.simple
       ['link', 'image', 'video'] // 链接、图片、视频
     ]
 
-const mentionAtValues = [
-  { id: 1, value: 'Fredrik Sundqvist' },
-  { id: 2, value: 'Patrik Sjölin' }
+const mentionAtValues: IMentionData[] = [
+  { id: '1', value: 'Fredrik Sundqvist' },
+  { id: '2', value: 'Patrik Sjölin' }
 ]
-const mentionHashValues = [
-  { id: 3, value: 'Fredrik Sundqvist 2' },
-  { id: 4, value: 'Patrik Sjölin 2' }
+const mentionHashValues: IMentionData[] = [
+  { id: '3', value: 'Fredrik Sundqvist 2' },
+  { id: '4', value: 'Patrik Sjölin 2' }
 ]
 
-const options = {
+const options: QuillOptions = {
   theme: 'snow',
   bounds: document.body,
   debug: 'error',
@@ -127,7 +141,7 @@ const options = {
   modules: {
     toolbar,
     imageUploader: {
-      upload: (file) => {
+      upload: (file: File) => {
         return new Promise((resolve, reject) => {
           if (!handleBeforeUpload(file)) {
             return reject('error')
@@ -146,9 +160,8 @@ const options = {
     mention: {
       mentionDenotationChars: ['@', '#'],
       spaceAfterInsert: false,
-      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-      source: function (searchTerm, renderList, mentionChar) {
-        let values
+      source: function (textAfter, renderList, mentionChar) {
+        let values: IMentionData[]
 
         if (mentionChar === '@') {
           values = mentionAtValues
@@ -156,23 +169,23 @@ const options = {
           values = mentionHashValues
         }
 
-        if (searchTerm.length === 0) {
-          renderList(values, searchTerm)
+        if (textAfter.length === 0) {
+          renderList(values, textAfter)
         } else {
-          const matches = []
+          const matches: IMentionData[] = []
           for (let i = 0; i < values.length; i++)
-            if (~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase()))
+            if (~values[i].value.toLowerCase().indexOf(textAfter.toLowerCase()))
               matches.push(values[i])
-          renderList(matches, searchTerm)
+          renderList(matches, textAfter)
         }
       }
-    }
+    } as MentionOption
   }
   // formats: ['bold', 'italic', 'mention']
 }
 
 const styles = computed(() => {
-  let style = {}
+  const style: CSSProperties = {}
   if (props.minHeight) {
     style.minHeight = `${props.minHeight}px`
   }
@@ -204,7 +217,7 @@ watch(
 )
 
 // 上传前校检格式和大小
-function handleBeforeUpload(file) {
+function handleBeforeUpload(file: File) {
   const type = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg']
   const isJPG = type.includes(file.type)
   //检验文件格式
@@ -233,7 +246,7 @@ function getContents() {
   }
 }
 // 设置内容
-function setContents(html) {
+function setContents(html: string) {
   const quill = getQuill()
   if (quill) {
     quill.clipboard.dangerouslyPasteHTML(html || '<p></p>')
@@ -243,19 +256,18 @@ function setContents(html) {
 function clearContent() {
   const quill = getQuill()
   if (quill) {
-    quill.setContents('')
+    quill.setContents(new Delta())
     quill.setSelection(0, 0)
   }
 }
 // 增加 mention
-function addMention(mention) {
+function addMention(mention: { id: string; value: string }[]) {
   const quill = getQuill()
-  const deltaMention = quill
-    .getModule('mention')
-    .insertItem({ denotationChar: '@', ...mention }, true)
-    .filter((item) => item.insert)
-  quill.setContents(deltaMention)
-  quill.setSelection(quill.getLength() + 1)
+  const deltaMention = getModule('mention').insertItem({ denotationChar: '@', ...mention }, true)
+  if (deltaMention) {
+    quill.setContents(deltaMention)
+    quill.setSelection(quill.getLength() + 1)
+  }
 }
 
 function init() {
@@ -272,7 +284,8 @@ onMounted(() => {
   init()
 })
 onUnmounted(() => {
-  quill = null
+  // @ts-expect-error 注销 quill 实例
+  quill = undefined
 })
 
 // 定义组件接口

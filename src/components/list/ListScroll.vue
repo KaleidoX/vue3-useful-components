@@ -17,11 +17,11 @@
 </template>
 
 <script lang="ts" setup>
-export interface TypeChangeListInfo {
+export interface TypeChangeListInfo<A = unknown, B = unknown> {
   type: string
   key?: string
-  keyValue?: any
-  newValue?: any
+  keyValue?: A
+  newValue?: B
 }
 
 defineOptions({
@@ -37,7 +37,7 @@ const props = defineProps({
   }
 })
 
-const list: Ref<any[]> = ref([])
+const list: Ref<unknown[]> = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const error = ref(false)
@@ -103,6 +103,7 @@ const handleChangeList = (changeInfo: TypeChangeListInfo) => {
       }
       for (let index = 0; index < list.value.length; index++) {
         const element = list.value[index]
+        // @ts-expect-error 这里是一个通用模块 使用 unknown 作为安全类型
         if (element[changeInfo.key] === changeInfo.keyValue) {
           list.value.splice(index, 1)
           break
@@ -116,6 +117,7 @@ const handleChangeList = (changeInfo: TypeChangeListInfo) => {
       }
       for (let index = 0; index < list.value.length; index++) {
         const element = list.value[index]
+        // @ts-expect-error 这里是一个通用模块 使用 unknown 作为安全类型
         if (element[changeInfo.key] === changeInfo.keyValue) {
           list.value.splice(index, 1, changeInfo.newValue)
           break

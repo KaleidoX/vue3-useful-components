@@ -1,28 +1,28 @@
 <template>
   <div
     class="flex items-center"
-    :class="{ 'px-5 rounded-full': round, 'shadow-base': shadow, 'bg-base-200': background }"
+    :class="{ 'px-5 rounded-full': props.round, 'shadow-base': props.shadow, 'bg-base-200': props.background }"
   >
-    <label v-if="label" class="mr-3 whitespace-nowrap">{{ label }}</label>
+    <label v-if="props.label" class="mr-3 whitespace-nowrap">{{ props.label }}</label>
     <slot>
       <input
         class="min-w-0 flex-1"
-        :class="{ 'cursor-pointer-events-none': disabled }"
+        :class="{ 'cursor-pointer-events-none': props.disabled }"
         type="text"
         v-model="value"
-        :placeholder="placeholder"
-        :disabled="disabled"
+        :placeholder="props.placeholder"
+        :disabled="props.disabled"
         autocomplete="off"
-        @focus="$emit('focus')"
-        @focusin="$emit('focusin')"
-        @focusout="$emit('focusout')"
+        @focus="($event) => emit('focus', $event)"
+        @focusin="($event) => emit('focusin', $event)"
+        @focusout="($event) => emit('focusout', $event)"
       />
     </slot>
-    <i v-if="arrowDown" class="i-ep:arrow-down-bold ml-3 color-primary"></i>
+    <i v-if="props.arrowDown" class="i-ep:arrow-down-bold ml-3 color-primary"></i>
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 defineOptions({
   name: 'FormItem'
 })
@@ -59,5 +59,7 @@ const props = defineProps({
   }
 })
 
-const value = useVModel(props, 'modelValue', emit)
+const value = defineModel('modelValue')
+
+const emit = defineEmits(['focus', 'focusin', 'focusout'])
 </script>

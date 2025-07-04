@@ -2,7 +2,7 @@
   <input class="p-0" v-model="data" />
 </template>
 
-<script setup>
+<script lang="ts" setup>
 defineOptions({
   name: 'InputDebounce'
 })

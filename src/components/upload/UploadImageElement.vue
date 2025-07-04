@@ -15,7 +15,7 @@
       :headers="headers"
       :file-list="fileList"
       :on-preview="handlePictureCardPreview"
-      :class="{ hide: this.fileList.length >= this.limit }"
+      :class="{ hide: fileList.length >= limit }"
     >
       <i class="i-ep:plus"></i>
       <!-- 上传提示 -->
@@ -39,7 +39,7 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 import { isArray, isString } from 'lodash-es'
 
 export default {
@@ -123,6 +123,7 @@ export default {
     handleUploadSuccess(res) {
       this.fileList.push({ name: res.fileName, url: res.fileName })
       this.$emit('update:modelValue', this.listToString(this.fileList))
+      // @ts-expect-error 忽略注入options的loading实例
       this.loading && this.loading.close()
     },
     // 上传前loading加载
@@ -166,6 +167,7 @@ export default {
     // 上传失败
     handleUploadError() {
       ElMessage.error('上传失败')
+      // @ts-expect-error 忽略注入options的loading实例
       this.loading && this.loading.close()
     },
     // 预览

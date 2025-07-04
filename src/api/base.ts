@@ -3,7 +3,7 @@ interface interfaceParams {
   rows: number
 }
 interface interfaceResponseList {
-  list: any[]
+  list: number[]
   count: number
   pageCount: number
 }
