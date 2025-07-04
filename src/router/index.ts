@@ -73,6 +73,17 @@ const router = createRouter({
           meta: { title: '上传图片组件', backLink: '/home' }
         }
       ]
+    },
+    {
+      path: '/loading',
+      children: [
+        {
+          path: 'view',
+          name: 'LoadingView',
+          component: () => import('@/views/loading/view.vue'),
+          meta: { title: '加载组件', backLink: '/home' }
+        }
+      ]
     }
   ]
 })
