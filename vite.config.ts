@@ -62,6 +62,13 @@ export default defineConfig(({ mode }) => {
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
     },
     // optimizeDeps: { disabled: true },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler' // or "modern"
+        }
+      }
+    },
     build: {
       minify: 'terser',
       // commonjsOptions: {
