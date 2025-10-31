@@ -15,9 +15,8 @@ import 'quill-image-uploader/dist/quill.imageUploader.min.css'
 // import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
 // @ts-expect-error 缺少ts类型
 import ImageUploader from 'quill-image-uploader'
-// @ts-expect-error 缺少ts类型
-import BlotFormatter from 'quill-blot-formatter/dist/quill-blot-formatter.min.js'
-// import BlotFormatter from 'quill-blot-formatter';
+import "@enzedonline/quill-blot-formatter2/dist/css/quill-blot-formatter2.css";
+import BlotFormatter from '@enzedonline/quill-blot-formatter2';
 // import Mention from 'quill-mention/dist/quill.mention.esm.js'
 import { Mention, MentionBlot, type MentionOption } from 'quill-mention'
 import { uploadImage } from '@/api/upload'
