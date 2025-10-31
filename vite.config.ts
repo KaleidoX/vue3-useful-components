@@ -92,7 +92,7 @@ export default defineConfig(({ mode }) => {
             vant: ['vant'],
             videoJs: ['video.js', 'mpegts.js'],
             xgplayer: ['xgplayer', 'xgplayer-flv', 'xgplayer-hls', 'xgplayer-mp4'],
-            quill: ['quill', 'quill-blot-formatter', 'quill-image-uploader', 'quill-mention']
+            quill: ['quill', '@enzedonline/quill-blot-formatter2', 'quill-image-uploader', 'quill-mention']
           }
         }
       }
