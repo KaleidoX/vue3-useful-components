@@ -38,6 +38,12 @@ const router = createRouter({
           name: 'FormEditorVditor',
           component: () => import('@/views/form/EditorVditorView.vue'),
           meta: { title: 'Vditor编辑器', backLink: '/home' }
+        },
+        {
+          path: 'editor-wang',
+          name: 'FormEditorWang',
+          component: () => import('@/views/form/EditorWangView.vue'),
+          meta: { title: 'WangEditor编辑器', backLink: '/home' }
         }
       ]
     },
