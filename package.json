@@ -25,6 +25,8 @@
     "@enzedonline/quill-blot-formatter2": "^3.0.3",
     "@vueuse/components": "^13.9.0",
     "@vueuse/core": "^11.3.0",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.13.1",
     "dayjs": "^1.11.18",
     "element-plus": "^2.11.5",
