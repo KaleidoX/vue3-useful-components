@@ -22,6 +22,12 @@ const router = createRouter({
       path: '/form',
       children: [
         {
+          path: 'editor-editorjs',
+          name: 'FormEditorEditorJs',
+          component: () => import('@/views/form/EditorEditorJsView.vue'),
+          meta: { title: 'EditorJS编辑器', backLink: '/home' }
+        },
+        {
           path: 'editor-quill',
           name: 'FormEditorQuill',
           component: () => import('@/views/form/EditorQuillView.vue'),

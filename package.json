@@ -17,6 +17,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.31.3",
+    "@editorjs/embed": "^2.8.0",
+    "@editorjs/header": "^2.8.8",
+    "@editorjs/image": "^2.10.3",
+    "@editorjs/list": "^2.0.9",
     "@enzedonline/quill-blot-formatter2": "^3.0.3",
     "@vueuse/components": "^13.9.0",
     "@vueuse/core": "^11.3.0",
