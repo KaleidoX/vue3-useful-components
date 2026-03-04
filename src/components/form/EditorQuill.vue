@@ -7,7 +7,6 @@
 
 <script lang="ts" setup>
 import type { CSSProperties } from 'vue'
-import { ElMessage } from 'element-plus'
 import 'quill/dist/quill.snow.css'
 import Quill, { Delta } from 'quill'
 import type { QuillOptions } from 'quill'

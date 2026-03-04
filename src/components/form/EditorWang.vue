@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMessage } from 'element-plus'
 import '@wangeditor/editor/dist/css/style.css'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { uploadImage } from '@/api/upload'
@@ -126,7 +125,10 @@ const options: IEditorConfig = {
       // 清空 image 元素的 hoverbar
       menuKeys: []
     }
-  }
+  },
+  customAlert: (info, type) => {
+    console.log('EdirtorWang customAlert :>> ', info, type);
+  },
 }
 
 // 上传前校检格式和大小
