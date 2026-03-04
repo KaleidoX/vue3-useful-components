@@ -7,7 +7,6 @@
 
 <script lang="ts" setup>
 import { ref, type CSSProperties } from 'vue'
-import { ElMessage } from 'element-plus'
 import 'vditor/dist/index.css'
 import EditorJS, { type EditorConfig } from '@editorjs/editorjs'
 import HeaderTool from '@editorjs/header'
