@@ -18,7 +18,6 @@ defineOptions({
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #fff;
 
   .loader {
     position: relative;
