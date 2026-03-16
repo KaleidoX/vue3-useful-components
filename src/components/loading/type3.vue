@@ -21,7 +21,7 @@ defineOptions({
   display: block;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #7171c6;
+  border-top-color: var(--el-color-primary, #409eff);
 }
 .loader {
   position: relative;
@@ -87,7 +87,7 @@ defineOptions({
   }
 }
 .loader-wrapper .load_title {
-  color: #7171c6;
+  color: var(--el-color-primary, #409eff);
   font-size: 19px;
   width: 100%;
   text-align: center;
