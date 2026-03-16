@@ -6,18 +6,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { CSSProperties } from 'vue'
-import 'quill/dist/quill.snow.css'
-import Quill, { Delta } from 'quill'
-import type { QuillOptions } from 'quill'
-import 'quill-image-uploader/dist/quill.imageUploader.min.css'
-// import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
-// @ts-expect-error 缺少ts类型
-import ImageUploader from 'quill-image-uploader'
-import "@enzedonline/quill-blot-formatter2/dist/css/quill-blot-formatter2.css";
-import BlotFormatter from '@enzedonline/quill-blot-formatter2';
-// import Mention from 'quill-mention/dist/quill.mention.esm.js'
-import { Mention, MentionBlot, type MentionOption } from 'quill-mention'
+import { ref, type CSSProperties } from 'vue'
+import 'vditor/dist/index.css'
+import Vditor from 'vditor'
 import { uploadImage } from '@/api/upload'
 import { formatUploadBase } from '@/utils/format'
 
@@ -28,35 +19,14 @@ interface IMentionData {
 }
 
 defineOptions({
-  name: 'EditorQuill'
+  name: 'EditorVditor'
 })
 
-// console.log(Quill, Quill.register)
-if (!Quill.imports['modules/imageUploader']) {
-  Quill.register('modules/imageUploader', ImageUploader)
-}
-if (!Quill.imports['modules/blotFormatter']) {
-  Quill.register('modules/blotFormatter', BlotFormatter)
-}
-if (!Quill.imports['modules/mention']) {
-  Quill.register({
-    'blots/mention': MentionBlot,
-    'modules/mention': Mention
-  })
-}
-
 const editor = ref()
-let quill: Quill
+let vditor: Vditor
 
-const getQuill = () => {
-  return quill
-}
-
-function getModule(moduleName: 'imageUploader'): ImageUploader
-function getModule(moduleName: 'blotFormatter'): BlotFormatter
-function getModule(moduleName: 'mention'): Mention
-function getModule(moduleName: string) {
-  return getQuill().getModule(moduleName)
+const getVditor = () => {
+  return vditor
 }
 
 const props = defineProps({
@@ -106,19 +76,30 @@ const props = defineProps({
 })
 const emit = defineEmits(['ready', 'update:modelValue'])
 
-const toolbar = props.simple
-  ? [['image']]
+const toolbar: IOptions['toolbar'] = props.simple
+  ? ['upload']
   : [
-      ['bold', 'italic', 'underline', 'strike'], // 加粗 斜体 下划线 删除线
-      ['blockquote', 'code-block'], // 引用  代码块
-      [{ list: 'ordered' }, { list: 'bullet' }], // 有序、无序列表
-      [{ indent: '-1' }, { indent: '+1' }], // 缩进
-      [{ size: ['small', false, 'large', 'huge'] }], // 字体大小
-      [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
-      [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
-      [{ align: [] }], // 对齐方式
-      ['clean'], // 清除文本格式
-      ['link', 'image', 'video'] // 链接、图片、视频
+      'bold',
+      'italic',
+      'strike',
+      'link',
+      '|',
+      'quote',
+      'code',
+      '|',
+      'ordered-list',
+      'list',
+      '|',
+      'indent',
+      'outdent',
+      '|',
+      'headings',
+      '|',
+      'undo',
+      'redo',
+      '|',
+      'upload', // 链接、图片、视频
+      'table'
     ]
 
 const mentionAtValues: IMentionData[] = [
@@ -130,56 +111,69 @@ const mentionHashValues: IMentionData[] = [
   { id: '4', value: 'Patrik Sjölin 2' }
 ]
 
-const options: QuillOptions = {
-  theme: 'snow',
-  bounds: document.body,
-  debug: 'error',
+const options: IOptions = {
+  height: props.height,
+  minHeight: props.minHeight,
   placeholder: props.placeholder,
-  readOnly: props.readOnly,
-  modules: {
-    toolbar,
-    imageUploader: {
-      upload: (file: File) => {
-        return new Promise((resolve, reject) => {
-          if (!handleBeforeUpload(file)) {
-            return reject('error')
-          }
-          uploadImage(file)
-            .then((res) => {
-              resolve(formatUploadBase(res.url))
-            })
-            .catch((err) => {
-              reject(err)
-            })
-        })
-      }
+  theme: 'classic',
+  after: () => {
+    setContents(props.modelValue)
+  },
+  blur(value) {
+    content.value = value
+  },
+  mode: 'wysiwyg',
+  debugger: false,
+  customWysiwygToolbar: (type, element) => {
+    console.log('customWysiwygToolbar :>> ', type, element)
+  },
+  toolbar: toolbar,
+  toolbarConfig: {
+    hide: false,
+    pin: true
+  },
+  counter: {
+    enable: true,
+    max: props.maxLength,
+    type: 'markdown'
+  },
+  cache: {
+    enable: false
+  },
+  comment: {
+    enable: true,
+    add: (id, text, commentsData) => {
+      console.log('id, text, commentsData :>> ', id, text, commentsData)
     },
-    blotFormatter: {},
-    mention: {
-      mentionDenotationChars: ['@', '#'],
-      spaceAfterInsert: false,
-      source: function (textAfter, renderList, mentionChar) {
-        let values: IMentionData[]
-
-        if (mentionChar === '@') {
-          values = mentionAtValues
-        } else {
-          values = mentionHashValues
-        }
-
-        if (textAfter.length === 0) {
-          renderList(values, textAfter)
-        } else {
-          const matches: IMentionData[] = []
-          for (let i = 0; i < values.length; i++)
-            if (~values[i].value.toLowerCase().indexOf(textAfter.toLowerCase()))
-              matches.push(values[i])
-          renderList(matches, textAfter)
-        }
-      }
-    } as MentionOption
+    remove: (ids) => {
+      console.log('ids :>> ', ids)
+    },
+    scroll: (top) => {
+      console.log('top :>> ', top)
+    },
+    adjustTop: (commentsData) => {
+      console.log('commentsData :>> ', commentsData)
+    }
+  },
+  image: {
+    isPreview: true,
+    preview: (bom) => {
+      console.log('image bom :>> ', bom)
+    }
+  },
+  link: {
+    isOpen: true,
+    click: (bom) => {
+      console.log('link bom :>> ', bom)
+    }
+  },
+  resize: {
+    enable: true
+  },
+  outline: {
+    enable: true,
+    position: 'left'
   }
-  // formats: ['bold', 'italic', 'mention']
 }
 
 const styles = computed(() => {
@@ -236,60 +230,54 @@ function handleBeforeUpload(file: File) {
 // 获取内容
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getContents() {
-  const quill = getQuill()
-  if (quill) {
-    return quill.root.innerHTML
+  if (vditor) {
+    return vditor.getValue() || ''
   } else {
     return ''
   }
 }
 // 设置内容
-function setContents(html: string) {
-  const quill = getQuill()
-  if (quill) {
-    quill.clipboard.dangerouslyPasteHTML(html || '<p></p>')
+function setContents(mdContent?: string) {
+  if (mdContent && vditor) {
+    vditor.setValue(mdContent)
+    content.value = mdContent
   }
 }
 // 清空内容
 function clearContent() {
-  const quill = getQuill()
-  if (quill) {
-    quill.setContents(new Delta())
-    quill.setSelection(0, 0)
+  if (vditor) {
+    vditor.setValue('')
   }
 }
 // 增加 mention
 function addMention(mention: { id: string; value: string }[]) {
-  const quill = getQuill()
-  const deltaMention = getModule('mention').insertItem({ denotationChar: '@', ...mention }, true)
-  if (deltaMention) {
-    quill.setContents(deltaMention)
-    quill.setSelection(quill.getLength() + 1)
-  }
+  console.log('mention :>> ', mention)
+  // const vditor = getVditor()
+  // const deltaMention = getModule('mention').insertItem({ denotationChar: '@', ...mention }, true)
+  // if (deltaMention) {
+  //   vditor.setContents(deltaMention)
+  //   vditor.setSelection(vditor.getLength() + 1)
+  // }
 }
 
 function init() {
-  quill = new Quill(editor.value, options)
-  setContents(content.value)
-  quill.on('text-change', function () {
-    const html = quill.root.innerHTML
-    content.value = html
-  })
-  emit('ready', quill)
+  vditor = new Vditor(editor.value, options)
+  emit('ready', vditor)
 }
 
 onMounted(() => {
   init()
 })
 onUnmounted(() => {
-  // @ts-expect-error 注销 quill 实例
-  quill = undefined
+  vditor?.destroy()
+  // @ts-expect-error 注销 vditor 实例
+  vditor = undefined
 })
 
 // 定义组件接口
 defineExpose({
-  getQuill,
-  getModule,
+  getvditor: getVditor,
+  // getModule,
   addMention,
   clearContent
 })
@@ -334,7 +322,7 @@ defineExpose({
     border: 1px solid #d1d5db !important;
   }
 }
-.quill-img {
+.vditor-img {
   display: none;
 }
 .ql-snow {

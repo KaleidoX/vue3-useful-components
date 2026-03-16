@@ -1,16 +1,13 @@
 <template>
   <section class="grid grid-cols-1 gap-10 p-10 lg:grid-cols-2">
-    <EditorQuill v-model="content1" :height="editorHeight" />
-    <EditorQuill v-model="content2" :height="editorHeight" simple />
+    <EditorEditorJs v-model="content1" :height="editorHeight" />
+    <EditorEditorJs v-model="content2" :height="editorHeight" simple />
   </section>
 </template>
 
 <script lang="ts" setup>
 import TestContent from '@/views/form/assets/test.html?raw'
 
-defineOptions({
-  name: 'EditorQuillView'
-})
 const content1 = ref(TestContent)
 const content2 = ref(TestContent)
 

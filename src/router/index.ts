@@ -22,10 +22,28 @@ const router = createRouter({
       path: '/form',
       children: [
         {
+          path: 'editor-editorjs',
+          name: 'FormEditorEditorJs',
+          component: () => import('@/views/form/EditorEditorJsView.vue'),
+          meta: { title: 'EditorJS编辑器', backLink: '/home' }
+        },
+        {
           path: 'editor-quill',
           name: 'FormEditorQuill',
           component: () => import('@/views/form/EditorQuillView.vue'),
           meta: { title: '富文本编辑器', backLink: '/home' }
+        },
+        {
+          path: 'editor-vditor',
+          name: 'FormEditorVditor',
+          component: () => import('@/views/form/EditorVditorView.vue'),
+          meta: { title: 'Vditor编辑器', backLink: '/home' }
+        },
+        {
+          path: 'editor-wang',
+          name: 'FormEditorWang',
+          component: () => import('@/views/form/EditorWangView.vue'),
+          meta: { title: 'WangEditor编辑器', backLink: '/home' }
         }
       ]
     },

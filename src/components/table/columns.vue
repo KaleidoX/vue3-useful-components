@@ -20,7 +20,6 @@
   </el-table-column>
 </template>
 <script setup lang="ts">
-import { ElTableColumn } from 'element-plus'
 import type { ITableRenderColumn, TableColumnProps } from './type'
 import TableRenderColumns from './columns.vue'
 import type { PropType } from 'vue'

@@ -12,6 +12,7 @@ import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver, VantResolver } from 'unplugin-vue-components/resolvers'
+import vueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -33,6 +34,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       vueJsx(),
+      vueDevTools(),
       AutoImport({
         include: [
           /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -62,6 +64,13 @@ export default defineConfig(({ mode }) => {
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
     },
     // optimizeDeps: { disabled: true },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler' // or "modern"
+        }
+      }
+    },
     build: {
       minify: 'terser',
       // commonjsOptions: {
@@ -92,7 +101,7 @@ export default defineConfig(({ mode }) => {
             vant: ['vant'],
             videoJs: ['video.js', 'mpegts.js'],
             xgplayer: ['xgplayer', 'xgplayer-flv', 'xgplayer-hls', 'xgplayer-mp4'],
-            quill: ['quill', 'quill-blot-formatter', 'quill-image-uploader', 'quill-mention']
+            quill: ['quill', '@enzedonline/quill-blot-formatter2', 'quill-image-uploader', 'quill-mention']
           }
         }
       }

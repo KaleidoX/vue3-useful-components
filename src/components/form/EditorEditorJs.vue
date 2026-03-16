@@ -6,20 +6,15 @@
 </template>
 
 <script lang="ts" setup>
-import type { CSSProperties } from 'vue'
-import 'quill/dist/quill.snow.css'
-import Quill, { Delta } from 'quill'
-import type { QuillOptions } from 'quill'
-import 'quill-image-uploader/dist/quill.imageUploader.min.css'
-// import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
-// @ts-expect-error 缺少ts类型
-import ImageUploader from 'quill-image-uploader'
-import "@enzedonline/quill-blot-formatter2/dist/css/quill-blot-formatter2.css";
-import BlotFormatter from '@enzedonline/quill-blot-formatter2';
-// import Mention from 'quill-mention/dist/quill.mention.esm.js'
-import { Mention, MentionBlot, type MentionOption } from 'quill-mention'
-import { uploadImage } from '@/api/upload'
-import { formatUploadBase } from '@/utils/format'
+import { ref, type CSSProperties } from 'vue'
+import 'vditor/dist/index.css'
+import EditorJS, { type EditorConfig } from '@editorjs/editorjs'
+import HeaderTool from '@editorjs/header'
+import ListTool from '@editorjs/list'
+import EmbedTool from '@editorjs/embed'
+import ImageTool from '@editorjs/image'
+// import { uploadImage } from '@/api/upload'
+// import { formatUploadBase } from '@/utils/format'
 
 interface IMentionData {
   id: string
@@ -28,35 +23,14 @@ interface IMentionData {
 }
 
 defineOptions({
-  name: 'EditorQuill'
+  name: 'EditorVditor'
 })
 
-// console.log(Quill, Quill.register)
-if (!Quill.imports['modules/imageUploader']) {
-  Quill.register('modules/imageUploader', ImageUploader)
-}
-if (!Quill.imports['modules/blotFormatter']) {
-  Quill.register('modules/blotFormatter', BlotFormatter)
-}
-if (!Quill.imports['modules/mention']) {
-  Quill.register({
-    'blots/mention': MentionBlot,
-    'modules/mention': Mention
-  })
-}
-
 const editor = ref()
-let quill: Quill
+let editorjs: EditorJS
 
-const getQuill = () => {
-  return quill
-}
-
-function getModule(moduleName: 'imageUploader'): ImageUploader
-function getModule(moduleName: 'blotFormatter'): BlotFormatter
-function getModule(moduleName: 'mention'): Mention
-function getModule(moduleName: string) {
-  return getQuill().getModule(moduleName)
+const getVditor = () => {
+  return editorjs
 }
 
 const props = defineProps({
@@ -106,81 +80,41 @@ const props = defineProps({
 })
 const emit = defineEmits(['ready', 'update:modelValue'])
 
-const toolbar = props.simple
-  ? [['image']]
-  : [
-      ['bold', 'italic', 'underline', 'strike'], // 加粗 斜体 下划线 删除线
-      ['blockquote', 'code-block'], // 引用  代码块
-      [{ list: 'ordered' }, { list: 'bullet' }], // 有序、无序列表
-      [{ indent: '-1' }, { indent: '+1' }], // 缩进
-      [{ size: ['small', false, 'large', 'huge'] }], // 字体大小
-      [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
-      [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
-      [{ align: [] }], // 对齐方式
-      ['clean'], // 清除文本格式
-      ['link', 'image', 'video'] // 链接、图片、视频
-    ]
+const toolbar: EditorConfig['tools'] = props.simple
+  ? {
+      header: HeaderTool,
+      embed: EmbedTool,
+      list: ListTool,
+      image: ImageTool
+      // video: VideoTool,
+    }
+  : {
+      header: HeaderTool,
+      embed: EmbedTool,
+      list: ListTool,
+      image: ImageTool
+      // video: VideoTool,
+    }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mentionAtValues: IMentionData[] = [
   { id: '1', value: 'Fredrik Sundqvist' },
   { id: '2', value: 'Patrik Sjölin' }
 ]
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mentionHashValues: IMentionData[] = [
   { id: '3', value: 'Fredrik Sundqvist 2' },
   { id: '4', value: 'Patrik Sjölin 2' }
 ]
 
-const options: QuillOptions = {
-  theme: 'snow',
-  bounds: document.body,
-  debug: 'error',
+const options = computed<EditorConfig>(() => ({
+  minHeight: props.minHeight,
+  holder: editor.value, // Element that should contain the Editor
   placeholder: props.placeholder,
   readOnly: props.readOnly,
-  modules: {
-    toolbar,
-    imageUploader: {
-      upload: (file: File) => {
-        return new Promise((resolve, reject) => {
-          if (!handleBeforeUpload(file)) {
-            return reject('error')
-          }
-          uploadImage(file)
-            .then((res) => {
-              resolve(formatUploadBase(res.url))
-            })
-            .catch((err) => {
-              reject(err)
-            })
-        })
-      }
-    },
-    blotFormatter: {},
-    mention: {
-      mentionDenotationChars: ['@', '#'],
-      spaceAfterInsert: false,
-      source: function (textAfter, renderList, mentionChar) {
-        let values: IMentionData[]
-
-        if (mentionChar === '@') {
-          values = mentionAtValues
-        } else {
-          values = mentionHashValues
-        }
-
-        if (textAfter.length === 0) {
-          renderList(values, textAfter)
-        } else {
-          const matches: IMentionData[] = []
-          for (let i = 0; i < values.length; i++)
-            if (~values[i].value.toLowerCase().indexOf(textAfter.toLowerCase()))
-              matches.push(values[i])
-          renderList(matches, textAfter)
-        }
-      }
-    } as MentionOption
-  }
-  // formats: ['bold', 'italic', 'mention']
-}
+  inlineToolbar: ['bold', 'italic', 'link'],
+  tools: toolbar
+}))
 
 const styles = computed(() => {
   const style: CSSProperties = {}
@@ -215,6 +149,7 @@ watch(
 )
 
 // 上传前校检格式和大小
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleBeforeUpload(file: File) {
   const type = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg']
   const isJPG = type.includes(file.type)
@@ -235,61 +170,66 @@ function handleBeforeUpload(file: File) {
 }
 // 获取内容
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getContents() {
-  const quill = getQuill()
-  if (quill) {
-    return quill.root.innerHTML
+async function getContents() {
+  if (editorjs) {
+    return (await editorjs.save()) || ''
   } else {
     return ''
   }
 }
 // 设置内容
-function setContents(html: string) {
-  const quill = getQuill()
-  if (quill) {
-    quill.clipboard.dangerouslyPasteHTML(html || '<p></p>')
+function setContents(htmlContent?: string) {
+  if (htmlContent && editorjs) {
+    if (typeof htmlContent === 'string') {
+      editorjs.blocks.renderFromHTML(htmlContent)
+    } else {
+      editorjs.render(htmlContent)
+    }
+    content.value = htmlContent
   }
 }
 // 清空内容
 function clearContent() {
-  const quill = getQuill()
-  if (quill) {
-    quill.setContents(new Delta())
-    quill.setSelection(0, 0)
+  if (editorjs) {
+    editorjs.blocks.renderFromHTML('')
   }
 }
 // 增加 mention
 function addMention(mention: { id: string; value: string }[]) {
-  const quill = getQuill()
-  const deltaMention = getModule('mention').insertItem({ denotationChar: '@', ...mention }, true)
-  if (deltaMention) {
-    quill.setContents(deltaMention)
-    quill.setSelection(quill.getLength() + 1)
-  }
+  console.log('mention :>> ', mention)
+  // const vditor = getVditor()
+  // const deltaMention = getModule('mention').insertItem({ denotationChar: '@', ...mention }, true)
+  // if (deltaMention) {
+  //   vditor.setContents(deltaMention)
+  //   vditor.setSelection(vditor.getLength() + 1)
+  // }
 }
 
-function init() {
-  quill = new Quill(editor.value, options)
-  setContents(content.value)
-  quill.on('text-change', function () {
-    const html = quill.root.innerHTML
-    content.value = html
-  })
-  emit('ready', quill)
+async function init() {
+  editorjs = new EditorJS(options.value)
+  try {
+    await editorjs.isReady
+    emit('ready', editorjs)
+    setContents(props.modelValue)
+    /** Do anything you need after editor initialization */
+  } catch (reason) {
+    console.log(`Editor.js initialization failed because of ${reason}`)
+  }
 }
 
 onMounted(() => {
   init()
 })
 onUnmounted(() => {
-  // @ts-expect-error 注销 quill 实例
-  quill = undefined
+  editorjs?.destroy()
+  // @ts-expect-error 注销 vditor 实例
+  editorjs = undefined
 })
 
 // 定义组件接口
 defineExpose({
-  getQuill,
-  getModule,
+  getvditor: getVditor,
+  // getModule,
   addMention,
   clearContent
 })
@@ -334,7 +274,7 @@ defineExpose({
     border: 1px solid #d1d5db !important;
   }
 }
-.quill-img {
+.vditor-img {
   display: none;
 }
 .ql-snow {

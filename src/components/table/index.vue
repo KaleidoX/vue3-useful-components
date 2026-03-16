@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElTable, ElTableColumn } from 'element-plus'
+import { ElTable, type TableInstance } from 'element-plus'
 import TableRenderColumns from './columns.vue'
 import type { ITableRender } from './type'
 import { computed, ref, type PropType } from 'vue'
@@ -74,7 +74,7 @@ const restProps = computed(() => {
   return rest
 })
 
-const ElTableRef = ref<InstanceType<typeof ElTable>>()
+const ElTableRef = ref<TableInstance>()
 const multipleSelection = ref<any[]>([])
 
 const handleSelectionChange = (val: any[]) => {
