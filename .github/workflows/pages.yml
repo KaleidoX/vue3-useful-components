@@ -5,12 +5,12 @@ on:
   # Runs on pushes tags the default branch
   push:
     branches:
-      - main  # 只在 main 分支上触发
+      - main # 只在 main 分支上触发
     tags:
-      - 'v*'  # 只在以 v 开头的标签上触发
+      - 'v*' # 只在以 v 开头的标签上触发
     paths:
-      - '**.vue'  # 只在 .vue 文件更改时触发
-      - '**.ts'  # 只在 .ts 文件更改时触发
+      - '**.vue' # 只在 .vue 文件更改时触发
+      - '**.ts' # 只在 .ts 文件更改时触发
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -43,9 +43,9 @@ jobs:
           version: latest
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 18
+          node-version: 22
           # cache: 'pnpm'
 
       - name: Install dependencies
@@ -58,10 +58,10 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Upload static files
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
