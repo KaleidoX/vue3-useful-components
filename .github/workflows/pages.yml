@@ -8,9 +8,10 @@ on:
       - main # 只在 main 分支上触发
     tags:
       - 'v*' # 只在以 v 开头的标签上触发
-    paths:
-      - '**.vue' # 只在 .vue 文件更改时触发
-      - '**.ts' # 只在 .ts 文件更改时触发
+    paths-ignore:
+      - '**.md'
+      - '**.gitignore'
+      - 'LICENSE'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
