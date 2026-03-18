@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { BaseUrl } from './base'
+import { previewRoutes } from './routes'
 
 import NProgress from '@/utils/nprogress'
 
@@ -13,100 +14,14 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      meta: { inHomeLayout: true },
       component: () => import('@/views/HomeView.vue')
     },
-    {
-      path: '/form',
-      children: [
-        {
-          path: 'editor-editorjs',
-          name: 'FormEditorEditorJs',
-          component: () => import('@/views/form/EditorEditorJsView.vue'),
-          meta: { title: 'EditorJS编辑器', backLink: '/home' }
-        },
-        {
-          path: 'editor-quill',
-          name: 'FormEditorQuill',
-          component: () => import('@/views/form/EditorQuillView.vue'),
-          meta: { title: '富文本编辑器', backLink: '/home' }
-        },
-        {
-          path: 'editor-vditor',
-          name: 'FormEditorVditor',
-          component: () => import('@/views/form/EditorVditorView.vue'),
-          meta: { title: 'Vditor编辑器', backLink: '/home' }
-        },
-        {
-          path: 'editor-wang',
-          name: 'FormEditorWang',
-          component: () => import('@/views/form/EditorWangView.vue'),
-          meta: { title: 'WangEditor编辑器', backLink: '/home' }
-        }
-      ]
-    },
-    {
-      path: '/list',
-      children: [
-        {
-          path: 'scroll',
-          name: 'ListScroll',
-          component: () => import('@/views/list/ListScrollView.vue'),
-          meta: { title: '滚动加载列表', backLink: '/home' }
-        },
-        {
-          path: 'none',
-          name: 'ListNone',
-          component: () => import('@/views/list/ListNoneView.vue'),
-          meta: { title: '无数据列表', backLink: '/home' }
-        }
-      ]
-    },
-    {
-      path: '/play',
-      children: [
-        {
-          path: 'video',
-          name: 'PlayVideo',
-          component: () => import('@/views/play/VideoView.vue'),
-          meta: { title: '视频组件预览', backLink: '/home' }
-        },
-        {
-          path: 'xg',
-          name: 'PlayXG',
-          component: () => import('@/views/play/XGView.vue'),
-          meta: { title: '西瓜视频组件预览', backLink: '/home' }
-        }
-      ]
-    },
-    {
-      path: '/upload',
-      children: [
-        {
-          path: 'image',
-          name: 'UploadImage',
-          component: () => import('@/views/upload/UploadImageView.vue'),
-          meta: { title: '上传图片组件', backLink: '/home' }
-        }
-      ]
-    },
-    {
-      path: '/loading',
-      children: [
-        {
-          path: 'view',
-          name: 'LoadingView',
-          component: () => import('@/views/loading/view.vue'),
-          meta: { title: '加载组件', backLink: '/home' }
-        }
-      ]
-    }
+    ...previewRoutes
   ]
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from) => {
   // beforeEach是router的钩子函数，在进入路由前执行
   // console.log(to);
   NProgress.start()
@@ -117,7 +32,7 @@ router.beforeEach(async (to, from, next) => {
     document.title = import.meta.env.VITE_APP_TITLE
   }
   // TODO: can do auth user
-  next()
+  console.log('to, from :>> ', to, from);
 })
 router.afterEach(() => {
   NProgress.done()
