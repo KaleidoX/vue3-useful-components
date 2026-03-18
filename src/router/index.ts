@@ -21,18 +21,14 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(async (to, from) => {
-  // beforeEach是router的钩子函数，在进入路由前执行
-  // console.log(to);
+router.beforeEach(async (to) => {
   NProgress.start()
   if (to.meta.title) {
-    //判断是否有标题
     document.title = `${import.meta.env.VITE_APP_TITLE}-${to.meta.title}`
   } else {
     document.title = import.meta.env.VITE_APP_TITLE
   }
-  // TODO: can do auth user
-  console.log('to, from :>> ', to, from);
+  return true
 })
 router.afterEach(() => {
   NProgress.done()
