@@ -24,6 +24,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('EditorJS编辑器')
       },
       {
+        path: 'editor-notectl',
+        name: 'FormEditorNotectl',
+        component: () => import('@/views/form/EditorNotectlView.vue'),
+        meta: routeMeta('Notectl编辑器')
+      },
+      {
         path: 'editor-quill',
         name: 'FormEditorQuill',
         component: () => import('@/views/form/EditorQuillView.vue'),
