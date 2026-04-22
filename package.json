@@ -14,6 +14,7 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "lint:oxlint": "oxlint . --fix",
     "format": "prettier --write src/"
   },
   "dependencies": {
@@ -75,11 +76,13 @@
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.9.0",
     "eslint": "^10.0.3",
+    "eslint-plugin-oxlint": "~1.57.0",
     "eslint-plugin-vue": "^10.8.0",
     "jsdom": "^29.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.8.1",
     "sass": "^1.98.0",
+    "oxlint": "~1.57.0",
     "typescript": "~5.9.3",
     "unocss": "^66.6.6",
     "unplugin-auto-import": "^21.0.0",
