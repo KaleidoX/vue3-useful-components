@@ -48,6 +48,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('Vditor编辑器')
       },
       {
+        path: 'editor-tinymce',
+        name: 'FormEditorTinyMCE',
+        component: () => import('@/views/form/EditorTinyMCEView.vue'),
+        meta: routeMeta('TinyMCE编辑器')
+      },
+      {
         path: 'editor-wang',
         name: 'FormEditorWang',
         component: () => import('@/views/form/EditorWangView.vue'),
