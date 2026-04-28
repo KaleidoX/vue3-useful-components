@@ -32,7 +32,13 @@ export default defineConfig(({ mode }) => {
       }
     },
     plugins: [
-      vue(),
+      vue({
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag) => tag.startsWith('trix-')
+          }
+        }
+      }),
       vueJsx(),
       vueDevTools(),
       AutoImport({

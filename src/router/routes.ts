@@ -36,6 +36,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('富文本编辑器')
       },
       {
+        path: 'editor-trix',
+        name: 'FormEditorTrix',
+        component: () => import('@/views/form/EditorTrixView.vue'),
+        meta: routeMeta('Trix编辑器')
+      },
+      {
         path: 'editor-vditor',
         name: 'FormEditorVditor',
         component: () => import('@/views/form/EditorVditorView.vue'),
