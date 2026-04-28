@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { CSSProperties } from 'vue'
+import type { CSSProperties, PropType } from 'vue'
 import 'quill/dist/quill.snow.css'
 import Quill, { Delta } from 'quill'
 import type { QuillOptions } from 'quill'
@@ -102,6 +102,14 @@ const props = defineProps({
   simple: {
     type: Boolean,
     default: false
+  },
+  mentionAtValues: {
+    type: Array as PropType<IMentionData[]>,
+    default: () => []
+  },
+  mentionHashValues: {
+    type: Array as PropType<IMentionData[]>,
+    default: () => []
   }
 })
 const emit = defineEmits(['ready', 'update:modelValue'])
@@ -120,15 +128,6 @@ const toolbar = props.simple
       ['clean'], // 清除文本格式
       ['link', 'image', 'video'] // 链接、图片、视频
     ]
-
-const mentionAtValues: IMentionData[] = [
-  { id: '1', value: 'Fredrik Sundqvist' },
-  { id: '2', value: 'Patrik Sjölin' }
-]
-const mentionHashValues: IMentionData[] = [
-  { id: '3', value: 'Fredrik Sundqvist 2' },
-  { id: '4', value: 'Patrik Sjölin 2' }
-]
 
 const options: QuillOptions = {
   theme: 'snow',
@@ -162,9 +161,9 @@ const options: QuillOptions = {
         let values: IMentionData[]
 
         if (mentionChar === '@') {
-          values = mentionAtValues
+          values = props.mentionAtValues
         } else {
-          values = mentionHashValues
+          values = props.mentionHashValues
         }
 
         if (textAfter.length === 0) {
