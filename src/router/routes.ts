@@ -18,6 +18,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
     description: '富文本与编辑器能力统一归类，适合直接在右侧预览交互效果。',
     children: [
       {
+        path: 'editor-ckeditor5',
+        name: 'FormEditorCKEditor5',
+        component: () => import('@/views/form/EditorCKEditor5View.vue'),
+        meta: routeMeta('CKEditor5编辑器')
+      },
+      {
         path: 'editor-editorjs',
         name: 'FormEditorEditorJs',
         component: () => import('@/views/form/EditorEditorJsView.vue'),

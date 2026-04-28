@@ -17,6 +17,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-vue": "^7.4.2",
     "@editorjs/editorjs": "^2.31.5",
     "@editorjs/embed": "^2.8.0",
     "@editorjs/header": "^2.8.8",
@@ -30,6 +31,7 @@
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.13.6",
+    "ckeditor5": "^48.0.1",
     "dayjs": "^1.11.20",
     "element-plus": "^2.13.5",
     "file-saver": "^2.0.5",
