@@ -30,6 +30,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('EditorJS编辑器')
       },
       {
+        path: 'editor-milkdown',
+        name: 'FormEditorMilkdown',
+        component: () => import('@/views/form/EditorMilkdownView.vue'),
+        meta: routeMeta('Milkdown编辑器')
+      },
+      {
         path: 'editor-notectl',
         name: 'FormEditorNotectl',
         component: () => import('@/views/form/EditorNotectlView.vue'),
