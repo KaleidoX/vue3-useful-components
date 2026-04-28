@@ -156,7 +156,7 @@ function handleBeforeUpload(file: File) {
   return true
 }
 // 获取内容
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 async function getContents() {
   const notectl = getNotectl()
   if (notectl) {
