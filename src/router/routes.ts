@@ -42,6 +42,18 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('富文本编辑器')
       },
       {
+        path: 'editor-tiptap',
+        name: 'FormEditorTiptap',
+        component: () => import('@/views/form/EditorTiptapView.vue'),
+        meta: routeMeta('Tiptap编辑器')
+      },
+      {
+        path: 'editor-tinymce',
+        name: 'FormEditorTinyMCE',
+        component: () => import('@/views/form/EditorTinyMCEView.vue'),
+        meta: routeMeta('TinyMCE编辑器')
+      },
+      {
         path: 'editor-trix',
         name: 'FormEditorTrix',
         component: () => import('@/views/form/EditorTrixView.vue'),
@@ -52,12 +64,6 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         name: 'FormEditorVditor',
         component: () => import('@/views/form/EditorVditorView.vue'),
         meta: routeMeta('Vditor编辑器')
-      },
-      {
-        path: 'editor-tinymce',
-        name: 'FormEditorTinyMCE',
-        component: () => import('@/views/form/EditorTinyMCEView.vue'),
-        meta: routeMeta('TinyMCE编辑器')
       },
       {
         path: 'editor-wang',
