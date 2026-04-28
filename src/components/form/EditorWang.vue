@@ -14,16 +14,8 @@
 <script lang="ts" setup>
 import '@wangeditor/editor/dist/css/style.css'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import { uploadImage } from '@/api/upload'
-import { formatUploadBase } from '@/utils/format'
 
 import type { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
-
-interface IMentionData {
-  id: string
-  value: string
-  [key: string]: string | undefined
-}
 
 const editor = shallowRef<IDomEditor>()
 
@@ -74,7 +66,7 @@ const props = defineProps({
     default: false
   }
 })
-const emit = defineEmits(['ready', 'update:modelValue'])
+const emit = defineEmits(['ready'])
 
 const toolbar: Partial<IToolbarConfig> = props.simple
   ? { toolbarKeys: ['insertImage'] }
@@ -101,15 +93,6 @@ const toolbar: Partial<IToolbarConfig> = props.simple
       ]
     }
 
-const mentionAtValues: IMentionData[] = [
-  { id: '1', value: 'Fredrik Sundqvist' },
-  { id: '2', value: 'Patrik Sjölin' }
-]
-const mentionHashValues: IMentionData[] = [
-  { id: '3', value: 'Fredrik Sundqvist 2' },
-  { id: '4', value: 'Patrik Sjölin 2' }
-]
-
 const options: IEditorConfig = {
   placeholder: props.placeholder,
   readOnly: props.readOnly,
@@ -127,52 +110,14 @@ const options: IEditorConfig = {
     }
   },
   customAlert: (info, type) => {
-    console.log('EdirtorWang customAlert :>> ', info, type);
+    console.log('EditorWang customAlert :>> ', info, type);
   },
 }
 
-// 上传前校检格式和大小
-function handleBeforeUpload(file: File) {
-  const type = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg']
-  const isJPG = type.includes(file.type)
-  //检验文件格式
-  if (!isJPG) {
-    ElMessage.error({ message: '图片格式错误!' })
-    return false
-  }
-  // 校检文件大小
-  if (props.fileSize) {
-    const isLt = file.size / 1024 / 1024 < props.fileSize
-    if (!isLt) {
-      ElMessage.error({ message: `上传文件大小不能超过 ${props.fileSize} MB!` })
-      return false
-    }
-  }
-  return true
-}
-// 获取内容
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getContents() {
-  if (editor.value) {
-    if (editor.value.getText().trim() === '') {
-      return ''
-    } else {
-      return editor.value.getHtml()
-    }
-  } else {
-    return ''
-  }
-}
-// 设置内容
-function setContents(html: string) {
-  editor.value?.setHtml(html || '<p></p>')
-}
 // 清空内容
 function clearContent() {
   editor.value?.clear()
 }
-// 增加 mention
-function addMention(mention: { id: string; value: string }[]) {}
 
 function handleCreated(editorInstance: IDomEditor) {
   console.log('editor.getAllMenuKeys() :>> ', editorInstance.getAllMenuKeys())
@@ -183,7 +128,6 @@ function handleCreated(editorInstance: IDomEditor) {
 // 定义组件接口
 defineExpose({
   getWang,
-  addMention,
   clearContent
 })
 </script>

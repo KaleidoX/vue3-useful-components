@@ -6,17 +6,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type CSSProperties } from 'vue'
+import { type CSSProperties } from 'vue'
 import 'vditor/dist/index.css'
 import Vditor from 'vditor'
-import { uploadImage } from '@/api/upload'
-import { formatUploadBase } from '@/utils/format'
 
-interface IMentionData {
-  id: string
-  value: string
-  [key: string]: string | undefined
-}
+type VditorOptions = NonNullable<ConstructorParameters<typeof Vditor>[1]>
 
 defineOptions({
   name: 'EditorVditor'
@@ -76,7 +70,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['ready', 'update:modelValue'])
 
-const toolbar: IOptions['toolbar'] = props.simple
+const toolbar: VditorOptions['toolbar'] = props.simple
   ? ['upload']
   : [
       'bold',
@@ -102,16 +96,7 @@ const toolbar: IOptions['toolbar'] = props.simple
       'table'
     ]
 
-const mentionAtValues: IMentionData[] = [
-  { id: '1', value: 'Fredrik Sundqvist' },
-  { id: '2', value: 'Patrik Sjölin' }
-]
-const mentionHashValues: IMentionData[] = [
-  { id: '3', value: 'Fredrik Sundqvist 2' },
-  { id: '4', value: 'Patrik Sjölin 2' }
-]
-
-const options: IOptions = {
+const options: VditorOptions = {
   height: props.height,
   minHeight: props.minHeight,
   placeholder: props.placeholder,
@@ -119,15 +104,15 @@ const options: IOptions = {
   after: () => {
     setContents(props.modelValue)
   },
-  blur(value) {
+  blur(value: string) {
     content.value = value
   },
   mode: 'wysiwyg',
   debugger: false,
-  customWysiwygToolbar: (type, element) => {
+  customWysiwygToolbar: (type: string, element: HTMLElement) => {
     console.log('customWysiwygToolbar :>> ', type, element)
   },
-  toolbar: toolbar,
+  toolbar,
   toolbarConfig: {
     hide: false,
     pin: true
@@ -142,28 +127,28 @@ const options: IOptions = {
   },
   comment: {
     enable: true,
-    add: (id, text, commentsData) => {
+    add: (id: string, text: string, commentsData: unknown) => {
       console.log('id, text, commentsData :>> ', id, text, commentsData)
     },
-    remove: (ids) => {
+    remove: (ids: string[]) => {
       console.log('ids :>> ', ids)
     },
-    scroll: (top) => {
+    scroll: (top: number) => {
       console.log('top :>> ', top)
     },
-    adjustTop: (commentsData) => {
+    adjustTop: (commentsData: unknown) => {
       console.log('commentsData :>> ', commentsData)
     }
   },
   image: {
     isPreview: true,
-    preview: (bom) => {
+    preview: (bom: unknown) => {
       console.log('image bom :>> ', bom)
     }
   },
   link: {
     isOpen: true,
-    click: (bom) => {
+    click: (bom: unknown) => {
       console.log('link bom :>> ', bom)
     }
   },
@@ -208,34 +193,6 @@ watch(
   { immediate: true }
 )
 
-// 上传前校检格式和大小
-function handleBeforeUpload(file: File) {
-  const type = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg']
-  const isJPG = type.includes(file.type)
-  //检验文件格式
-  if (!isJPG) {
-    ElMessage.error({ message: '图片格式错误!' })
-    return false
-  }
-  // 校检文件大小
-  if (props.fileSize) {
-    const isLt = file.size / 1024 / 1024 < props.fileSize
-    if (!isLt) {
-      ElMessage.error({ message: `上传文件大小不能超过 ${props.fileSize} MB!` })
-      return false
-    }
-  }
-  return true
-}
-// 获取内容
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getContents() {
-  if (vditor) {
-    return vditor.getValue() || ''
-  } else {
-    return ''
-  }
-}
 // 设置内容
 function setContents(mdContent?: string) {
   if (mdContent && vditor) {
@@ -248,16 +205,6 @@ function clearContent() {
   if (vditor) {
     vditor.setValue('')
   }
-}
-// 增加 mention
-function addMention(mention: { id: string; value: string }[]) {
-  console.log('mention :>> ', mention)
-  // const vditor = getVditor()
-  // const deltaMention = getModule('mention').insertItem({ denotationChar: '@', ...mention }, true)
-  // if (deltaMention) {
-  //   vditor.setContents(deltaMention)
-  //   vditor.setSelection(vditor.getLength() + 1)
-  // }
 }
 
 function init() {
@@ -277,126 +224,12 @@ onUnmounted(() => {
 // 定义组件接口
 defineExpose({
   getvditor: getVditor,
-  // getModule,
-  addMention,
   clearContent
 })
 </script>
 
 <style lang="scss">
-.editor-img-uploader {
-  display: none;
-}
 .editor {
   position: relative;
-  &.hidden-toolbar {
-    .ql-toolbar {
-      display: none;
-    }
-    .ql-container.ql-snow {
-      border: 1px solid #d1d5db !important;
-    }
-  }
-}
-.editor,
-.ql-toolbar {
-  white-space: pre-wrap !important;
-  line-height: normal !important;
-}
-.ql-container .ql-editor {
-  min-height: 160px;
-}
-.editor-simple {
-  .ql-toolbar {
-    height: 0;
-    padding: 0;
-    border: none;
-    .ql-image {
-      position: absolute;
-      right: 8px;
-      bottom: 8px;
-      z-index: 10;
-    }
-  }
-  .ql-container.ql-snow {
-    border: 1px solid #d1d5db !important;
-  }
-}
-.vditor-img {
-  display: none;
-}
-.ql-snow {
-  .ql-tooltip {
-    &[data-mode='link']::before {
-      content: '请输入链接地址:';
-    }
-    &.ql-editing a.ql-action::after {
-      border-right: 0;
-      content: '保存';
-      padding-right: 0;
-    }
-    &[data-mode='video']::before {
-      content: '请输入视频地址:';
-    }
-  }
-  .ql-picker {
-    &.ql-size {
-      .ql-picker-label,
-      .ql-picker-item {
-        &::before {
-          content: '14px';
-        }
-        &[data-value='small']::before {
-          content: '10px';
-        }
-        &[data-value='large']::before {
-          content: '18px';
-        }
-        &[data-value='huge']::before {
-          content: '32px';
-        }
-      }
-    }
-    &.ql-header {
-      .ql-picker-label,
-      .ql-picker-item {
-        &::before {
-          content: '文本';
-        }
-        &[data-value='1']::before {
-          content: '标题1';
-        }
-        &[data-value='2']::before {
-          content: '标题2';
-        }
-        &[data-value='3']::before {
-          content: '标题3';
-        }
-        &[data-value='4']::before {
-          content: '标题4';
-        }
-        &[data-value='5']::before {
-          content: '标题5';
-        }
-        &[data-value='6']::before {
-          content: '标题6';
-        }
-      }
-    }
-    &.ql-font {
-      .ql-picker-label,
-      .ql-picker-item {
-        &::before {
-          content: '标准字体';
-        }
-        &[data-value='serif']::before {
-          content: '衬线字体';
-        }
-        &[data-value='monospace']::before {
-          content: '等宽字体';
-        }
-      }
-    }
-  }
 }
 </style>
