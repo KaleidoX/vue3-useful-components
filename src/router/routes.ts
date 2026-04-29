@@ -57,7 +57,7 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         path: 'editor-slate',
         name: 'FormEditorSlate',
         component: () => import('@/views/form/EditorSlateView.vue'),
-        meta: routeMeta('Slate编辑器')
+        meta: routeMeta('Slate编辑器', '高度可定制的富文本编辑器框架，slate-vue3 提供 Vue3 绑定。')
       },
       {
         path: 'editor-ckeditor5',
