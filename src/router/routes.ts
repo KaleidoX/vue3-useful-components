@@ -30,6 +30,18 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('SheetJS电子表格')
       },
       {
+        path: 'editor-univer-sheet',
+        name: 'FormEditorUniverSheet',
+        component: () => import('@/views/form/EditorUniverView.vue'),
+        meta: routeMeta('Univer电子表格')
+      },
+      {
+        path: 'editor-univer-doc',
+        name: 'FormEditorUniverDoc',
+        component: () => import('@/views/form/EditorUniverDocView.vue'),
+        meta: routeMeta('Univer文档')
+      },
+      {
         path: 'editor-ckeditor5',
         name: 'FormEditorCKEditor5',
         component: () => import('@/views/form/EditorCKEditor5View.vue'),

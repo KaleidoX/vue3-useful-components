@@ -13,6 +13,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver, VantResolver } from 'unplugin-vue-components/resolvers'
 import vueDevTools from 'vite-plugin-vue-devtools';
+import { univerPlugin as univer } from '@univerjs/vite-plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -61,7 +62,8 @@ export default defineConfig(({ mode }) => {
       //   modernPolyfills: true,
       //   renderLegacyChunks: false
       // }),
-      UnoCSS()
+      UnoCSS(),
+      univer()
     ],
     resolve: {
       alias: {
