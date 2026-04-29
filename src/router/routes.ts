@@ -42,6 +42,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('Univer文档')
       },
       {
+        path: 'editor-umo',
+        name: 'FormEditorUmoEditor',
+        component: () => import('@/views/form/EditorUmoEditorView.vue'),
+        meta: routeMeta('Umo编辑器')
+      },
+      {
         path: 'editor-ckeditor5',
         name: 'FormEditorCKEditor5',
         component: () => import('@/views/form/EditorCKEditor5View.vue'),
