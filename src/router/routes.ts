@@ -24,6 +24,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('格式转换')
       },
       {
+        path: 'editor-sheetjs',
+        name: 'FormEditorSheetJS',
+        component: () => import('@/views/form/EditorSheetJSView.vue'),
+        meta: routeMeta('SheetJS电子表格')
+      },
+      {
         path: 'editor-ckeditor5',
         name: 'FormEditorCKEditor5',
         component: () => import('@/views/form/EditorCKEditor5View.vue'),
