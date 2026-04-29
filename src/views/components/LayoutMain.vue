@@ -91,7 +91,9 @@ const currentTitle = computed(() => {
 const currentDescription = computed(() => {
   if (route.meta?.title) {
     return String(
-      currentGroup.value?.description ?? '当前组件通过 vue-router 的嵌套视图直接渲染在右侧内容区。'
+      route.meta?.description
+      ?? currentGroup.value?.description
+      ?? '当前组件通过 vue-router 的嵌套视图直接渲染在右侧内容区。'
     )
   }
 

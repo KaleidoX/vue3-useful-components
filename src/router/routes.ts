@@ -8,7 +8,7 @@ export interface PreviewRouteGroup {
   children: RouteRecordRaw[]
 }
 
-const routeMeta = (title: string) => ({ title, inHomeLayout: true })
+const routeMeta = (title: string, description?: string) => ({ title, description, inHomeLayout: true })
 
 export const previewRouteGroups: PreviewRouteGroup[] = [
   {
@@ -46,6 +46,18 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         name: 'FormEditorUmoEditor',
         component: () => import('@/views/form/EditorUmoEditorView.vue'),
         meta: routeMeta('Umo编辑器')
+      },
+      {
+        path: 'editor-canvas',
+        name: 'FormEditorCanvasEditor',
+        component: () => import('@/views/form/EditorCanvasEditorView.vue'),
+        meta: routeMeta('Canvas编辑器', '基于 Canvas 渲染的富文本编辑器，支持分页模式。')
+      },
+      {
+        path: 'editor-slate',
+        name: 'FormEditorSlate',
+        component: () => import('@/views/form/EditorSlateView.vue'),
+        meta: routeMeta('Slate编辑器')
       },
       {
         path: 'editor-ckeditor5',
