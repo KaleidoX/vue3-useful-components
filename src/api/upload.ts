@@ -1,3 +1,5 @@
+import { imgToBase64 } from '@/utils/transform'
+
 // import md5 from 'md5'
 
 /**

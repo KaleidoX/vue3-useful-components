@@ -50,7 +50,6 @@ export default defineConfig(({ mode }) => {
         ],
         dts: './src/auto-imports.d.ts',
         imports: ['vue', 'pinia', 'vue-router', '@vueuse/core'],
-        dirs: ['./src/composables/**', './src/stores/**', './src/types/**', './src/utils/**'],
         resolvers: [ElementPlusResolver()]
       }),
       Components({
