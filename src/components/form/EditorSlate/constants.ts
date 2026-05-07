@@ -47,7 +47,7 @@ export const TOOLBAR_BUTTONS = {
       { icon: 'i-lucide:italic', title: '斜体', action: 'toggleMark', mark: 'italic' },
       { icon: 'i-lucide:underline', title: '下划线', action: 'toggleMark', mark: 'underline' },
       { icon: 'i-lucide:strikethrough', title: '删除线', action: 'toggleMark', mark: 'strikethrough' },
-      { icon: 'i-lucide:code', title: '行内代码', action: 'toggleMark', mark: 'code' }
+      { icon: 'i-lucide:code-xml', title: '行内代码', action: 'toggleMark', mark: 'code' }
     ],
     [
       { icon: 'i-lucide:heading-1', title: '标题 1', action: 'toggleBlock', block: 'heading', level: 1 },

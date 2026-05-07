@@ -11,6 +11,26 @@ import { colors, fontSize } from './src/assets/styles/variable'
 export default defineConfig({
   // ...UnoCSS options
   // darkMode: 'class',
+  safelist: [
+    'i-lucide:undo-2',
+    'i-lucide:redo-2',
+    'i-lucide:bold',
+    'i-lucide:italic',
+    'i-lucide:underline',
+    'i-lucide:strikethrough',
+    'i-lucide:code-xml',
+    'i-lucide:heading-1',
+    'i-lucide:heading-2',
+    'i-lucide:heading-3',
+    'i-lucide:list',
+    'i-lucide:list-ordered',
+    'i-lucide:quote',
+    'i-lucide:braces',
+    'i-lucide:image',
+    'i-lucide:link',
+    'i-lucide:table',
+    'i-lucide:minus'
+  ],
   theme: { colors, fontSize },
   rules: [
     [/^color-(\d+)$/, ([, d]) => ({ color: `#${d.toString().repeat(3)}` })],
