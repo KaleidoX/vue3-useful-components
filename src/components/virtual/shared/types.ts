@@ -6,3 +6,10 @@ export interface IListItem {
   avatar?: string
   description?: string
 }
+
+export interface ITreeNode extends IListItem {
+  level: number
+  parentId: number | null
+  hasChildren: boolean
+  expanded: boolean
+}
