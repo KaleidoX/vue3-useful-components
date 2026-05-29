@@ -188,6 +188,20 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         meta: routeMeta('加载组件')
       }
     ]
+  },
+  {
+    key: 'perf',
+    path: 'perf',
+    label: '性能监控',
+    description: '可拖拽浮动性能监控面板，覆盖 FPS、Web Vitals、网络请求、路由性能和自定义埋点。',
+    children: [
+      {
+        path: 'panel',
+        name: 'PerfPanel',
+        component: () => import('@/views/perf/PerfView.vue'),
+        meta: routeMeta('性能监控面板')
+      }
+    ]
   }
 ]
 

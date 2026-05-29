@@ -21,6 +21,7 @@
         </LayoutMain>
       </div>
     </div>
+    <PerfPanel />
   </el-config-provider>
 </template>
 
@@ -30,6 +31,7 @@ import { usePageBack } from '@/utils/page'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
 import LayoutNav from '@/views/components/LayoutNav.vue'
 import LayoutMain from '@/views/components/LayoutMain.vue'
+import { PerfPanel } from '@/components/perf'
 import 'dayjs/locale/zh-cn'
 
 const localeElement = zhCn
