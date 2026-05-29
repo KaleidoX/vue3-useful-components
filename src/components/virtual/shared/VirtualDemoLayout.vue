@@ -5,10 +5,12 @@ interface Props {
   count: number
   contentType: string
   enableMemo: boolean
+  showEditable?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   maxCount: 100000,
+  showEditable: false,
 })
 
 const emit = defineEmits<{
@@ -24,13 +26,19 @@ const countSteps = computed(() => {
   return [1000, 5000, 10000, 50000, 100000]
 })
 
-const contentTypeOptions = [
-  { label: '纯文本', value: 'plain' },
-  { label: 'ElCheckbox', value: 'el-checkbox' },
-  { label: '原生Checkbox', value: 'native-checkbox' },
-  { label: '复杂组件', value: 'complex' },
-  { label: '动态高度', value: 'dynamic' },
-]
+const contentTypeOptions = computed(() => {
+  const base = [
+    { label: '纯文本', value: 'plain' },
+    { label: 'ElCheckbox', value: 'el-checkbox' },
+    { label: '原生Checkbox', value: 'native-checkbox' },
+    { label: '复杂组件', value: 'complex' },
+    { label: '动态高度', value: 'dynamic' },
+  ]
+  if (props.showEditable) {
+    base.push({ label: '可编辑', value: 'editable' })
+  }
+  return base
+})
 
 const countSliderValue = ref(props.count)
 const renderTime = ref<number | null>(null)
