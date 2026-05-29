@@ -248,6 +248,42 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         name: 'VirtualAgGridList',
         component: () => import('@/views/virtual/AgGridListView.vue'),
         meta: routeMeta('AG Grid 列表')
+      },
+      {
+        path: 'vfor-tree',
+        name: 'VirtualVForTree',
+        component: () => import('@/views/virtual/VForTreeView.vue'),
+        meta: routeMeta('v-for 树')
+      },
+      {
+        path: 'vueuse-tree',
+        name: 'VirtualVueuseTree',
+        component: () => import('@/views/virtual/VueuseTreeView.vue'),
+        meta: routeMeta('VueUse 树')
+      },
+      {
+        path: 'virtual-scroller-tree',
+        name: 'VirtualVirtualScrollerTree',
+        component: () => import('@/views/virtual/VirtualScrollerTreeView.vue'),
+        meta: routeMeta('VirtualScroller 树')
+      },
+      {
+        path: 'tanstack-tree',
+        name: 'VirtualTanStackTree',
+        component: () => import('@/views/virtual/TanStackTreeView.vue'),
+        meta: routeMeta('TanStack 树')
+      },
+      {
+        path: 'el-table-v2-tree',
+        name: 'VirtualElTableV2Tree',
+        component: () => import('@/views/virtual/ElTableV2TreeView.vue'),
+        meta: routeMeta('ElTableV2 树')
+      },
+      {
+        path: 'ag-grid-tree',
+        name: 'VirtualAgGridTree',
+        component: () => import('@/views/virtual/AgGridTreeView.vue'),
+        meta: routeMeta('AG Grid 树')
       }
     ]
   }
