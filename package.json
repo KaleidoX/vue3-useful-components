@@ -53,7 +53,7 @@
     "@univerjs/sheets": "^0.21.1",
     "@univerjs/sheets-formula": "^0.21.1",
     "@univerjs/sheets-formula-ui": "^0.21.1",
-    "@univerjs/sheets-ui": "^0.21.1",
+    "@univerjs/sheets-ui": "^0.22.0",
     "@univerjs/ui": "^0.21.1",
     "@univerjs/vite-plugin": "^0.5.1",
     "@vueuse/components": "^14.2.1",
