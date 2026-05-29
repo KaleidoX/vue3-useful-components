@@ -109,7 +109,10 @@ export default defineConfig(({ mode }) => {
             vant: ['vant'],
             videoJs: ['video.js', 'mpegts.js'],
             xgplayer: ['xgplayer', 'xgplayer-flv', 'xgplayer-hls', 'xgplayer-mp4'],
-            quill: ['quill', '@enzedonline/quill-blot-formatter2', 'quill-image-uploader', 'quill-mention']
+            quill: ['quill', '@enzedonline/quill-blot-formatter2', 'quill-image-uploader', 'quill-mention'],
+            'ag-grid': ['ag-grid-community', 'ag-grid-vue3'],
+            'tanstack-virtual': ['@tanstack/vue-virtual'],
+            'virtual-scroller': ['vue-virtual-scroller']
           }
         }
       }
