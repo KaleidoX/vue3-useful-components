@@ -8,7 +8,11 @@ export interface PreviewRouteGroup {
   children: RouteRecordRaw[]
 }
 
-const routeMeta = (title: string, description?: string) => ({ title, description, inHomeLayout: true })
+const routeMeta = (title: string, description?: string) => ({
+  title,
+  description,
+  inHomeLayout: true
+})
 
 export const previewRouteGroups: PreviewRouteGroup[] = [
   {
@@ -200,6 +204,50 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         name: 'PerfPanel',
         component: () => import('@/views/perf/PerfView.vue'),
         meta: routeMeta('性能监控面板')
+      }
+    ]
+  },
+  {
+    key: 'virtual',
+    path: 'virtual',
+    label: '虚拟滚动',
+    description: '6 种虚拟滚动方案效果与性能对比。',
+    children: [
+      {
+        path: 'vfor-list',
+        name: 'VirtualVForList',
+        component: () => import('@/views/virtual/VForListView.vue'),
+        meta: routeMeta('v-for 列表')
+      },
+      {
+        path: 'vueuse-list',
+        name: 'VirtualVueuseList',
+        component: () => import('@/views/virtual/VueuseListView.vue'),
+        meta: routeMeta('VueUse 列表')
+      },
+      {
+        path: 'virtual-scroller-list',
+        name: 'VirtualVirtualScrollerList',
+        component: () => import('@/views/virtual/VirtualScrollerListView.vue'),
+        meta: routeMeta('VirtualScroller 列表')
+      },
+      {
+        path: 'tanstack-list',
+        name: 'VirtualTanStackList',
+        component: () => import('@/views/virtual/TanStackListView.vue'),
+        meta: routeMeta('TanStack 列表')
+      },
+      {
+        path: 'el-table-v2-list',
+        name: 'VirtualElTableV2List',
+        component: () => import('@/views/virtual/ElTableV2ListView.vue'),
+        meta: routeMeta('ElTableV2 列表')
+      },
+      {
+        path: 'ag-grid-list',
+        name: 'VirtualAgGridList',
+        component: () => import('@/views/virtual/AgGridListView.vue'),
+        meta: routeMeta('AG Grid 列表')
       }
     ]
   }
