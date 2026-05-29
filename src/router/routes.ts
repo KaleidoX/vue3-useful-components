@@ -208,6 +208,20 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
     ]
   },
   {
+    key: 'layout',
+    path: 'layout',
+    label: '布局组件',
+    description: '可拖拽分割的面板布局系统，支持标签页、停靠、撤销/重做。',
+    children: [
+      {
+        path: 'demo',
+        name: 'LayoutDemo',
+        component: () => import('@/views/layout/LayoutDemoView.vue'),
+        meta: routeMeta('布局系统演示')
+      }
+    ]
+  },
+  {
     key: 'virtual',
     path: 'virtual',
     label: '虚拟滚动',
