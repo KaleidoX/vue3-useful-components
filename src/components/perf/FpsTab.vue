@@ -10,7 +10,12 @@
       </button>
     </div>
 
-    <div v-if="chartPoints.length > 1" class="fps-chart-wrap" @mousemove="onChartHover" @mouseleave="hoveredIndex = -1">
+    <div
+      v-if="chartPoints.length > 1"
+      class="fps-chart-wrap"
+      @mousemove="onChartHover"
+      @mouseleave="hoveredIndex = -1"
+    >
       <svg class="fps-chart" viewBox="0 0 300 100" preserveAspectRatio="none">
         <polyline
           :points="chartPoints"
@@ -30,7 +35,11 @@
           stroke-width="1.5"
         />
       </svg>
-      <div v-if="hoveredSample" class="fps-tooltip" :style="{ left: hoveredSample.tooltipX + 'px', bottom: '100%' }">
+      <div
+        v-if="hoveredSample"
+        class="fps-tooltip"
+        :style="{ left: hoveredSample.tooltipX + 'px', bottom: '100%' }"
+      >
         FPS: {{ hoveredSample.value }} @ {{ hoveredSample.t }}
       </div>
     </div>

@@ -5,7 +5,6 @@ import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'a
 import type {
   IPerfSwitches,
   IFpsSample,
-  IWebVitalRecord,
   INetworkRecord,
   IRouteRecord,
   ICustomRecord,
@@ -45,7 +44,6 @@ export const usePerfStore = defineStore('perf', () => {
     custom: []
   })
 
-  let _router: Router | null = null
   let _axios: AxiosInstance | null = null
   let _rafId: number | null = null
   let _observer: PerformanceObserver | null = null
@@ -53,16 +51,17 @@ export const usePerfStore = defineStore('perf', () => {
   const _interceptorsRemoved = false
   let _nativeNetworkHooked = false
   let _origFetch: typeof window.fetch | null = null
-  const _origXHROpen: typeof XMLHttpRequest.prototype.open | null = null
-  const _origXHRSend: typeof XMLHttpRequest.prototype.send | null = null
 
   const currentFps = ref(0)
 
   const runtimeStats = computed<IRuntimeStats>(() => {
     const fps = currentFps.value
     let memoryMB = 0
-    const perf = (performance as unknown) as Record<string, unknown>
-    if (perf.memory && typeof (perf.memory as { usedJSHeapSize: number }).usedJSHeapSize === 'number') {
+    const perf = performance as unknown as Record<string, unknown>
+    if (
+      perf.memory &&
+      typeof (perf.memory as { usedJSHeapSize: number }).usedJSHeapSize === 'number'
+    ) {
       memoryMB = (perf.memory as { usedJSHeapSize: number }).usedJSHeapSize / 1024 / 1024
     }
     const domNodes = document.querySelectorAll('*').length
@@ -160,7 +159,6 @@ export const usePerfStore = defineStore('perf', () => {
     try {
       _observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          const name = entry.name
           let value: number
           let vitalName: string
 
@@ -175,7 +173,7 @@ export const usePerfStore = defineStore('perf', () => {
               break
             case 'layout-shift':
               vitalName = 'CLS'
-              value = ((entry as unknown) as { value: number }).value ?? 0
+              value = (entry as unknown as { value: number }).value ?? 0
               break
             case 'paint': {
               const paintEntry = entry as PerformancePaintTiming
@@ -252,7 +250,7 @@ export const usePerfStore = defineStore('perf', () => {
 
     axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
       if (switches.value.network) {
-        ((config as unknown) as Record<string, unknown>).__perfStartTime = performance.now()
+        ;(config as unknown as Record<string, unknown>).__perfStartTime = performance.now()
       }
       return config
     })
@@ -260,7 +258,8 @@ export const usePerfStore = defineStore('perf', () => {
     axios.interceptors.response.use(
       (res: AxiosResponse) => {
         if (switches.value.network) {
-          const startTime = ((res.config as unknown) as Record<string, unknown>).__perfStartTime as number
+          const startTime = (res.config as unknown as Record<string, unknown>)
+            .__perfStartTime as number
           if (startTime) {
             const duration = performance.now() - startTime
             addNetworkRecord({
@@ -275,7 +274,11 @@ export const usePerfStore = defineStore('perf', () => {
         }
         return res
       },
-      (err: { config?: Record<string, unknown>; response?: { status: number }; message?: string }) => {
+      (err: {
+        config?: Record<string, unknown>
+        response?: { status: number }
+        message?: string
+      }) => {
         if (switches.value.network) {
           const startTime = err.config?.__perfStartTime as number | undefined
           if (startTime) {
@@ -306,7 +309,8 @@ export const usePerfStore = defineStore('perf', () => {
         return (_origFetch as typeof fetch)(input, init)
       }
       const startTime = performance.now()
-      const url = typeof input === 'string' ? input : (input instanceof Request ? input.url : String(input))
+      const url =
+        typeof input === 'string' ? input : input instanceof Request ? input.url : String(input)
       const method = (init?.method ?? 'GET').toUpperCase()
 
       return (_origFetch as typeof fetch)(input, init)
@@ -338,14 +342,6 @@ export const usePerfStore = defineStore('perf', () => {
     }
   }
 
-  function uninstallNativeNetworkHooks() {
-    if (_origFetch) {
-      window.fetch = _origFetch
-      _origFetch = null
-    }
-    _nativeNetworkHooked = false
-  }
-
   // --- Route ---
   function startRoute() {
     // Hooks are installed once - they check switches
@@ -364,8 +360,7 @@ export const usePerfStore = defineStore('perf', () => {
   }
 
   function installRouterHook(router: Router) {
-    _router = router
-    router.beforeEach((_to, _from) => {
+    router.beforeEach(() => {
       if (switches.value.route) {
         _routeStartTime = performance.now()
       }

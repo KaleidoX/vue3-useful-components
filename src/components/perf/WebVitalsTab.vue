@@ -15,7 +15,8 @@
           <div
             class="wv-bar-fill"
             :style="{
-              width: vt.rating === 'good' ? '33%' : vt.rating === 'needs-improvement' ? '66%' : '100%',
+              width:
+                vt.rating === 'good' ? '33%' : vt.rating === 'needs-improvement' ? '66%' : '100%',
               backgroundColor: ratingColor(vt.rating)
             }"
           />

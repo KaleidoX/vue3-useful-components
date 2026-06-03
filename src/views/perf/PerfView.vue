@@ -14,7 +14,9 @@
         <div class="space-y-3">
           <div class="text-xs text-slate-500 leading-relaxed">
             <p class="mb-1 text-slate-600 font-medium">1. 安装注册（main.ts）</p>
-            <pre class="overflow-x-auto rounded-lg bg-slate-50 p-3 text-[11px]">{{ installCode }}</pre>
+            <pre class="overflow-x-auto rounded-lg bg-slate-50 p-3 text-[11px]">{{
+              installCode
+            }}</pre>
           </div>
           <div class="text-xs text-slate-500 leading-relaxed">
             <p class="mb-1 text-slate-600 font-medium">2. 组件内埋点</p>
@@ -36,9 +38,7 @@
             <span class="ml-2 text-xs text-slate-400">+{{ test.delay.toFixed(0) }}ms 模拟</span>
           </button>
         </div>
-        <p v-if="lastResult" class="mt-3 text-xs text-green-600">
-          已记录: {{ lastResult }}
-        </p>
+        <p v-if="lastResult" class="mt-3 text-xs text-green-600">已记录: {{ lastResult }}</p>
       </div>
     </div>
 
@@ -57,7 +57,11 @@
             {{ req.loading ? '请求中...' : req.label }}
           </button>
         </div>
-        <p v-if="netResult" class="mt-2 text-xs" :class="netError ? 'text-red-500' : 'text-green-600'">
+        <p
+          v-if="netResult"
+          class="mt-2 text-xs"
+          :class="netError ? 'text-red-500' : 'text-green-600'"
+        >
           {{ netResult }}
         </p>
       </div>
@@ -72,7 +76,11 @@
         >
           {{ axiosLoading ? '请求中...' : '发送请求' }}
         </button>
-        <p v-if="axiosResult" class="mt-2 text-xs" :class="axiosError ? 'text-red-500' : 'text-green-600'">
+        <p
+          v-if="axiosResult"
+          class="mt-2 text-xs"
+          :class="axiosError ? 'text-red-500' : 'text-green-600'"
+        >
           {{ axiosResult }}
         </p>
       </div>
@@ -169,7 +177,7 @@ async function runNetTest(req: { url: string; loading: boolean; label: string })
     const res = await fetch(req.url)
     const dur = (performance.now() - start).toFixed(0)
     netResult.value = `${res.status} ${res.statusText} (${dur}ms)`
-  } catch (e: unknown) {
+  } catch {
     netError.value = true
     const dur = (performance.now() - start).toFixed(0)
     netResult.value = `请求失败 (${dur}ms)`

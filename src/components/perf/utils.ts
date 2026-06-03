@@ -74,10 +74,7 @@ export function nextId(): string {
   return `${Date.now()}-${_idCounter}`
 }
 
-const WEB_VITALS_THRESHOLDS: Record<
-  string,
-  { good: number; poor: number }
-> = {
+const WEB_VITALS_THRESHOLDS: Record<string, { good: number; poor: number }> = {
   LCP: { good: 2500, poor: 4000 },
   FID: { good: 100, poor: 300 },
   CLS: { good: 0.1, poor: 0.25 },

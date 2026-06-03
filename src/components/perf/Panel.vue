@@ -23,13 +23,14 @@
       @mouseenter="isHovering = true"
       @mouseleave="isHovering = false"
     >
-      <div ref="headerEl" class="perf-header cursor-move select-none" @mousedown="onHeaderMouseDown">
+      <div
+        ref="headerEl"
+        class="perf-header cursor-move select-none"
+        @mousedown="onHeaderMouseDown"
+      >
         <span class="text-xs text-white/90 font-semibold">⚡ 性能监控</span>
         <div class="flex items-center gap-1">
-          <span
-            class="text-[11px] text-white/80 font-mono"
-            :style="{ color: store.fpsColorValue }"
-          >
+          <span class="text-[11px] text-white/80 font-mono" :style="{ color: store.fpsColorValue }">
             FPS:{{ store.switches.fps ? store.currentFps : '--' }}
           </span>
           <button class="perf-btn" title="设置" @click="store.toggleSettings()">
@@ -71,10 +72,14 @@
 
       <div class="perf-footer">
         <span class="perf-stat">
-          <span class="i-mdi-routes text-xs text-blue-400" /> R:{{ store.runtimeStats.networkCount }}
+          <span class="i-mdi-routes text-xs text-blue-400" /> R:{{
+            store.runtimeStats.networkCount
+          }}
         </span>
         <span class="perf-stat">
-          <span class="i-mdi-code-tags text-xs text-purple-400" /> D:{{ store.runtimeStats.domNodes }}
+          <span class="i-mdi-code-tags text-xs text-purple-400" /> D:{{
+            store.runtimeStats.domNodes
+          }}
         </span>
         <span class="perf-stat">
           <span class="i-mdi-memory text-xs text-green-400" /> {{ store.runtimeStats.memoryMB }}MB
@@ -85,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, watchEffect } from 'vue'
+import { ref, reactive, onUnmounted, watchEffect } from 'vue'
 import { usePerfStore } from './store'
 import SettingsPanel from './SettingsPanel.vue'
 import FpsTab from './FpsTab.vue'
@@ -227,7 +232,9 @@ onUnmounted(() => {
   background: transparent;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    background 0.15s;
 
   &:hover {
     color: white;
@@ -260,7 +267,9 @@ onUnmounted(() => {
   border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
   white-space: nowrap;
 
   &:hover {

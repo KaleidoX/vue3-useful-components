@@ -13,8 +13,6 @@ import { ToolbarOverflowBehavior } from '@notectl/core/plugins/toolbar'
 import { createFullPreset } from '@notectl/core/presets/full'
 import { CodeBlockPlugin } from '@notectl/core/plugins/code-block'
 import { ImagePlugin } from '@notectl/core/plugins/image'
-import { uploadImage } from '@/api/upload'
-import { formatUploadBase } from '@/utils/format'
 import type { NotectlEditor, NotectlEditorConfig, ToolbarConfig } from '@notectl/core'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -88,7 +86,7 @@ const preset = createFullPreset({
 
 const toolbar: ToolbarConfig = props.simple
   ? {
-      groups: [[new CodeBlockPlugin(),],[new ImagePlugin()]],
+      groups: [[new CodeBlockPlugin()], [new ImagePlugin()]],
       overflow: ToolbarOverflowBehavior.Flow
     }
   : {
@@ -156,7 +154,7 @@ function handleBeforeUpload(file: File) {
   return true
 }
 // 获取内容
- 
+
 async function getContents() {
   const notectl = getNotectl()
   if (notectl) {

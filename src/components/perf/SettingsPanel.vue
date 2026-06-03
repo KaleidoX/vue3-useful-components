@@ -14,9 +14,7 @@
           </button>
         </label>
       </div>
-      <button class="settings-clear-all" @click="store.clearMetrics()">
-        清空全部数据
-      </button>
+      <button class="settings-clear-all" @click="store.clearMetrics()">清空全部数据</button>
     </div>
   </div>
 </template>

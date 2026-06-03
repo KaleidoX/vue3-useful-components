@@ -39,6 +39,7 @@
   </div>
 </template>
 
+<!-- eslint-disable-next-line vue/block-lang -->
 <script lang="js">
 import { isArray, isString } from 'lodash-es'
 
@@ -124,7 +125,9 @@ export default {
       this.fileList.push({ name: res.fileName, url: res.fileName })
       this.$emit('update:modelValue', this.listToString(this.fileList))
       // @ts-expect-error 忽略注入options的loading实例
-      this.loading && this.loading.close()
+      if (this.loading) {
+        this.loading.close()
+      }
     },
     // 上传前loading加载
     handleBeforeUpload(file) {
@@ -168,7 +171,9 @@ export default {
     handleUploadError() {
       ElMessage.error('上传失败')
       // @ts-expect-error 忽略注入options的loading实例
-      this.loading && this.loading.close()
+      if (this.loading) {
+        this.loading.close()
+      }
     },
     // 预览
     handlePictureCardPreview(file) {
