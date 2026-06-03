@@ -5,35 +5,84 @@ import { nextTick } from 'vue'
 /**
  * FlowLogicFlow 节点数控制工具栏测试
  *
- * 功能：在画布左上角添加浮动工具栏，按钮 [10 | 50 | 100]，
+ * 功能：在画布左上角添加浮动工具栏，按钮 [10 | 50 | 100] 和模式切换按钮，
  * 点击后重新渲染对应数量的节点（网格排布，cols=5）和边。
  */
 
+const mockRegister = vi.fn()
 const mockRender = vi.fn()
 const mockTranslateCenter = vi.fn()
 const mockDestroy = vi.fn()
 const mockSetTheme = vi.fn()
 
-const MockLogicFlow = vi.fn(function (this: any, _options: any) {
+const MockLogicFlow = vi.fn(function (this: any) {
+  this.register = mockRegister
   this.render = mockRender
   this.translateCenter = mockTranslateCenter
   this.destroy = mockDestroy
   this.setTheme = mockSetTheme
 })
 
+// HtmlNodeModel mock — 必须是真实的 class，因为组件会用 extends 继承
+class MockHtmlNodeModel {
+  x: number
+  y: number
+  width: number
+  height: number
+  properties: Record<string, unknown>
+
+  constructor(data?: any) {
+    this.x = data?.x ?? 0
+    this.y = data?.y ?? 0
+    this.width = data?.properties?.width ?? 200
+    this.height = data?.properties?.height ?? 80
+    this.properties = data?.properties ?? {}
+  }
+
+  setAttributes() {}
+  getNodeStyle() {
+    return {}
+  }
+  getDefaultAnchor() {
+    return []
+  }
+}
+
+// HtmlNode mock — 必须是真实的 class
+class MockHtmlNode {
+  ref: { current: SVGForeignObjectElement | null }
+  props: { model: MockHtmlNodeModel; graphModel: any }
+
+  constructor(props?: any) {
+    this.props = props ?? { model: new MockHtmlNodeModel(), graphModel: null }
+    this.ref = { current: null }
+  }
+
+  setHtml() {}
+  shouldUpdate() {
+    return true
+  }
+  componentDidMount() {}
+  componentDidUpdate() {}
+  componentWillUnmount() {}
+}
+
 vi.mock('@logicflow/core', () => ({
   default: MockLogicFlow,
+  HtmlNodeModel: MockHtmlNodeModel,
+  HtmlNode: MockHtmlNode
 }))
 
 describe('FlowLogicFlow node-count toolbar', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     MockLogicFlow.mockClear()
+    mockRegister.mockClear()
     mockRender.mockClear()
     mockTranslateCenter.mockClear()
   })
 
-  it('renders toolbar with buttons for 10, 50, 100 nodes', async () => {
+  it('renders toolbar with buttons for 10, 50, 100 and mode toggle', async () => {
     const FlowLogicFlow = (await import('../FlowLogicFlow.vue')).default
 
     const wrapper = mount(FlowLogicFlow)
@@ -42,9 +91,11 @@ describe('FlowLogicFlow node-count toolbar', () => {
     const buttons = wrapper.findAll('button')
     const buttonTexts = buttons.map((b) => b.text().trim())
 
+    // 简单模式下显示 [10, 50, 100] 和 "复杂节点" 切换按钮
     expect(buttonTexts).toContain('10')
     expect(buttonTexts).toContain('50')
     expect(buttonTexts).toContain('100')
+    expect(buttonTexts).toContain('复杂节点')
   })
 
   it('default nodeCount is 10', async () => {

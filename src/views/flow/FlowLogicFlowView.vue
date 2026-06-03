@@ -4,9 +4,7 @@ import EvaluationTable from '../form/components/EvaluationTable.vue'
 
 const flowHeaders = ['工具', '渲染', '功能', '性能', '开发难度', '可扩展', '体积', '许可']
 
-const evalRows = [
-  ['LogicFlow', 'SVG', '★★★★', '★★★', '★★★', '★★★★', '★★★', 'Apache-2.0'],
-]
+const evalRows = [['LogicFlow', 'SVG', '★★★★', '★★★', '★★★', '★★★★', '★★★', 'Apache-2.0']]
 </script>
 
 <template>

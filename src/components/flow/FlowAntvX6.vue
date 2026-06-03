@@ -1,80 +1,231 @@
 <template>
   <div class="relative h-full w-full">
-    <div class="absolute left-2 top-2 z-20 flex gap-1 rounded bg-white/90 px-2 py-1 shadow">
-      <button
-        v-for="n in [10, 50, 100]"
-        :key="n"
-        :class="['px-2 py-0.5 text-xs rounded', nodeCount === n ? 'bg-blue-500 text-white' : 'bg-gray-100 hover:bg-gray-200']"
-        @click="setNodeCount(n)"
-      >
-        {{ n }}
-      </button>
-    </div>
+    <FlowToolbar
+      :mode="mode"
+      :node-count="nodeCount"
+      @update:mode="onModeChange"
+      @update:node-count="onCountChange"
+    />
     <div ref="containerRef" class="h-full w-full" />
-    <div class="pointer-events-none absolute bottom-2 right-2 z-10 rounded bg-white/80 px-2 py-1 text-xs text-gray-400 shadow">
+    <div
+      class="pointer-events-none absolute bottom-2 right-2 z-10 rounded bg-white/80 px-2 py-1 text-xs text-gray-400 shadow"
+    >
       滚轮平移 | Ctrl+滚轮缩放
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Graph, Shape } from '@antv/x6'
+import { Graph, Selection } from '@antv/x6'
+import { register } from '@antv/x6-vue-shape'
+import FlowNodeInfo from './nodes/FlowNodeInfo.vue'
+import FlowNodeForm from './nodes/FlowNodeForm.vue'
+import { useFlowData, SIMPLE_GAP_X, SIMPLE_GAP_Y } from './composables/useFlowData'
 
 defineOptions({
-  name: 'FlowAntvX6',
+  name: 'FlowAntvX6'
 })
 
 const containerRef = ref<HTMLElement>()
-const nodeCount = ref(10)
+
+const {
+  mode,
+  nodeCount,
+  infoData,
+  formData,
+  getSimpleNodes,
+  getSimpleEdges,
+  getInfoPosition,
+  getFormPosition,
+  getComplexEdges,
+  updateFormInput,
+  updateFormSelect,
+  updateFormToggle,
+} = useFlowData()
 
 let graph: Graph
 
-function setNodeCount(count: number) {
+// --- Wrapper components for x6-vue-shape ---
+const FlowNodeInfoWrapper = defineComponent({
+  props: ['node'],
+  setup(props) {
+    return () => {
+      const data = props.node?.getData?.() || {}
+      return h(FlowNodeInfo, {
+        title: data.title || '',
+        subtitle: data.subtitle || '',
+        status: data.status || 'success',
+        statusLabel: data.statusLabel || ''
+      })
+    }
+  }
+})
+
+const FlowNodeFormWrapper = defineComponent({
+  props: ['node'],
+  setup(props) {
+    const nodeId = computed(() => props.node?.id || '')
+    return () => {
+      const id = nodeId.value
+      if (!id) return null
+      const data = formData.find((n) => n.id === id)
+      if (!data) return null
+      return h(FlowNodeForm, {
+        title: data.title,
+        inputValue: data.inputValue,
+        selectValue: data.selectValue,
+        toggleValue: data.toggleValue,
+        'onUpdate:inputValue': (val: string) => {
+          updateFormInput(id, val)
+        },
+        'onUpdate:selectValue': (val: string) => {
+          updateFormSelect(id, val)
+        },
+        'onUpdate:toggleValue': (val: boolean) => {
+          updateFormToggle(id, val)
+        }
+      })
+    }
+  }
+})
+
+// --- Register custom node shapes ---
+register({
+  shape: 'info-card',
+  component: FlowNodeInfoWrapper,
+  width: 260,
+  height: 56,
+  attrs: {
+    body: {
+      fill: 'none',
+      stroke: 'none'
+    },
+    fo: {
+      refWidth: '100%',
+      refHeight: '100%'
+    }
+  }
+})
+
+register({
+  shape: 'form-node',
+  component: FlowNodeFormWrapper,
+  width: 200,
+  height: 110,
+  attrs: {
+    body: {
+      fill: 'none',
+      stroke: 'none'
+    },
+    fo: {
+      refWidth: '100%',
+      refHeight: '100%'
+    }
+  }
+})
+
+// --- Simple node rendering ---
+function renderSimple() {
   if (!graph) return
-  nodeCount.value = count
   graph.clearCells()
-  const COLS = 5,
-    GAP_X = 180,
-    GAP_Y = 80
-  const rects: Shape.Rect[] = []
-  for (let i = 0; i < count; i++) {
-    const col = i % COLS
-    const row = Math.floor(i / COLS)
-    const node = graph.addNode({
+  const nodes = getSimpleNodes()
+  const edges = getSimpleEdges()
+
+  for (const node of nodes) {
+    graph.addNode({
+      id: node.id,
       shape: 'rect',
-      x: 40 + col * GAP_X,
-      y: 40 + row * GAP_Y,
+      x: 40 + node.col * SIMPLE_GAP_X,
+      y: 40 + node.row * SIMPLE_GAP_Y,
       width: 100,
       height: 36,
-      label: `N${i + 1}`,
+      label: node.label,
       attrs: {
         body: { fill: '#3b82f6', stroke: '#1e40af', rx: 6, ry: 6 },
-        label: { fill: '#fff', fontSize: 12 },
-      },
+        label: { fill: '#fff', fontSize: 12 }
+      }
     })
-    rects.push(node)
   }
-  for (let i = 0; i < count - 1; i++) {
+  for (const edge of edges) {
     graph.addEdge({
-      source: { cell: rects[i].id },
-      target: { cell: rects[i + 1].id },
+      source: edge.source,
+      target: edge.target,
       attrs: {
         line: {
           stroke: '#94a3b8',
           strokeWidth: 1.5,
-          targetMarker: { name: 'block', width: 6, height: 4 },
-        },
-      },
+          targetMarker: { name: 'block', width: 6, height: 4 }
+        }
+      }
     })
-    if (i % 7 === 0 && i + 5 < count) {
-      graph.addEdge({
-        source: { cell: rects[i].id },
-        target: { cell: rects[i + 5].id },
-        attrs: { line: { stroke: '#94a3b8', strokeWidth: 1, strokeDasharray: '4 2' } },
-      })
-    }
   }
   graph.centerContent()
+}
+
+// --- Complex node rendering ---
+function renderComplex() {
+  if (!graph) return
+  graph.clearCells()
+
+  // InfoCard nodes
+  for (let i = 0; i < infoData.length; i++) {
+    const pos = getInfoPosition(i)
+    graph.addNode({
+      id: infoData[i].id,
+      shape: 'info-card',
+      x: pos.x,
+      y: pos.y,
+      data: infoData[i]
+    })
+  }
+
+  // FormNode nodes
+  for (let i = 0; i < formData.length; i++) {
+    const pos = getFormPosition(i)
+    graph.addNode({
+      id: formData[i].id,
+      shape: 'form-node',
+      x: pos.x,
+      y: pos.y,
+      data: formData[i]
+    })
+  }
+
+  // Edges
+  const edges = getComplexEdges()
+  for (const edge of edges) {
+    graph.addEdge({
+      source: edge.source,
+      target: edge.target,
+      attrs: {
+        line: {
+          stroke: '#94a3b8',
+          strokeWidth: 1.5,
+          targetMarker: { name: 'block', width: 6, height: 4 }
+        }
+      }
+    })
+  }
+
+  graph.centerContent()
+}
+
+// --- Toolbar event handlers ---
+function onModeChange(newMode: 'simple' | 'complex') {
+  if (newMode === mode.value || !graph) return
+  mode.value = newMode
+  if (newMode === 'simple') {
+    renderSimple()
+  } else {
+    renderComplex()
+  }
+}
+
+function onCountChange(count: number) {
+  nodeCount.value = count
+  if (graph && mode.value === 'simple') {
+    renderSimple()
+  }
 }
 
 onMounted(() => {
@@ -87,11 +238,18 @@ onMounted(() => {
     grid: { size: 10, visible: true },
     panning: { enabled: true, eventTypes: ['leftMouseDown', 'mouseWheel'] },
     mousewheel: { enabled: true, modifiers: 'ctrl' },
-    selecting: { enabled: true, rubberband: true, showNodeSelectionBox: true },
-    background: { color: '#f5f5f5' },
+    background: { color: '#f5f5f5' }
   })
 
-  setNodeCount(10)
+  graph.use(
+    new Selection({
+      enabled: true,
+      rubberband: true,
+      showNodeSelectionBox: true
+    })
+  )
+
+  renderSimple()
 
   const handleResize = () => {
     graph.resize(containerRef.value!.clientWidth, containerRef.value!.clientHeight)

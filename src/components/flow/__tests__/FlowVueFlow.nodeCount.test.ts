@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { nextTick, ref } from 'vue'
+import { nextTick } from 'vue'
 
 /**
  * FlowVueFlow 节点数控制工具栏测试
@@ -13,21 +13,30 @@ import { nextTick, ref } from 'vue'
 vi.mock('@vue-flow/core', () => ({
   VueFlow: {
     name: 'VueFlow',
-    props: ['nodes', 'edges', 'defaultViewport', 'fitViewOnInit', 'panOnScroll', 'zoomOnScroll', 'zoomActivationKeyCode'],
-    template: '<div class="mock-vue-flow"><slot name="node-default" v-for="n in nodes" :key="n.id" :data="n.data" /></div>',
-  },
+    props: [
+      'nodes',
+      'edges',
+      'defaultViewport',
+      'fitViewOnInit',
+      'panOnScroll',
+      'zoomOnScroll',
+      'zoomActivationKeyCode'
+    ],
+    template:
+      '<div class="mock-vue-flow"><slot name="node-default" v-for="n in nodes" :key="n.id" :data="n.data" /></div>'
+  }
 }))
 
 vi.mock('@vue-flow/background', () => ({
-  Background: { name: 'Background', template: '<div class="mock-background" />' },
+  Background: { name: 'Background', template: '<div class="mock-background" />' }
 }))
 
 vi.mock('@vue-flow/controls', () => ({
-  Controls: { name: 'Controls', template: '<div class="mock-controls" />' },
+  Controls: { name: 'Controls', template: '<div class="mock-controls" />' }
 }))
 
 vi.mock('@vue-flow/minimap', () => ({
-  MiniMap: { name: 'MiniMap', template: '<div class="mock-minimap" />' },
+  MiniMap: { name: 'MiniMap', template: '<div class="mock-minimap" />' }
 }))
 
 describe('FlowVueFlow node-count toolbar', () => {
@@ -68,10 +77,11 @@ describe('FlowVueFlow node-count toolbar', () => {
     expect(nodes.length).toBe(10)
 
     // Verify grid layout: first node at col 0 row 0, second at col 1 row 0
-    expect(nodes[0].position.x).toBe(40) // 40 + 0 * 180
-    expect(nodes[0].position.y).toBe(40) // 40 + 0 * 80
-    expect(nodes[1].position.x).toBe(220) // 40 + 1 * 180
-    expect(nodes[1].position.y).toBe(40)
+    // Composables use offset 50, SIMPLE_GAP_X=160, SIMPLE_GAP_Y=70
+    expect(nodes[0].position.x).toBe(50) // 50 + 0 * 160
+    expect(nodes[0].position.y).toBe(50) // 50 + 0 * 70
+    expect(nodes[1].position.x).toBe(210) // 50 + 1 * 160
+    expect(nodes[1].position.y).toBe(50)
   })
 
   it('clicking "50" button changes nodeCount to 50 and regenerates 50 nodes', async () => {
@@ -110,13 +120,13 @@ describe('FlowVueFlow node-count toolbar', () => {
     expect(vm.nodeCount).toBe(100)
     expect(vm.nodes.length).toBe(100)
 
-    // Grid layout: COLS=5, so row 0 has cols 0-4, row 1 has cols 0-4...
+    // Grid layout: SIMPLE_COLS=5, SIMPLE_GAP_X=160, SIMPLE_GAP_Y=70, offset=50
     const COLS = 5
-    const GAP_X = 180
-    const GAP_Y = 80
+    const GAP_X = 160
+    const GAP_Y = 70
     for (let i = 0; i < 100; i++) {
-      const expectedX = 40 + (i % COLS) * GAP_X
-      const expectedY = 40 + Math.floor(i / COLS) * GAP_Y
+      const expectedX = 50 + (i % COLS) * GAP_X
+      const expectedY = 50 + Math.floor(i / COLS) * GAP_Y
       expect(vm.nodes[i].position.x).toBe(expectedX)
       expect(vm.nodes[i].position.y).toBe(expectedY)
     }

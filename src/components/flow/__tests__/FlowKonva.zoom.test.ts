@@ -88,7 +88,7 @@ describe('FlowKonva zoom formula', () => {
       const smallChange = computeOldScale(0.3, 100) // 0.3 - 0.1 = 0.2
       // At large scale, additive change is tiny relative
       const largeChange = computeOldScale(2.5, 100) // 2.5 - 0.1 = 2.4
-      
+
       // Both change by 0.1 absolute, but 0.1/0.3 ≈ 33% vs 0.1/2.5 = 4%
       // Multiplicative would be consistent 5%
       expect(smallChange).toBe(0.2)

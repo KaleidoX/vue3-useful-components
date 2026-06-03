@@ -19,7 +19,7 @@ const mockDispose = vi.fn()
 // Track added nodes to return incrementing IDs
 let nodeIdCounter = 0
 
-const MockGraph = vi.fn(function (this: any, _options: any) {
+const MockGraph = vi.fn(function (this: any) {
   this.clearCells = mockClearCells
   this.addNode = mockAddNode.mockImplementation(() => {
     return { id: `node-${++nodeIdCounter}` }
@@ -32,12 +32,17 @@ const MockGraph = vi.fn(function (this: any, _options: any) {
 
 // Mock Shape.Rect for type checking
 const MockShape = {
-  Rect: vi.fn(),
+  Rect: vi.fn()
 }
+
+vi.mock('@antv/x6-vue-shape', () => ({
+  register: vi.fn(),
+  shapeMaps: {}
+}))
 
 vi.mock('@antv/x6', () => ({
   Graph: MockGraph,
-  Shape: MockShape,
+  Shape: MockShape
 }))
 
 describe('FlowAntvX6 node-count toolbar', () => {
@@ -150,8 +155,8 @@ describe('FlowAntvX6 node-count toolbar', () => {
     expect(addNodeCalls.length).toBe(50)
 
     const COLS = 5
-    const GAP_X = 180
-    const GAP_Y = 80
+    const GAP_X = 160
+    const GAP_Y = 70
 
     for (let i = 0; i < 50; i++) {
       const config = addNodeCalls[i][0]
