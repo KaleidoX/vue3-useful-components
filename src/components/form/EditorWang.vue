@@ -110,8 +110,8 @@ const options: IEditorConfig = {
     }
   },
   customAlert: (info, type) => {
-    console.log('EditorWang customAlert :>> ', info, type);
-  },
+    console.log('EditorWang customAlert :>> ', info, type)
+  }
 }
 
 // 清空内容
