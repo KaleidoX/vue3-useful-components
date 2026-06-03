@@ -1,7 +1,7 @@
 <template>
   <div class="network-tab">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-[11px] font-semibold text-white/60">请求统计</span>
+    <div class="mb-2 flex items-center justify-between">
+      <span class="text-[11px] text-white/60 font-semibold">请求统计</span>
       <button class="perf-clear-btn" title="清空" @click="store.clearNetworkMetrics()">
         <i class="i-mdi-delete-outline text-sm" />
       </button>
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div v-else class="flex-1 flex items-center justify-center py-8">
+    <div v-else class="flex flex-1 items-center justify-center py-8">
       <span class="text-[11px] text-white/20">暂无机请求</span>
     </div>
   </div>

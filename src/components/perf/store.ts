@@ -50,11 +50,11 @@ export const usePerfStore = defineStore('perf', () => {
   let _rafId: number | null = null
   let _observer: PerformanceObserver | null = null
   let _routeStartTime = 0
-  let _interceptorsRemoved = false
+  const _interceptorsRemoved = false
   let _nativeNetworkHooked = false
   let _origFetch: typeof window.fetch | null = null
-  let _origXHROpen: typeof XMLHttpRequest.prototype.open | null = null
-  let _origXHRSend: typeof XMLHttpRequest.prototype.send | null = null
+  const _origXHROpen: typeof XMLHttpRequest.prototype.open | null = null
+  const _origXHRSend: typeof XMLHttpRequest.prototype.send | null = null
 
   const currentFps = ref(0)
 

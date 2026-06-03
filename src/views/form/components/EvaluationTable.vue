@@ -3,14 +3,10 @@
     <table class="min-w-full text-sm">
       <thead>
         <tr class="bg-gray-100">
-          <th class="border px-3 py-2 text-left">工具</th>
-          <th class="border px-3 py-2 text-center">功能</th>
-          <th class="border px-3 py-2 text-center">集成</th>
-          <th class="border px-3 py-2 text-center">体积</th>
-          <th class="border px-3 py-2 text-center">许可</th>
-          <th class="border px-3 py-2 text-center">中文</th>
-          <th class="border px-3 py-2 text-center">扩展</th>
-          <th class="border px-3 py-2 text-center">体验</th>
+          <th v-for="(h, i) in headers" :key="i"
+            :class="['border px-3 py-2', i === 0 ? 'text-left' : 'text-center']">
+            {{ h }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -26,7 +22,10 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{
+withDefaults(defineProps<{
   rows: string[][]
-}>()
+  headers?: string[]
+}>(), {
+  headers: () => ['工具', '功能', '集成', '体积', '许可', '中文', '扩展', '体验'],
+})
 </script>

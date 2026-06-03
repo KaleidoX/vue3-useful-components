@@ -1,7 +1,7 @@
 <template>
   <div class="custom-tab">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-[11px] font-semibold text-white/60">自定义埋点</span>
+    <div class="mb-2 flex items-center justify-between">
+      <span class="text-[11px] text-white/60 font-semibold">自定义埋点</span>
       <button class="perf-clear-btn" title="清空" @click="store.clearCustomMetrics()">
         <i class="i-mdi-delete-outline text-sm" />
       </button>
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div v-else class="flex-1 flex items-center justify-center py-8">
+    <div v-else class="flex flex-1 items-center justify-center py-8">
       <span class="text-[11px] text-white/20">
         调用 <code class="text-white/30">usePerfStore().customMark()</code> 添加埋点
       </span>

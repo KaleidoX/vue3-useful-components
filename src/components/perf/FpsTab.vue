@@ -1,6 +1,6 @@
 <template>
   <div class="fps-tab">
-    <div class="flex items-center justify-between mb-2">
+    <div class="mb-2 flex items-center justify-between">
       <div class="fps-current" :style="{ color: fpsColorStr }">
         {{ store.currentFps }}
         <span class="fps-unit">fps</span>
@@ -34,7 +34,7 @@
         FPS: {{ hoveredSample.value }} @ {{ hoveredSample.t }}
       </div>
     </div>
-    <div v-else class="flex-1 flex items-center justify-center">
+    <div v-else class="flex flex-1 items-center justify-center">
       <span class="text-[11px] text-white/30">采集 FPS 数据中...</span>
     </div>
 

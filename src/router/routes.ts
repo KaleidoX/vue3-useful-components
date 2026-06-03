@@ -222,6 +222,56 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
     ]
   },
   {
+    key: 'flow',
+    path: 'flow',
+    label: '流程编辑器',
+    description: '7 种流程编辑器引擎对比（SVG / Canvas），基本流图 + 交互演示。',
+    children: [
+      {
+        path: 'vue-flow',
+        name: 'FlowVueFlow',
+        component: () => import('@/views/flow/FlowVueFlowView.vue'),
+        meta: routeMeta('Vue Flow', 'SVG 编辑器 · Vue 3 原生 · 节点即 Vue 组件')
+      },
+      {
+        path: 'antv-x6',
+        name: 'FlowAntvX6',
+        component: () => import('@/views/flow/FlowAntvX6View.vue'),
+        meta: routeMeta('AntV X6', 'SVG 编辑器 · 企业级 MVC · 虚拟渲染')
+      },
+      {
+        path: 'logicflow',
+        name: 'FlowLogicFlow',
+        component: () => import('@/views/flow/FlowLogicFlowView.vue'),
+        meta: routeMeta('LogicFlow', 'SVG 编辑器 · 自执行引擎 · BPMN 适配')
+      },
+      {
+        path: 'g6',
+        name: 'FlowG6',
+        component: () => import('@/views/flow/FlowG6View.vue'),
+        meta: routeMeta('G6', 'Canvas 可视化 · 三模式渲染 · 布局算法丰富')
+      },
+      {
+        path: 'konva',
+        name: 'FlowKonva',
+        component: () => import('@/views/flow/FlowKonvaView.vue'),
+        meta: routeMeta('Konva.js', 'Canvas 引擎 · 声明式图层 · 自建编辑器')
+      },
+      {
+        path: 'pixi',
+        name: 'FlowPixi',
+        component: () => import('@/views/flow/FlowPixiView.vue'),
+        meta: routeMeta('PixiJS', 'WebGL/Canvas 引擎 · 高性能渲染 · 自建编辑器')
+      },
+      {
+        path: 'fabric',
+        name: 'FlowFabric',
+        component: () => import('@/views/flow/FlowFabricView.vue'),
+        meta: routeMeta('Fabric.js', 'Canvas 引擎 · 对象模型丰富 · 自建编辑器')
+      }
+    ]
+  },
+  {
     key: 'virtual',
     path: 'virtual',
     label: '虚拟滚动',

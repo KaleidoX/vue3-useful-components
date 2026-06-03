@@ -1,7 +1,7 @@
 <template>
   <div class="wv-tab">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-[11px] font-semibold text-white/60">核心指标</span>
+    <div class="mb-2 flex items-center justify-between">
+      <span class="text-[11px] text-white/60 font-semibold">核心指标</span>
       <button class="perf-clear-btn" title="清空" @click="store.clearWebVitalsMetrics()">
         <i class="i-mdi-delete-outline text-sm" />
       </button>
@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div v-else class="flex-1 flex items-center justify-center">
+    <div v-else class="flex flex-1 items-center justify-center">
       <span class="text-[11px] text-white/20">等待指标数据...</span>
     </div>
   </div>

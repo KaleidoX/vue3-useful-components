@@ -24,10 +24,10 @@
       @mouseleave="isHovering = false"
     >
       <div ref="headerEl" class="perf-header cursor-move select-none" @mousedown="onHeaderMouseDown">
-        <span class="text-xs font-semibold text-white/90">⚡ 性能监控</span>
+        <span class="text-xs text-white/90 font-semibold">⚡ 性能监控</span>
         <div class="flex items-center gap-1">
           <span
-            class="text-[11px] font-mono text-white/80"
+            class="text-[11px] text-white/80 font-mono"
             :style="{ color: store.fpsColorValue }"
           >
             FPS:{{ store.switches.fps ? store.currentFps : '--' }}

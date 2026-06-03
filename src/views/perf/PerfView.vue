@@ -1,7 +1,7 @@
 <template>
   <div class="perf-view">
     <div class="mb-6">
-      <h2 class="text-xl font-semibold text-slate-900 mb-2">性能监控面板</h2>
+      <h2 class="mb-2 text-xl text-slate-900 font-semibold">性能监控面板</h2>
       <p class="text-sm text-slate-500 leading-6">
         右键点击页面，浮动性能监控面板会显示在右下角。<br />
         可拖拽、折叠、切换不同监控维度，支持 FPS、Web Vitals、网络请求、路由性能和自定义埋点。
@@ -10,30 +10,30 @@
 
     <div class="grid gap-4 lg:grid-cols-2">
       <div class="border border-base-400/80 rounded-2xl bg-white p-5">
-        <h3 class="text-sm font-semibold text-slate-700 mb-3">使用方式</h3>
+        <h3 class="mb-3 text-sm text-slate-700 font-semibold">使用方式</h3>
         <div class="space-y-3">
           <div class="text-xs text-slate-500 leading-relaxed">
-            <p class="font-medium text-slate-600 mb-1">1. 安装注册（main.ts）</p>
-            <pre class="bg-slate-50 rounded-lg p-3 text-[11px] overflow-x-auto">{{ installCode }}</pre>
+            <p class="mb-1 text-slate-600 font-medium">1. 安装注册（main.ts）</p>
+            <pre class="overflow-x-auto rounded-lg bg-slate-50 p-3 text-[11px]">{{ installCode }}</pre>
           </div>
           <div class="text-xs text-slate-500 leading-relaxed">
-            <p class="font-medium text-slate-600 mb-1">2. 组件内埋点</p>
-            <pre class="bg-slate-50 rounded-lg p-3 text-[11px] overflow-x-auto">{{ markCode }}</pre>
+            <p class="mb-1 text-slate-600 font-medium">2. 组件内埋点</p>
+            <pre class="overflow-x-auto rounded-lg bg-slate-50 p-3 text-[11px]">{{ markCode }}</pre>
           </div>
         </div>
       </div>
 
       <div class="border border-base-400/80 rounded-2xl bg-white p-5">
-        <h3 class="text-sm font-semibold text-slate-700 mb-3">自定义埋点测试</h3>
+        <h3 class="mb-3 text-sm text-slate-700 font-semibold">自定义埋点测试</h3>
         <div class="space-y-3">
           <button
             v-for="test in tests"
             :key="test.label"
-            class="w-full rounded-xl bg-slate-50 px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-100 transition-colors"
+            class="w-full rounded-xl bg-slate-50 px-4 py-3 text-left text-sm text-slate-700 transition-colors hover:bg-primary-100"
             @click="runTest(test)"
           >
             <span class="font-medium">{{ test.label }}</span>
-            <span class="text-xs text-slate-400 ml-2">+{{ test.delay.toFixed(0) }}ms 模拟</span>
+            <span class="ml-2 text-xs text-slate-400">+{{ test.delay.toFixed(0) }}ms 模拟</span>
           </button>
         </div>
         <p v-if="lastResult" class="mt-3 text-xs text-green-600">
@@ -42,15 +42,15 @@
       </div>
     </div>
 
-    <div class="mt-4 grid gap-4 lg:grid-cols-2">
+    <div class="grid mt-4 gap-4 lg:grid-cols-2">
       <div class="border border-base-400/80 rounded-2xl bg-white p-5">
-        <h3 class="text-sm font-semibold text-slate-700 mb-3">网络请求测试</h3>
-        <p class="text-xs text-slate-400 mb-3">发送真实请求以验证网络监控 tab</p>
+        <h3 class="mb-3 text-sm text-slate-700 font-semibold">网络请求测试</h3>
+        <p class="mb-3 text-xs text-slate-400">发送真实请求以验证网络监控 tab</p>
         <div class="grid grid-cols-2 gap-2">
           <button
             v-for="req in netTests"
             :key="req.label"
-            class="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700 hover:bg-primary-100 transition-colors"
+            class="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700 transition-colors hover:bg-primary-100"
             :disabled="req.loading"
             @click="runNetTest(req)"
           >
@@ -63,10 +63,10 @@
       </div>
 
       <div class="border border-base-400/80 rounded-2xl bg-white p-5">
-        <h3 class="text-sm font-semibold text-slate-700 mb-3">axios 请求测试</h3>
-        <p class="text-xs text-slate-400 mb-3">触发 axios 拦截器</p>
+        <h3 class="mb-3 text-sm text-slate-700 font-semibold">axios 请求测试</h3>
+        <p class="mb-3 text-xs text-slate-400">触发 axios 拦截器</p>
         <button
-          class="w-full rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700 hover:bg-primary-100 transition-colors"
+          class="w-full rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700 transition-colors hover:bg-primary-100"
           :disabled="axiosLoading"
           @click="runAxiosTest"
         >
@@ -79,31 +79,31 @@
     </div>
 
     <div class="mt-6 border border-base-400/80 rounded-2xl bg-white p-5">
-      <h3 class="text-sm font-semibold text-slate-700 mb-3">当前性能数据概览</h3>
+      <h3 class="mb-3 text-sm text-slate-700 font-semibold">当前性能数据概览</h3>
       <div class="grid grid-cols-4 gap-4 text-center">
-        <div class="p-3 bg-slate-50 rounded-xl">
+        <div class="rounded-xl bg-slate-50 p-3">
           <div class="text-2xl font-bold font-mono" :style="{ color: fpsColor(store.currentFps) }">
             {{ store.switches.fps ? store.currentFps : '--' }}
           </div>
-          <div class="text-[10px] text-slate-400 mt-1">FPS</div>
+          <div class="mt-1 text-[10px] text-slate-400">FPS</div>
         </div>
-        <div class="p-3 bg-slate-50 rounded-xl">
-          <div class="text-2xl font-bold font-mono text-slate-700">
+        <div class="rounded-xl bg-slate-50 p-3">
+          <div class="text-2xl text-slate-700 font-bold font-mono">
             {{ store.runtimeStats.networkCount }}
           </div>
-          <div class="text-[10px] text-slate-400 mt-1">请求数</div>
+          <div class="mt-1 text-[10px] text-slate-400">请求数</div>
         </div>
-        <div class="p-3 bg-slate-50 rounded-xl">
-          <div class="text-2xl font-bold font-mono text-slate-700">
+        <div class="rounded-xl bg-slate-50 p-3">
+          <div class="text-2xl text-slate-700 font-bold font-mono">
             {{ store.runtimeStats.domNodes }}
           </div>
-          <div class="text-[10px] text-slate-400 mt-1">DOM 节点</div>
+          <div class="mt-1 text-[10px] text-slate-400">DOM 节点</div>
         </div>
-        <div class="p-3 bg-slate-50 rounded-xl">
-          <div class="text-2xl font-bold font-mono text-slate-700">
+        <div class="rounded-xl bg-slate-50 p-3">
+          <div class="text-2xl text-slate-700 font-bold font-mono">
             {{ store.runtimeStats.memoryMB }}MB
           </div>
-          <div class="text-[10px] text-slate-400 mt-1">内存</div>
+          <div class="mt-1 text-[10px] text-slate-400">内存</div>
         </div>
       </div>
     </div>
