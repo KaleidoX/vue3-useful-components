@@ -17,7 +17,7 @@ watch(
   () => props.item.checked,
   (val) => {
     localChecked.value = val
-  },
+  }
 )
 
 function handleChange(event: Event) {
@@ -28,12 +28,7 @@ function handleChange(event: Event) {
 
 <template>
   <label class="flex cursor-pointer items-center gap-2">
-    <input
-      type="checkbox"
-      :checked="localChecked"
-      class="h-4 w-4"
-      @change="handleChange"
-    />
+    <input type="checkbox" :checked="localChecked" class="h-4 w-4" @change="handleChange" />
     <span class="truncate">{{ item.content }}</span>
   </label>
 </template>

@@ -30,20 +30,22 @@ const content = ref(TestMd)
 function onSealInsert(data: { id: string; src: string; name: string; size: number }) {
   const editor = editorRef.value?.getEditor() as any
   if (!editor?.chain) return
-  editor.chain().focus().setImage({
-    id: data.id,
-    type: 'seal',
-    name: data.name,
-    size: data.size,
-    src: data.src,
-    width: 150,
-    draggable: true,
-    rotatable: true,
-    previewType: null,
-  }).run()
+  editor
+    .chain()
+    .focus()
+    .setImage({
+      id: data.id,
+      type: 'seal',
+      name: data.name,
+      size: data.size,
+      src: data.src,
+      width: 150,
+      draggable: true,
+      rotatable: true,
+      previewType: null
+    })
+    .run()
 }
 
-const evalRows = [
-  ['Umo Editor', '★★★★★', '★★★★★', '★★★', 'MIT', '★★★★★', '★★★★', '★★★★★'],
-]
+const evalRows = [['Umo Editor', '★★★★★', '★★★★★', '★★★', 'MIT', '★★★★★', '★★★★', '★★★★★']]
 </script>

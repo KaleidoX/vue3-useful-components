@@ -17,8 +17,8 @@ import { type CSSProperties } from 'vue'
 import { MilkdownProvider } from '@milkdown/vue'
 import MilkdownEditor from './MilkdownEditor.vue'
 
-import "@milkdown/crepe/theme/common/style.css";
-import "@milkdown/crepe/theme/frame.css";
+import '@milkdown/crepe/theme/common/style.css'
+import '@milkdown/crepe/theme/frame.css'
 
 defineOptions({
   name: 'EditorMilkdown'
@@ -67,7 +67,9 @@ const styles = computed(() => {
   }
 
   &.hidden-toolbar {
-    .crepe-toolbar { display: none !important; }
+    .crepe-toolbar {
+      display: none !important;
+    }
   }
 }
 </style>

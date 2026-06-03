@@ -1,5 +1,8 @@
 <template>
-  <div ref="containerRef" :style="{ width: '100%', height: height || '600px', overflow: 'hidden' }" />
+  <div
+    ref="containerRef"
+    :style="{ width: '100%', height: height || '600px', overflow: 'hidden' }"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -29,11 +32,9 @@ onMounted(() => {
   const { univer, univerAPI } = createUniver({
     locale: LocaleType.ZH_CN,
     locales: {
-      [LocaleType.ZH_CN]: mergeLocales(UniverPresetDocsCoreZhCN),
+      [LocaleType.ZH_CN]: mergeLocales(UniverPresetDocsCoreZhCN)
     },
-    presets: [
-      UniverDocsCorePreset({ container: containerRef.value }),
-    ],
+    presets: [UniverDocsCorePreset({ container: containerRef.value })]
   })
 
   univerAPI.createUniverDoc({})

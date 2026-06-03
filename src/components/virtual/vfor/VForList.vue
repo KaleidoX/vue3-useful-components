@@ -24,7 +24,10 @@ function handleCheckedUpdate(id: number, checked: boolean) {
       v-for="item in data"
       :key="item.id"
       class="border-b border-gray-100 px-4"
-      :style="{ height: props.contentType === 'dynamic' ? (item.height ? `${item.height}px` : 'auto') : '50px' }"
+      :style="{
+        height:
+          props.contentType === 'dynamic' ? (item.height ? `${item.height}px` : 'auto') : '50px'
+      }"
     >
       <div class="h-full flex items-center">
         <ContentRendererDispatcher

@@ -4,7 +4,7 @@ import VirtualDemoLayout from '@/components/virtual/shared/VirtualDemoLayout.vue
 import AgGridList from '@/components/virtual/ag-grid/AgGridList.vue'
 
 defineOptions({
-  name: 'VirtualAgGridListView',
+  name: 'VirtualAgGridListView'
 })
 
 const count = ref(1000)
@@ -29,10 +29,6 @@ function handleCheckedUpdate(id: number, checked: boolean) {
     v-model:enable-memo="enableMemo"
     title="AG Grid Community"
   >
-    <AgGridList
-      :data="data"
-      :content-type="contentType"
-      @update:checked="handleCheckedUpdate"
-    />
+    <AgGridList :data="data" :content-type="contentType" @update:checked="handleCheckedUpdate" />
   </VirtualDemoLayout>
 </template>

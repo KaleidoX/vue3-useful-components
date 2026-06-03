@@ -4,7 +4,7 @@ import VirtualDemoLayout from '@/components/virtual/shared/VirtualDemoLayout.vue
 import ElTableV2List from '@/components/virtual/el-table-v2/ElTableV2List.vue'
 
 defineOptions({
-  name: 'VirtualElTableV2ListView',
+  name: 'VirtualElTableV2ListView'
 })
 
 const count = ref(1000)
@@ -29,10 +29,6 @@ function handleCheckedUpdate(id: number, checked: boolean) {
     v-model:enable-memo="enableMemo"
     title="Element Plus Table V2"
   >
-    <ElTableV2List
-      :data="data"
-      :content-type="contentType"
-      @update:checked="handleCheckedUpdate"
-    />
+    <ElTableV2List :data="data" :content-type="contentType" @update:checked="handleCheckedUpdate" />
   </VirtualDemoLayout>
 </template>

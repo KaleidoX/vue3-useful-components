@@ -47,24 +47,31 @@ watch(loading, (isLoading) => {
   if (!isLoading) emit('ready', get())
 })
 
-watch(() => props.modelValue, (value) => {
-  const editor = get()
-  if (!editor) return
-  editor.action((ctx) => {
-    const current = ctx.get(defaultValueCtx)
-    if (current !== value) {
-      ctx.set(defaultValueCtx, value ?? '')
-    }
-  })
-})
+watch(
+  () => props.modelValue,
+  (value) => {
+    const editor = get()
+    if (!editor) return
+    editor.action((ctx) => {
+      const current = ctx.get(defaultValueCtx)
+      if (current !== value) {
+        ctx.set(defaultValueCtx, value ?? '')
+      }
+    })
+  }
+)
 
 const instance = get()
 defineExpose({
   getEditor: () => instance,
   clearContent: () => {
-    instance?.action((ctx) => { ctx.set(defaultValueCtx, '') })
+    instance?.action((ctx) => {
+      ctx.set(defaultValueCtx, '')
+    })
   }
 })
 
-onUnmounted(() => { get()?.destroy() })
+onUnmounted(() => {
+  get()?.destroy()
+})
 </script>

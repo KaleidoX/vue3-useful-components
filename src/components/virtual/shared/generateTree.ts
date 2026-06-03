@@ -6,7 +6,7 @@ function createTreeNode(
   id: number,
   level: number,
   parentId: number | null,
-  hasChildren: boolean,
+  hasChildren: boolean
 ): ITreeNode {
   return {
     id,
@@ -15,7 +15,7 @@ function createTreeNode(
     level,
     parentId,
     hasChildren,
-    expanded: false,
+    expanded: false
   }
 }
 
@@ -30,7 +30,11 @@ export function generateTreeRoots(count: number): ITreeNode[] {
   return roots
 }
 
-export function generateChildren(parentId: number, parentLevel: number, maxCount: number): ITreeNode[] {
+export function generateChildren(
+  parentId: number,
+  parentLevel: number,
+  maxCount: number
+): ITreeNode[] {
   const children: ITreeNode[] = []
   for (let i = 0; i < CHILDREN_PER_NODE && treeNextId <= maxCount; i++) {
     const id = treeNextId++
@@ -40,11 +44,7 @@ export function generateChildren(parentId: number, parentLevel: number, maxCount
   return children
 }
 
-export function expandNode(
-  allNodes: ITreeNode[],
-  nodeId: number,
-  maxCount: number,
-): ITreeNode[] {
+export function expandNode(allNodes: ITreeNode[], nodeId: number, maxCount: number): ITreeNode[] {
   const idx = allNodes.findIndex((n) => n.id === nodeId)
   if (idx === -1 || allNodes[idx].expanded) return allNodes
 
@@ -57,7 +57,7 @@ export function expandNode(
   return [
     ...before.map((n) => (n.id === nodeId ? { ...n, expanded: true } : n)),
     ...children,
-    ...after,
+    ...after
   ]
 }
 

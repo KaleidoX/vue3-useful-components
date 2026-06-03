@@ -11,7 +11,7 @@
 这段内容展示了在内容里面一些排版格式，比如：
 
 - **加粗** - `**加粗**`
-- *倾斜* - `*倾斜*`
+- _倾斜_ - `*倾斜*`
 - ~~删除线~~ - `~~删除线~~`
 - `Code 标记` - `` `Code 标记` ``
 - [超级链接](https://ld246.com) - `[超级链接](https://ld246.com)`
@@ -32,7 +32,7 @@
 
 #### 一些表情例子
 
-:smile: :laughing: :dizzy_face: :sob: :cold_sweat: :sweat_smile:  :cry: :triumph: :heart_eyes: :relieved:
+:smile: :laughing: :dizzy_face: :sob: :cold_sweat: :sweat_smile: :cry: :triumph: :heart_eyes: :relieved:
 :+1: :-1: :100: :clap: :bell: :gift: :question: :bomb: :heart: :coffee: :cyclone: :bow: :kiss: :pray: :anger:
 
 ### 大标题 - Heading 3
@@ -127,7 +127,7 @@ public class HelloWorld {
 #### 任务列表
 
 - [x] 发布 Sym
-- [X] 发布 Solo
+- [x] 发布 Solo
 - [ ] 预约牙医
 
 ### 表格
@@ -184,6 +184,7 @@ $$
 公式 $a^2 + b^2 = \color{red}c^2$ 是行内。
 
 ### 脑图
+
 ```mindmap
 - 教程
 - 语法指导
@@ -345,6 +346,7 @@ https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html
 这里是一个脚注引用[^1]，这里是另一个脚注引用[^bignote]。
 
 [^1]: 第一个脚注定义。
+
 [^bignote]: 脚注定义可使用多段内容。
 
     缩进对齐的段落包含在这个脚注定义内。
@@ -355,7 +357,7 @@ https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html
 
     还有其他行级排版语法，比如**加粗**和[链接](https://b3log.org)。
 
-```
+````
 这里是一个脚注引用[^1]，这里是另一个脚注引用[^bignote]。
 [^1]: 第一个脚注定义。
 [^bignote]: 脚注定义可使用多段内容。
@@ -367,7 +369,7 @@ https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html
     ```
 
     还有其他行级排版语法，比如**加粗**和[链接](https://b3log.org)。
-```
+````
 
 ## 快捷键
 

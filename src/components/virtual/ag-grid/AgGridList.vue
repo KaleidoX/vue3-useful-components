@@ -24,14 +24,14 @@ const CellRendererContent = defineComponent({
       h('div', { class: 'h-full flex items-center' }, [
         h(ContentRendererDispatcher, {
           item: item.value,
-          contentType: contentType.value,
-        }),
+          contentType: contentType.value
+        })
       ])
-  },
+  }
 })
 
 const components = {
-  cellRendererContent: CellRendererContent,
+  cellRendererContent: CellRendererContent
 }
 
 const colDefs = computed(() => [
@@ -39,7 +39,7 @@ const colDefs = computed(() => [
     headerName: '#',
     field: 'id',
     width: 80,
-    suppressSizeToFit: true,
+    suppressSizeToFit: true
   },
   {
     headerName: '内容',
@@ -47,14 +47,14 @@ const colDefs = computed(() => [
     flex: 1,
     cellRenderer: 'cellRendererContent',
     cellRendererParams: {
-      contentType: props.contentType,
-    },
-  },
+      contentType: props.contentType
+    }
+  }
 ])
 
 const defaultColDef = {
   resizable: true,
-  sortable: false,
+  sortable: false
 }
 
 const myTheme = themeQuartz

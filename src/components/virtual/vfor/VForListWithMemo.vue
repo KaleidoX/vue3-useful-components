@@ -25,7 +25,9 @@ function handleCheckedUpdate(id: number, checked: boolean) {
       :key="item.id"
       v-memo="[item.content, item.checked]"
       class="border-b border-gray-100 px-4"
-      :style="{ height: contentType === 'dynamic' ? (item.height ? `${item.height}px` : 'auto') : '50px' }"
+      :style="{
+        height: contentType === 'dynamic' ? (item.height ? `${item.height}px` : 'auto') : '50px'
+      }"
     >
       <div class="h-full flex items-center">
         <ContentRendererDispatcher

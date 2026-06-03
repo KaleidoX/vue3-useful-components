@@ -22,7 +22,7 @@ const columns = computed(() => {
       title: '#',
       dataKey: 'id',
       width: 80,
-      align: 'center',
+      align: 'center'
     },
     {
       key: 'content',
@@ -33,11 +33,10 @@ const columns = computed(() => {
         return h(ContentRendererDispatcher, {
           item: rowData,
           contentType: props.contentType,
-          'onUpdate:checked': (id: number, checked: boolean) =>
-            emit('update:checked', id, checked),
+          'onUpdate:checked': (id: number, checked: boolean) => emit('update:checked', id, checked)
         })
-      },
-    },
+      }
+    }
   ]
   return cols
 })

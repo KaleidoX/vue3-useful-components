@@ -18,11 +18,12 @@ import TestHtml from './assets/test.html?raw'
 
 defineOptions({ name: 'EditorCanvasEditorView' })
 
-const canvasContent = TestHtml.split('\n').filter(l => l.trim()).slice(0, 10).map(line => ({
-  value: line.replace(/<[^>]+>/g, '') || line
-}))
+const canvasContent = TestHtml.split('\n')
+  .filter((l) => l.trim())
+  .slice(0, 10)
+  .map((line) => ({
+    value: line.replace(/<[^>]+>/g, '') || line
+  }))
 
-const evalRows = [
-  ['canvas-editor', '★★★★', '★★★', '★★★', 'MIT', '★★★★', '★★★', '★★★'],
-]
+const evalRows = [['canvas-editor', '★★★★', '★★★', '★★★', 'MIT', '★★★★', '★★★', '★★★']]
 </script>

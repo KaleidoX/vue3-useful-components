@@ -66,12 +66,18 @@ function getRowStyle(ct: string): Record<string, string> {
 
           <td class="px-3">
             <template v-if="contentType === 'el-checkbox'">
-              <ElCheckbox :model-value="row.col1" size="small" @change="(v) => emit('update:cell', row.id, 'col1', v)" />
+              <ElCheckbox
+                :model-value="row.col1"
+                size="small"
+                @change="(v) => emit('update:cell', row.id, 'col1', v)"
+              />
             </template>
             <template v-else-if="contentType === 'native-checkbox'">
               <input type="checkbox" :checked="row.col1" @change="onEdit(row.id, 'col1', $event)" />
             </template>
-            <span v-else :class="row.col1 ? 'text-green-600' : 'text-red-500'">{{ row.col1 ? '是' : '否' }}</span>
+            <span v-else :class="row.col1 ? 'text-green-600' : 'text-red-500'">{{
+              row.col1 ? '是' : '否'
+            }}</span>
           </td>
 
           <td class="px-3">
@@ -111,7 +117,10 @@ function getRowStyle(ct: string): Record<string, string> {
           <td class="px-3">
             <div class="flex items-center gap-1">
               <template v-if="contentType === 'complex'">
-                <span class="inline-block h-6 w-6 rounded-full bg-blue-200 text-center text-xs leading-6">{{ row.id % 3 }}</span>
+                <span
+                  class="inline-block h-6 w-6 rounded-full bg-blue-200 text-center text-xs leading-6"
+                  >{{ row.id % 3 }}</span
+                >
                 <ElButton size="small" text>详情</ElButton>
               </template>
               <span v-else class="text-xs text-gray-400">—</span>
@@ -124,5 +133,8 @@ function getRowStyle(ct: string): Record<string, string> {
 </template>
 
 <style scoped>
-table { border-collapse: collapse; width: 100%; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
 </style>

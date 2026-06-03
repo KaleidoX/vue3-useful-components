@@ -4,7 +4,7 @@ import VirtualDemoLayout from '@/components/virtual/shared/VirtualDemoLayout.vue
 import TanStackList from '@/components/virtual/tanstack/TanStackList.vue'
 
 defineOptions({
-  name: 'VirtualTanStackListView',
+  name: 'VirtualTanStackListView'
 })
 
 const count = ref(1000)
@@ -29,10 +29,6 @@ function handleCheckedUpdate(id: number, checked: boolean) {
     v-model:enable-memo="enableMemo"
     title="TanStack Virtual"
   >
-    <TanStackList
-      :data="data"
-      :content-type="contentType"
-      @update:checked="handleCheckedUpdate"
-    />
+    <TanStackList :data="data" :content-type="contentType" @update:checked="handleCheckedUpdate" />
   </VirtualDemoLayout>
 </template>

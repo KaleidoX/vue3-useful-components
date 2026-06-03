@@ -2,7 +2,10 @@
   <div class="editor-sheetjs" :style="styles">
     <div class="mb-4 flex gap-2">
       <input type="file" accept=".xlsx,.xls,.csv" @change="handleImport" />
-      <button class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600" @click="handleExport">
+      <button
+        class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+        @click="handleExport"
+      >
         导出 .xlsx
       </button>
     </div>
@@ -10,7 +13,11 @@
       <table v-if="data.length" class="min-w-full border-collapse">
         <thead>
           <tr>
-            <th v-for="ci in maxCols" :key="ci" class="border bg-gray-100 px-2 py-1 text-left text-sm font-semibold">
+            <th
+              v-for="ci in maxCols"
+              :key="ci"
+              class="border bg-gray-100 px-2 py-1 text-left text-sm font-semibold"
+            >
               {{ colName(ci - 1) }}
             </th>
           </tr>
@@ -34,13 +41,16 @@ import * as XLSX from 'xlsx'
 
 defineOptions({ name: 'EditorSheetJS' })
 
-const props = withDefaults(defineProps<{
-  modelValue?: string[][]
-  height?: number
-  placeholder?: string
-}>(), {
-  placeholder: '导入 .xlsx/.xls/.csv 文件'
-})
+const props = withDefaults(
+  defineProps<{
+    modelValue?: string[][]
+    height?: number
+    placeholder?: string
+  }>(),
+  {
+    placeholder: '导入 .xlsx/.xls/.csv 文件'
+  }
+)
 
 const emit = defineEmits<{
   'update:modelValue': [value: string[][]]
@@ -95,6 +105,8 @@ function handleExport() {
 watch(data, (val) => emit('update:modelValue', val), { deep: true })
 
 const getData = () => data.value
-const clear = () => { data.value = [] }
+const clear = () => {
+  data.value = []
+}
 defineExpose({ getData, clear, handleExport })
 </script>

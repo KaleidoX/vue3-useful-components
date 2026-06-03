@@ -10,15 +10,18 @@ import { UmoEditor } from '@umoteam/editor'
 
 defineOptions({ name: 'EditorUmoEditor', inheritAttrs: false })
 
-const props = withDefaults(defineProps<{
-  modelValue?: string
-  height?: string
-  config?: Record<string, unknown>
-}>(), {
-  modelValue: '',
-  height: '600px',
-  config: () => ({})
-})
+const props = withDefaults(
+  defineProps<{
+    modelValue?: string
+    height?: string
+    config?: Record<string, unknown>
+  }>(),
+  {
+    modelValue: '',
+    height: '600px',
+    config: () => ({})
+  }
+)
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
@@ -42,7 +45,12 @@ function onReady(editor: unknown) {
 }
 
 watch(content, (v) => emit('update:modelValue', v))
-watch(() => props.modelValue, (v) => { if (v !== content.value) content.value = v })
+watch(
+  () => props.modelValue,
+  (v) => {
+    if (v !== content.value) content.value = v
+  }
+)
 
 const wrapperRef = ref<HTMLElement>()
 defineExpose({ getContent: () => content.value, getEditor: () => editorInstance.value })

@@ -1,5 +1,9 @@
 <template>
-  <div class="editor-trix" :class="{ 'hidden-toolbar': hiddenToolbar, 'trix-simple': simple }" :style="styles">
+  <div
+    class="editor-trix"
+    :class="{ 'hidden-toolbar': hiddenToolbar, 'trix-simple': simple }"
+    :style="styles"
+  >
     <div v-if="!hiddenToolbar" class="trix-toolbar-wrapper">
       <trix-toolbar :id="toolbarId" class="trix-toolbar"></trix-toolbar>
     </div>

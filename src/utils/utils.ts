@@ -16,7 +16,7 @@ export function parseXml(xmlString: string) {
     return xmlDoc
   } catch (e) {
     //Internet Explorer
-    console.error(e);
+    console.error(e)
     try {
       // @ts-expect-error eslint-disable-next-line no-undef, no-redeclare
       const xmlDoc = new ActiveXObject('Microsoft.XMLDOM')

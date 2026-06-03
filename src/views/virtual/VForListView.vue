@@ -5,7 +5,7 @@ import VForList from '@/components/virtual/vfor/VForList.vue'
 import VForListWithMemo from '@/components/virtual/vfor/VForListWithMemo.vue'
 
 defineOptions({
-  name: 'VirtualVForListView',
+  name: 'VirtualVForListView'
 })
 
 const count = ref(1000)
@@ -32,11 +32,7 @@ function handleCheckedUpdate(id: number, checked: boolean) {
     :max-count="10000"
   >
     <template v-if="!enableMemo">
-      <VForList
-        :data="data"
-        :content-type="contentType"
-        @update:checked="handleCheckedUpdate"
-      />
+      <VForList :data="data" :content-type="contentType" @update:checked="handleCheckedUpdate" />
     </template>
     <template v-else>
       <VForListWithMemo

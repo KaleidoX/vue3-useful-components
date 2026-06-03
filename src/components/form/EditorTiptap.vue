@@ -2,34 +2,128 @@
   <div class="editor-tiptap" :class="{ 'hidden-toolbar': hiddenToolbar }" :style="styles">
     <div v-if="editor && !hiddenToolbar" class="tiptap-toolbar">
       <template v-if="simple">
-        <button @click="editor.chain().focus().toggleBold().run()" :class="{ active: editor.isActive('bold') }"><b>B</b></button>
-        <button @click="editor.chain().focus().toggleItalic().run()" :class="{ active: editor.isActive('italic') }"><i>I</i></button>
-        <button @click="editor.chain().focus().toggleStrike().run()" :class="{ active: editor.isActive('strike') }"><s>S</s></button>
+        <button
+          @click="editor.chain().focus().toggleBold().run()"
+          :class="{ active: editor.isActive('bold') }"
+        >
+          <b>B</b>
+        </button>
+        <button
+          @click="editor.chain().focus().toggleItalic().run()"
+          :class="{ active: editor.isActive('italic') }"
+        >
+          <i>I</i>
+        </button>
+        <button
+          @click="editor.chain().focus().toggleStrike().run()"
+          :class="{ active: editor.isActive('strike') }"
+        >
+          <s>S</s>
+        </button>
         <span class="divider" />
-        <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ active: editor.isActive('heading', { level: 2 }) }">H2</button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ active: editor.isActive('heading', { level: 3 }) }">H3</button>
+        <button
+          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+          :class="{ active: editor.isActive('heading', { level: 2 }) }"
+        >
+          H2
+        </button>
+        <button
+          @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+          :class="{ active: editor.isActive('heading', { level: 3 }) }"
+        >
+          H3
+        </button>
         <span class="divider" />
-        <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ active: editor.isActive('bulletList') }">•</button>
-        <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ active: editor.isActive('orderedList') }">1.</button>
+        <button
+          @click="editor.chain().focus().toggleBulletList().run()"
+          :class="{ active: editor.isActive('bulletList') }"
+        >
+          •
+        </button>
+        <button
+          @click="editor.chain().focus().toggleOrderedList().run()"
+          :class="{ active: editor.isActive('orderedList') }"
+        >
+          1.
+        </button>
       </template>
       <template v-else>
-        <button @click="editor.chain().focus().toggleBold().run()" :class="{ active: editor.isActive('bold') }"><b>B</b></button>
-        <button @click="editor.chain().focus().toggleItalic().run()" :class="{ active: editor.isActive('italic') }"><i>I</i></button>
-        <button @click="editor.chain().focus().toggleStrike().run()" :class="{ active: editor.isActive('strike') }"><s>S</s></button>
-        <button @click="editor.chain().focus().toggleCode().run()" :class="{ active: editor.isActive('code') }">&lt;/&gt;</button>
+        <button
+          @click="editor.chain().focus().toggleBold().run()"
+          :class="{ active: editor.isActive('bold') }"
+        >
+          <b>B</b>
+        </button>
+        <button
+          @click="editor.chain().focus().toggleItalic().run()"
+          :class="{ active: editor.isActive('italic') }"
+        >
+          <i>I</i>
+        </button>
+        <button
+          @click="editor.chain().focus().toggleStrike().run()"
+          :class="{ active: editor.isActive('strike') }"
+        >
+          <s>S</s>
+        </button>
+        <button
+          @click="editor.chain().focus().toggleCode().run()"
+          :class="{ active: editor.isActive('code') }"
+        >
+          &lt;/&gt;
+        </button>
         <span class="divider" />
-        <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ active: editor.isActive('heading', { level: 1 }) }">H1</button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ active: editor.isActive('heading', { level: 2 }) }">H2</button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ active: editor.isActive('heading', { level: 3 }) }">H3</button>
+        <button
+          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+          :class="{ active: editor.isActive('heading', { level: 1 }) }"
+        >
+          H1
+        </button>
+        <button
+          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+          :class="{ active: editor.isActive('heading', { level: 2 }) }"
+        >
+          H2
+        </button>
+        <button
+          @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+          :class="{ active: editor.isActive('heading', { level: 3 }) }"
+        >
+          H3
+        </button>
         <span class="divider" />
-        <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ active: editor.isActive('bulletList') }">•</button>
-        <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ active: editor.isActive('orderedList') }">1.</button>
-        <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ active: editor.isActive('blockquote') }">"</button>
-        <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ active: editor.isActive('codeBlock') }">{}</button>
+        <button
+          @click="editor.chain().focus().toggleBulletList().run()"
+          :class="{ active: editor.isActive('bulletList') }"
+        >
+          •
+        </button>
+        <button
+          @click="editor.chain().focus().toggleOrderedList().run()"
+          :class="{ active: editor.isActive('orderedList') }"
+        >
+          1.
+        </button>
+        <button
+          @click="editor.chain().focus().toggleBlockquote().run()"
+          :class="{ active: editor.isActive('blockquote') }"
+        >
+          "
+        </button>
+        <button
+          @click="editor.chain().focus().toggleCodeBlock().run()"
+          :class="{ active: editor.isActive('codeBlock') }"
+        >
+          {}
+        </button>
         <span class="divider" />
         <button @click="editor.chain().focus().setHorizontalRule().run()">—</button>
-        <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().undo()">↩</button>
-        <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().redo()">↪</button>
+        <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().undo()">
+          ↩
+        </button>
+        <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().redo()">
+          ↪
+        </button>
       </template>
     </div>
     <EditorContent :editor="editor" class="tiptap-content" />
@@ -79,13 +173,21 @@ const editor = useEditor({
 
 const getEditor = () => editor.value
 
-watch(() => props.modelValue, (value) => {
-  const isSame = editor.value?.getHTML() === value
-  if (isSame) return
-  editor.value?.commands.setContent(value ?? '')
-})
+watch(
+  () => props.modelValue,
+  (value) => {
+    const isSame = editor.value?.getHTML() === value
+    if (isSame) return
+    editor.value?.commands.setContent(value ?? '')
+  }
+)
 
-watch(() => props.readOnly, (val) => { editor.value?.setEditable(!val) })
+watch(
+  () => props.readOnly,
+  (val) => {
+    editor.value?.setEditable(!val)
+  }
+)
 
 const styles = computed(() => {
   const style: CSSProperties = {}
@@ -98,7 +200,9 @@ function clearContent() {
   editor.value?.commands.clearContent()
 }
 
-onUnmounted(() => { editor.value?.destroy() })
+onUnmounted(() => {
+  editor.value?.destroy()
+})
 
 defineExpose({ getEditor, clearContent })
 </script>
@@ -134,11 +238,23 @@ defineExpose({ getEditor, clearContent })
     font-size: 13px;
     cursor: pointer;
     color: #374151;
-    &:hover { background: #e5e7eb; }
-    &.active { background: #d1d5db; border-color: #9ca3af; }
-    &:disabled { opacity: 0.4; cursor: not-allowed; }
+    &:hover {
+      background: #e5e7eb;
+    }
+    &.active {
+      background: #d1d5db;
+      border-color: #9ca3af;
+    }
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
   }
-  .divider { width: 1px; background: #d1d5db; margin: 2px 4px; }
+  .divider {
+    width: 1px;
+    background: #d1d5db;
+    margin: 2px 4px;
+  }
 }
 
 .tiptap-content {
@@ -161,6 +277,8 @@ defineExpose({ getEditor, clearContent })
 }
 
 .hidden-toolbar {
-  .tiptap-toolbar { display: none !important; }
+  .tiptap-toolbar {
+    display: none !important;
+  }
 }
 </style>

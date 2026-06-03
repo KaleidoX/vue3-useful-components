@@ -29,12 +29,17 @@ const CellRendererName = defineComponent({
         return h('input', {
           class: 'w-full border border-gray-300 rounded px-1 py-0.5 text-xs',
           value: row.value.col0,
-          onInput: (e: Event) => compProps.params.onCellUpdate(row.value.id, 'col0', (e.target as HTMLInputElement).value),
+          onInput: (e: Event) =>
+            compProps.params.onCellUpdate(
+              row.value.id,
+              'col0',
+              (e.target as HTMLInputElement).value
+            )
         })
       }
       return h('span', { class: 'truncate' }, row.value.col0)
     }
-  },
+  }
 })
 
 const CellRendererStatus = defineComponent({
@@ -48,18 +53,28 @@ const CellRendererStatus = defineComponent({
           item: { id: row.value.id, content: '', checked: row.value.col1 },
           contentType: 'el-checkbox',
           'onUpdate:checked': (_id: number, checked: boolean) =>
-            compProps.params.onCellUpdate(row.value.id, 'col1', checked),
+            compProps.params.onCellUpdate(row.value.id, 'col1', checked)
         })
       }
       if (ct.value === 'native-checkbox') {
         return h('input', {
-          type: 'checkbox', checked: row.value.col1,
-          onChange: (e: Event) => compProps.params.onCellUpdate(row.value.id, 'col1', (e.target as HTMLInputElement).checked),
+          type: 'checkbox',
+          checked: row.value.col1,
+          onChange: (e: Event) =>
+            compProps.params.onCellUpdate(
+              row.value.id,
+              'col1',
+              (e.target as HTMLInputElement).checked
+            )
         })
       }
-      return h('span', { class: row.value.col1 ? 'text-green-600' : 'text-red-500' }, row.value.col1 ? '是' : '否')
+      return h(
+        'span',
+        { class: row.value.col1 ? 'text-green-600' : 'text-red-500' },
+        row.value.col1 ? '是' : '否'
+      )
     }
-  },
+  }
 })
 
 const CellRendererCategory = defineComponent({
@@ -72,12 +87,17 @@ const CellRendererCategory = defineComponent({
         return h('input', {
           class: 'w-full border border-gray-300 rounded px-1 py-0.5 text-xs',
           value: row.value.col2,
-          onInput: (e: Event) => compProps.params.onCellUpdate(row.value.id, 'col2', (e.target as HTMLInputElement).value),
+          onInput: (e: Event) =>
+            compProps.params.onCellUpdate(
+              row.value.id,
+              'col2',
+              (e.target as HTMLInputElement).value
+            )
         })
       }
       return h('span', { class: 'truncate' }, row.value.col2)
     }
-  },
+  }
 })
 
 const CellRendererNumber = defineComponent({
@@ -89,13 +109,19 @@ const CellRendererNumber = defineComponent({
       if (ct.value === 'editable') {
         return h('input', {
           class: 'w-full text-right border border-gray-300 rounded px-1 py-0.5 text-xs',
-          type: 'number', value: row.value.col3,
-          onInput: (e: Event) => compProps.params.onCellUpdate(row.value.id, 'col3', Number((e.target as HTMLInputElement).value)),
+          type: 'number',
+          value: row.value.col3,
+          onInput: (e: Event) =>
+            compProps.params.onCellUpdate(
+              row.value.id,
+              'col3',
+              Number((e.target as HTMLInputElement).value)
+            )
         })
       }
       return h('span', { class: 'font-mono' }, row.value.col3.toLocaleString())
     }
-  },
+  }
 })
 
 const CellRendererTag = defineComponent({
@@ -108,12 +134,17 @@ const CellRendererTag = defineComponent({
         return h('input', {
           class: 'w-full border border-gray-300 rounded px-1 py-0.5 text-xs',
           value: row.value.col4,
-          onInput: (e: Event) => compProps.params.onCellUpdate(row.value.id, 'col4', (e.target as HTMLInputElement).value),
+          onInput: (e: Event) =>
+            compProps.params.onCellUpdate(
+              row.value.id,
+              'col4',
+              (e.target as HTMLInputElement).value
+            )
         })
       }
       return h('span', {}, row.value.col4)
     }
-  },
+  }
 })
 
 const CellRendererAction = defineComponent({
@@ -124,13 +155,19 @@ const CellRendererAction = defineComponent({
     return () => {
       if (ct.value === 'complex') {
         return h('div', { class: 'flex items-center gap-1' }, [
-          h('span', { class: 'w-5 h-5 rounded-full bg-blue-200 inline-block text-xs text-center leading-5' }, String(row.value.id % 3)),
-          h('ElButton', { size: 'small', text: true }, { default: () => '详情' }),
+          h(
+            'span',
+            {
+              class: 'w-5 h-5 rounded-full bg-blue-200 inline-block text-xs text-center leading-5'
+            },
+            String(row.value.id % 3)
+          ),
+          h('ElButton', { size: 'small', text: true }, { default: () => '详情' })
         ])
       }
       return h('span', { class: 'text-gray-400 text-xs' }, '—')
     }
-  },
+  }
 })
 
 const components = {
@@ -139,24 +176,61 @@ const components = {
   categoryRenderer: CellRendererCategory,
   numberRenderer: CellRendererNumber,
   tagRenderer: CellRendererTag,
-  actionRenderer: CellRendererAction,
+  actionRenderer: CellRendererAction
 }
 
 function cellParams() {
   return {
     contentType: props.contentType,
-    onCellUpdate: (rowId: number, col2: string, val: string | boolean | number) => emit('update:cell', rowId, col2, val),
+    onCellUpdate: (rowId: number, col2: string, val: string | boolean | number) =>
+      emit('update:cell', rowId, col2, val)
   }
 }
 
 const colDefs = computed(() => [
   { headerName: '#', field: 'id', width: 70, suppressSizeToFit: true },
-  { headerName: '名称', field: 'col0', flex: 1, cellRenderer: 'nameRenderer', cellRendererParams: cellParams() },
-  { headerName: '状态', field: 'col1', width: 80, cellRenderer: 'statusRenderer', cellRendererParams: cellParams() },
-  { headerName: '类别', field: 'col2', width: 110, cellRenderer: 'categoryRenderer', cellRendererParams: cellParams() },
-  { headerName: '数值', field: 'col3', width: 110, cellRenderer: 'numberRenderer', cellRendererParams: cellParams() },
-  { headerName: '标签', field: 'col4', width: 80, cellRenderer: 'tagRenderer', cellRendererParams: cellParams() },
-  { headerName: '操作', field: 'id', width: 110, cellRenderer: 'actionRenderer', cellRendererParams: cellParams() },
+  {
+    headerName: '名称',
+    field: 'col0',
+    flex: 1,
+    cellRenderer: 'nameRenderer',
+    cellRendererParams: cellParams()
+  },
+  {
+    headerName: '状态',
+    field: 'col1',
+    width: 80,
+    cellRenderer: 'statusRenderer',
+    cellRendererParams: cellParams()
+  },
+  {
+    headerName: '类别',
+    field: 'col2',
+    width: 110,
+    cellRenderer: 'categoryRenderer',
+    cellRendererParams: cellParams()
+  },
+  {
+    headerName: '数值',
+    field: 'col3',
+    width: 110,
+    cellRenderer: 'numberRenderer',
+    cellRendererParams: cellParams()
+  },
+  {
+    headerName: '标签',
+    field: 'col4',
+    width: 80,
+    cellRenderer: 'tagRenderer',
+    cellRendererParams: cellParams()
+  },
+  {
+    headerName: '操作',
+    field: 'id',
+    width: 110,
+    cellRenderer: 'actionRenderer',
+    cellRendererParams: cellParams()
+  }
 ])
 
 const defaultColDef = { resizable: true, sortable: false }

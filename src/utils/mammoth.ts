@@ -1,7 +1,7 @@
 import mammoth_ from 'mammoth'
-import TurndownService from 'turndown';
+import TurndownService from 'turndown'
 
-const turndownService = new TurndownService();
+const turndownService = new TurndownService()
 
 export async function convertDocxToHtml(file: File): Promise<string> {
   const arrayBuffer = await file.arrayBuffer()
@@ -11,7 +11,7 @@ export async function convertDocxToHtml(file: File): Promise<string> {
 
 export async function convertDocxToMarkdown(file: File): Promise<string> {
   const html = await convertDocxToHtml(file)
-  const markdown = turndownService.turndown(html);
+  const markdown = turndownService.turndown(html)
   return markdown
 }
 

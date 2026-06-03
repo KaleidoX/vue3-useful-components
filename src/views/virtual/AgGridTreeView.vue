@@ -18,9 +18,6 @@ const { allNodes } = useTreeData(count)
     v-model:enable-memo="enableMemo"
     title="AG Grid Community 树"
   >
-    <AgGridTree
-      :nodes="allNodes"
-      :content-type="contentType"
-    />
+    <AgGridTree :nodes="allNodes" :content-type="contentType" />
   </VirtualDemoLayout>
 </template>

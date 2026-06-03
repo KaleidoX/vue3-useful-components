@@ -31,7 +31,10 @@ import './toolbar.scss'
 
 defineOptions({ name: 'EditorCanvasEditor' })
 
-const props = defineProps<{ height?: string; content?: { value: string; size?: number; bold?: boolean }[] }>()
+const props = defineProps<{
+  height?: string
+  content?: { value: string; size?: number; bold?: boolean }[]
+}>()
 const emit = defineEmits<{ ready: [editor: Editor] }>()
 
 const editorRef = ref<HTMLDivElement>()
@@ -49,7 +52,15 @@ const wordCount = ref(0)
 const lineCount = ref(0)
 const colCount = ref(0)
 const isPaging = ref(true)
-const modeNames = ['编辑模式', '整洁模式', '只读模式', '表单模式', '打印模式', '设计模式', '涂鸦模式']
+const modeNames = [
+  '编辑模式',
+  '整洁模式',
+  '只读模式',
+  '表单模式',
+  '打印模式',
+  '设计模式',
+  '涂鸦模式'
+]
 const modeKeys = ['edit', 'clean', 'readonly', 'form', 'print', 'design', 'graffiti']
 let modeIndex = 0
 const currentMode = ref(modeNames[0])
@@ -64,7 +75,17 @@ function togglePageMode() {
   exec('executePageMode', isPaging.value ? 'paging' : 'continuity')
 }
 
-const pageState: PageState = { currentPage, totalPages, wordCount, lineCount, colCount, currentMode, isPaging, cycleMode, togglePageMode }
+const pageState: PageState = {
+  currentPage,
+  totalPages,
+  wordCount,
+  lineCount,
+  colCount,
+  currentMode,
+  isPaging,
+  cycleMode,
+  togglePageMode
+}
 
 provide<CanvasEditorContext>(CANVAS_EDITOR_KEY, { editor, exec, rangeStyle, pageState })
 
@@ -78,7 +99,7 @@ onMounted(() => {
   if (!editorRef.value) return
 
   const initialData: IElement[] = props.content?.length
-    ? props.content.map(item => ({ value: item.value, size: item.size, bold: item.bold }))
+    ? props.content.map((item) => ({ value: item.value, size: item.size, bold: item.bold }))
     : [
         { value: 'Canvas Editor', size: 40, bold: true },
         { value: '' },
@@ -86,7 +107,11 @@ onMounted(() => {
       ]
 
   const instance = new Editor(editorRef.value, initialData)
-  try { instance.use(floatingToolbarPlugin) } catch { /* */ }
+  try {
+    instance.use(floatingToolbarPlugin)
+  } catch {
+    /* */
+  }
 
   const listener = (instance as any).listener
   if (listener) {
@@ -130,14 +155,23 @@ onMounted(() => {
 })
 
 function pickRangeStyle(p: any): RangeStylePayload {
-  return { bold: p.bold, italic: p.italic, underline: p.underline, strikeout: p.strikeout, font: p.font, size: p.size }
+  return {
+    bold: p.bold,
+    italic: p.italic,
+    underline: p.underline,
+    strikeout: p.strikeout,
+    font: p.font,
+    size: p.size
+  }
 }
 
 async function refreshWordCount() {
   try {
     const count = await editor.value?.command?.getWordCount?.()
     if (typeof count === 'number') wordCount.value = count
-  } catch { /* */ }
+  } catch {
+    /* */
+  }
 }
 
 onUnmounted(() => editor.value?.destroy())
@@ -145,7 +179,23 @@ defineExpose({ getEditor: () => editor.value })
 </script>
 
 <style scoped>
-.canvas-editor-root { display: flex; flex-direction: column; background: #f0f0f0; overflow: hidden; }
-.canvas-body { display: flex; flex: 1; min-height: 0; }
-.editor { flex: 1; min-width: 0; min-height: 0; overflow: auto; display: flex; justify-content: center; }
+.canvas-editor-root {
+  display: flex;
+  flex-direction: column;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+.canvas-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.editor {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+}
 </style>

@@ -4,7 +4,7 @@ import VirtualDemoLayout from '@/components/virtual/shared/VirtualDemoLayout.vue
 import VirtualScrollerList from '@/components/virtual/virtual-scroller/VirtualScrollerList.vue'
 
 defineOptions({
-  name: 'VirtualVirtualScrollerListView',
+  name: 'VirtualVirtualScrollerListView'
 })
 
 const count = ref(1000)

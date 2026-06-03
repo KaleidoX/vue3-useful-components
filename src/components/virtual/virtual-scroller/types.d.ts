@@ -18,7 +18,12 @@ declare module 'vue-virtual-scroller' {
     onResize?: () => void
     onVisible?: () => void
     onHidden?: () => void
-    onUpdate?: (startIndex: number, endIndex: number, visibleStartIndex: number, visibleEndIndex: number) => void
+    onUpdate?: (
+      startIndex: number,
+      endIndex: number,
+      visibleStartIndex: number,
+      visibleEndIndex: number
+    ) => void
   }
 
   interface DynamicScrollerProps {

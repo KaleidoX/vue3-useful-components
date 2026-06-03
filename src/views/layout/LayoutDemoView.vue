@@ -16,7 +16,7 @@ import { activatePanel } from '@/components/ui-layout/engine/actions/activate-pa
 import { toggleCollapse } from '@/components/ui-layout/engine/actions/toggle-collapse'
 
 defineOptions({
-  name: 'LayoutDemoView',
+  name: 'LayoutDemoView'
 })
 
 // --- Demo panel components ---
@@ -96,9 +96,7 @@ const DemoPanelC = defineComponent({
             class:
               'flex-1 text-[12px] font-mono bg-slate-100 dark:bg-white/5 p-3 rounded overflow-auto'
           },
-          logs.value.map((log, i) =>
-            h('div', { key: i, class: log.color }, log.text)
-          )
+          logs.value.map((log, i) => h('div', { key: i, class: log.color }, log.text))
         ),
         h('div', { class: 'flex gap-2 mt-2' }, [
           h('input', {
@@ -141,10 +139,15 @@ function buildDefaultLayout(): LayoutNode {
     'p1'
   )
   const c2 = createContainerNode('side_container', 'tabs', [createPanelNode('p3', 'panel-b')], 'p3')
-  return createSplitNode('root', 'horizontal', [c1, c2], [
-    { type: 'ratio', value: 3 },
-    { type: 'ratio', value: 1 }
-  ])
+  return createSplitNode(
+    'root',
+    'horizontal',
+    [c1, c2],
+    [
+      { type: 'ratio', value: 3 },
+      { type: 'ratio', value: 1 }
+    ]
+  )
 }
 
 const store = useLayoutStore()

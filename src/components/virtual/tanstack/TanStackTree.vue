@@ -11,7 +11,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  'toggle': [id: number]
+  toggle: [id: number]
   'update:checked': [id: number, checked: boolean]
 }>()
 
@@ -22,8 +22,8 @@ const virtualizer = useVirtualizer(
     count: props.nodes.length,
     getScrollElement: () => scrollElementRef.value,
     estimateSize: () => 50,
-    overscan: 10,
-  })),
+    overscan: 10
+  }))
 )
 
 function handleCheckedUpdate(id: number, checked: boolean) {
@@ -33,7 +33,9 @@ function handleCheckedUpdate(id: number, checked: boolean) {
 
 <template>
   <div ref="scrollElementRef" class="h-128 overflow-y-auto border border-gray-200 rounded">
-    <div :style="{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }">
+    <div
+      :style="{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }"
+    >
       <div
         v-for="virtualRow in virtualizer.getVirtualItems()"
         :key="nodes[virtualRow.index].id"
@@ -43,16 +45,21 @@ function handleCheckedUpdate(id: number, checked: boolean) {
           left: 0,
           width: '100%',
           height: `${virtualRow.size}px`,
-          transform: `translateY(${virtualRow.start}px)`,
+          transform: `translateY(${virtualRow.start}px)`
         }"
         class="border-b border-gray-100 px-4"
       >
-        <div class="h-full flex items-center" :style="{ paddingLeft: `${nodes[virtualRow.index].level * 24}px` }">
+        <div
+          class="h-full flex items-center"
+          :style="{ paddingLeft: `${nodes[virtualRow.index].level * 24}px` }"
+        >
           <button
             class="mr-1 h-5 w-5 flex cursor-pointer select-none items-center justify-center border-none bg-transparent p-0 text-xs leading-none"
             @click.stop.prevent="emit('toggle', nodes[virtualRow.index].id)"
           >
-            <template v-if="nodes[virtualRow.index].hasChildren">{{ nodes[virtualRow.index].expanded ? '▼' : '▶' }}</template>
+            <template v-if="nodes[virtualRow.index].hasChildren">{{
+              nodes[virtualRow.index].expanded ? '▼' : '▶'
+            }}</template>
           </button>
           <ContentRendererDispatcher
             :item="nodes[virtualRow.index]"

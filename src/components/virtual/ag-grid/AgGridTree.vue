@@ -21,17 +21,26 @@ const CellRendererContent = defineComponent({
     const node = computed(() => compProps.params.data as ITreeNode)
     const ct = computed(() => compProps.params.contentType as string)
     return () =>
-      h('div', { class: 'h-full flex items-center', style: { paddingLeft: `${node.value.level * 24}px` } }, [
-        h('button', {
-          class: 'mr-1 w-5 h-5 flex items-center justify-center border-none bg-transparent cursor-pointer select-none text-xs leading-none p-0',
-          onClick: () => compProps.params.toggleNode(node.value.id),
-        }, node.value.hasChildren ? (node.value.expanded ? '▼' : '▶') : ''),
-        h(ContentRendererDispatcher, {
-          item: node.value,
-          contentType: ct.value,
-        }),
-      ])
-  },
+      h(
+        'div',
+        { class: 'h-full flex items-center', style: { paddingLeft: `${node.value.level * 24}px` } },
+        [
+          h(
+            'button',
+            {
+              class:
+                'mr-1 w-5 h-5 flex items-center justify-center border-none bg-transparent cursor-pointer select-none text-xs leading-none p-0',
+              onClick: () => compProps.params.toggleNode(node.value.id)
+            },
+            node.value.hasChildren ? (node.value.expanded ? '▼' : '▶') : ''
+          ),
+          h(ContentRendererDispatcher, {
+            item: node.value,
+            contentType: ct.value
+          })
+        ]
+      )
+  }
 })
 
 const components = { cellRendererContent: CellRendererContent }
@@ -45,14 +54,14 @@ const colDefs = computed(() => [
     cellRendererParams: {
       contentType: props.contentType,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      toggleNode: (id: number) => {},
-    },
-  },
+      toggleNode: (id: number) => {}
+    }
+  }
 ])
 
 const defaultColDef = {
   resizable: true,
-  sortable: false,
+  sortable: false
 }
 
 const myTheme = themeQuartz

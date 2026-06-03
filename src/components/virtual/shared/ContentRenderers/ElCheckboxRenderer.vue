@@ -17,7 +17,7 @@ watch(
   () => props.item.checked,
   (val) => {
     localChecked.value = val
-  },
+  }
 )
 
 function handleChange(val: string | number | boolean) {

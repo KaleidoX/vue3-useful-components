@@ -11,7 +11,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  'toggle': [id: number]
+  toggle: [id: number]
   'update:checked': [id: number, checked: boolean]
 }>()
 
@@ -19,7 +19,7 @@ const nodesRef = toRef(() => props.nodes)
 
 const { list, containerProps, wrapperProps } = useVirtualList(nodesRef, {
   itemHeight: 50,
-  overscan: 10,
+  overscan: 10
 })
 
 function handleCheckedUpdate(id: number, checked: boolean) {

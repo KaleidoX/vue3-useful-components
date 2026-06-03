@@ -14,7 +14,15 @@
 <script lang="ts" setup>
 import { type CSSProperties } from 'vue'
 
-import { ClassicEditor, Essentials, Paragraph, Bold, Italic, Underline, Strikethrough } from 'ckeditor5'
+import {
+  ClassicEditor,
+  Essentials,
+  Paragraph,
+  Bold,
+  Italic,
+  Underline,
+  Strikethrough
+} from 'ckeditor5'
 import { Heading } from 'ckeditor5'
 import { List } from 'ckeditor5'
 import { Link } from 'ckeditor5'
@@ -49,15 +57,22 @@ const emit = defineEmits(['ready', 'update:modelValue'])
 
 const content = ref(props.modelValue ?? '')
 
-watchDebounced(content, () => emit('update:modelValue', content.value), { debounce: 200, maxWait: 5000 })
+watchDebounced(content, () => emit('update:modelValue', content.value), {
+  debounce: 200,
+  maxWait: 5000
+})
 
-watch(() => props.modelValue, (v) => {
-  if (!v) clearContent()
-  else if (v !== content.value && editorInstance) {
-    editorInstance.setData(v)
-    content.value = v
-  }
-}, { immediate: true })
+watch(
+  () => props.modelValue,
+  (v) => {
+    if (!v) clearContent()
+    else if (v !== content.value && editorInstance) {
+      editorInstance.setData(v)
+      content.value = v
+    }
+  },
+  { immediate: true }
+)
 
 const styles = computed(() => {
   const style: CSSProperties = {}
@@ -66,11 +81,73 @@ const styles = computed(() => {
   return style
 })
 
-const simplePlugins = [Essentials, Paragraph, Bold, Italic, Heading, List, Link, Indent, IndentBlock, Undo]
-const normalPlugins = [Essentials, Paragraph, Bold, Italic, Underline, Strikethrough, Heading, List, Link, Indent, IndentBlock, BlockQuote, CodeBlock, HorizontalLine, Undo]
+const simplePlugins = [
+  Essentials,
+  Paragraph,
+  Bold,
+  Italic,
+  Heading,
+  List,
+  Link,
+  Indent,
+  IndentBlock,
+  Undo
+]
+const normalPlugins = [
+  Essentials,
+  Paragraph,
+  Bold,
+  Italic,
+  Underline,
+  Strikethrough,
+  Heading,
+  List,
+  Link,
+  Indent,
+  IndentBlock,
+  BlockQuote,
+  CodeBlock,
+  HorizontalLine,
+  Undo
+]
 
-const simpleToolbar = ['heading', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link', '|', 'undo', 'redo']
-const normalToolbar = ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', '|', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'link', 'blockQuote', 'codeBlock', '|', 'horizontalLine']
+const simpleToolbar = [
+  'heading',
+  '|',
+  'bold',
+  'italic',
+  '|',
+  'bulletedList',
+  'numberedList',
+  '|',
+  'link',
+  '|',
+  'undo',
+  'redo'
+]
+const normalToolbar = [
+  'undo',
+  'redo',
+  '|',
+  'heading',
+  '|',
+  'bold',
+  'italic',
+  'underline',
+  'strikethrough',
+  '|',
+  'bulletedList',
+  'numberedList',
+  '|',
+  'outdent',
+  'indent',
+  '|',
+  'link',
+  'blockQuote',
+  'codeBlock',
+  '|',
+  'horizontalLine'
+]
 
 const editorConfig = computed(() => ({
   licenseKey: 'GPL',

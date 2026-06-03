@@ -21,8 +21,8 @@ const virtualizer = useVirtualizer(
     count: props.data.length,
     getScrollElement: () => scrollElementRef.value,
     estimateSize: () => (props.contentType === 'dynamic' ? 80 : 50),
-    overscan: 10,
-  })),
+    overscan: 10
+  }))
 )
 
 function handleCheckedUpdate(id: number, checked: boolean) {
@@ -36,7 +36,7 @@ function handleCheckedUpdate(id: number, checked: boolean) {
       :style="{
         height: `${virtualizer.getTotalSize()}px`,
         width: '100%',
-        position: 'relative',
+        position: 'relative'
       }"
     >
       <div
@@ -48,7 +48,7 @@ function handleCheckedUpdate(id: number, checked: boolean) {
           left: 0,
           width: '100%',
           height: `${virtualRow.size}px`,
-          transform: `translateY(${virtualRow.start}px)`,
+          transform: `translateY(${virtualRow.start}px)`
         }"
         class="border-b border-gray-100 px-4"
       >

@@ -11,7 +11,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   'resize-end': [nodeId: string, sizes: LayoutSize[]]
-  'collapse': [nodeId: string, childIndex: number]
+  collapse: [nodeId: string, childIndex: number]
 }>()
 
 function sizeToFlex(s: LayoutSize): string {
@@ -40,10 +40,12 @@ function getContainerSize(): number {
 function sizesToPixelArray(): number[] {
   const total = getContainerSize()
   if (total <= 0) return props.node.sizes.map(() => 0)
-  const pxTotal = props.node.sizes.filter(s => s.type === 'px').reduce((a, s) => a + s.value, 0)
+  const pxTotal = props.node.sizes.filter((s) => s.type === 'px').reduce((a, s) => a + s.value, 0)
   const flexSpace = Math.max(0, total - pxTotal)
-  const ratioTotal = props.node.sizes.filter(s => s.type === 'ratio').reduce((a, s) => a + s.value, 0)
-  const autoCount = props.node.sizes.filter(s => s.type === 'auto').length
+  const ratioTotal = props.node.sizes
+    .filter((s) => s.type === 'ratio')
+    .reduce((a, s) => a + s.value, 0)
+  const autoCount = props.node.sizes.filter((s) => s.type === 'auto').length
   const unitCount = Math.max(1, ratioTotal + autoCount)
 
   return props.node.sizes.map((s, i) => {
@@ -65,12 +67,17 @@ const { localSizes, isDragging, onPointerDown } = useResize(initialPx, {
 
 const holdPixel = ref(false)
 
-watch(() => props.node.sizes, () => { holdPixel.value = false })
+watch(
+  () => props.node.sizes,
+  () => {
+    holdPixel.value = false
+  }
+)
 
 function handleResizeEnd() {
   const total = localSizes.value.reduce((a, b) => a + b, 0)
   if (total <= 0) return
-  const newSizes: LayoutSize[] = localSizes.value.map(s => ({
+  const newSizes: LayoutSize[] = localSizes.value.map((s) => ({
     type: 'ratio' as const,
     value: s / total
   }))
@@ -90,7 +97,7 @@ function handlePointerDown(index: number, event: PointerEvent) {
 
 const localFlex = computed(() => {
   if (isDragging.value || holdPixel.value) {
-    return localSizes.value.map(s => `0 0 ${s}px`)
+    return localSizes.value.map((s) => `0 0 ${s}px`)
   }
   return props.node.sizes.map((s, i) => {
     if (isCollapsed(i)) return `0 0 ${getCollapsedSize(i)}px`

@@ -10,7 +10,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   maxCount: 100000,
-  showEditable: false,
+  showEditable: false
 })
 
 const emit = defineEmits<{
@@ -32,7 +32,7 @@ const contentTypeOptions = computed(() => {
     { label: 'ElCheckbox', value: 'el-checkbox' },
     { label: '原生Checkbox', value: 'native-checkbox' },
     { label: '复杂组件', value: 'complex' },
-    { label: '动态高度', value: 'dynamic' },
+    { label: '动态高度', value: 'dynamic' }
   ]
   if (props.showEditable) {
     base.push({ label: '可编辑', value: 'editable' })
@@ -46,11 +46,13 @@ const renderTime = ref<number | null>(null)
 const scrollContainerRef = ref<HTMLElement | null>(null)
 provide('scrollContainer', scrollContainerRef)
 
-const selectedStep = ref(countSteps.value.indexOf(props.count) >= 0 ? props.count : countSteps.value[2])
+const selectedStep = ref(
+  countSteps.value.indexOf(props.count) >= 0 ? props.count : countSteps.value[2]
+)
 
 function getClosestStep(val: number): number {
   return countSteps.value.reduce((prev, curr) =>
-    Math.abs(curr - val) < Math.abs(prev - val) ? curr : prev,
+    Math.abs(curr - val) < Math.abs(prev - val) ? curr : prev
   )
 }
 
@@ -89,7 +91,7 @@ watch(
   () => [props.count, props.contentType, props.enableMemo],
   async () => {
     renderTime.value = await measureRender(() => {})
-  },
+  }
 )
 
 defineExpose({ scrollContainerRef, measureRender })
@@ -122,11 +124,7 @@ defineExpose({ scrollContainerRef, measureRender })
           size="small"
           @update:model-value="(val) => emit('update:contentType', String(val))"
         >
-          <ElRadioButton
-            v-for="opt in contentTypeOptions"
-            :key="opt.value"
-            :value="opt.value"
-          >
+          <ElRadioButton v-for="opt in contentTypeOptions" :key="opt.value" :value="opt.value">
             {{ opt.label }}
           </ElRadioButton>
         </ElRadioGroup>

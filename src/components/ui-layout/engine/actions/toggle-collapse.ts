@@ -2,15 +2,11 @@ import { isSplitNode } from '../../domain'
 import type { LayoutNode, LayoutSize } from '../../domain'
 import type { SplitChildState } from '../../domain/layout/split'
 
-export function toggleCollapse(
-  root: LayoutNode,
-  nodeId: string,
-  childIndex: number
-): LayoutNode {
+export function toggleCollapse(root: LayoutNode, nodeId: string, childIndex: number): LayoutNode {
   if (root.id === nodeId && isSplitNode(root)) {
-    const states: SplitChildState[] = (root.childStates ?? root.children.map((): SplitChildState => ({ collapsed: false }))).map(
-      (s, i) => (i === childIndex ? { ...s, collapsed: s.collapsed ? false : true } : { ...s })
-    )
+    const states: SplitChildState[] = (
+      root.childStates ?? root.children.map((): SplitChildState => ({ collapsed: false }))
+    ).map((s, i) => (i === childIndex ? { ...s, collapsed: s.collapsed ? false : true } : { ...s }))
 
     const sizes: LayoutSize[] = [...root.sizes]
     const childState = states[childIndex]!
@@ -33,7 +29,7 @@ export function toggleCollapse(
   if (isSplitNode(root)) {
     return {
       ...root,
-      children: root.children.map(child => toggleCollapse(child, nodeId, childIndex))
+      children: root.children.map((child) => toggleCollapse(child, nodeId, childIndex))
     }
   }
 

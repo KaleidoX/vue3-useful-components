@@ -6,10 +6,38 @@
       <i class="i-lucide:underline" @click.stop="exec('executeUnderline')" />
       <span class="dropdown-trigger" @click.stop="toggleDropdown('underline')" />
       <div v-show="ds.underline" class="menu-options" @click.stop>
-        <li @click="exec('executeUnderline'); ds.underline = false">单线</li>
-        <li @click="exec('executeUnderline', { style: 'dashed' }); ds.underline = false">虚线</li>
-        <li @click="exec('executeUnderline', { style: 'dotted' }); ds.underline = false">点线</li>
-        <li @click="exec('executeUnderline', { style: 'wavy' }); ds.underline = false">波浪线</li>
+        <li
+          @click="
+            exec('executeUnderline')
+            ds.underline = false
+          "
+        >
+          单线
+        </li>
+        <li
+          @click="
+            exec('executeUnderline', { style: 'dashed' })
+            ds.underline = false
+          "
+        >
+          虚线
+        </li>
+        <li
+          @click="
+            exec('executeUnderline', { style: 'dotted' })
+            ds.underline = false
+          "
+        >
+          点线
+        </li>
+        <li
+          @click="
+            exec('executeUnderline', { style: 'wavy' })
+            ds.underline = false
+          "
+        >
+          波浪线
+        </li>
       </div>
     </div>
     <div title="删除线" @click="exec('executeStrikeout')"><i class="i-lucide:strikethrough" /></div>
@@ -23,10 +51,19 @@ defineOptions({ name: 'CanvasFormatTool' })
 import { useCanvasEditor } from '../injection'
 const { exec } = useCanvasEditor()
 const ds = reactive<Record<string, boolean>>({})
-function toggleDropdown(k: string) { ds[k] = !ds[k] }
+function toggleDropdown(k: string) {
+  ds[k] = !ds[k]
+}
 </script>
 
 <style scoped>
-.item-underline { position: relative; }
-.dropdown-trigger { display: inline-block; width: 12px; height: 100%; cursor: pointer; }
+.item-underline {
+  position: relative;
+}
+.dropdown-trigger {
+  display: inline-block;
+  width: 12px;
+  height: 100%;
+  cursor: pointer;
+}
 </style>

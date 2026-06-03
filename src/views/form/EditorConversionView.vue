@@ -14,8 +14,16 @@
         </div>
         <div class="border rounded p-4">
           <h3 class="mb-3 text-lg font-semibold">内容 → .docx</h3>
-          <textarea v-model="exportText" class="mb-3 w-full border rounded p-2" rows="6" placeholder="输入文本，每行一个段落" />
-          <button class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600" @click="handleDocxExport">
+          <textarea
+            v-model="exportText"
+            class="mb-3 w-full border rounded p-2"
+            rows="6"
+            placeholder="输入文本，每行一个段落"
+          />
+          <button
+            class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+            @click="handleDocxExport"
+          >
             生成并下载 .docx
           </button>
         </div>
@@ -44,7 +52,7 @@ const exportText = ref(TestHtml)
 
 const evalRows = [
   ['mammoth.js', '★★★', '★★★★★', '★★★★★', 'MIT', '★★★', '★★', '★★★★'],
-  ['docx', '★★★★', '★★★★★', '★★★★', 'MIT', '★★★★', '★★★', '★★★★'],
+  ['docx', '★★★★', '★★★★★', '★★★★', 'MIT', '★★★★', '★★★', '★★★★']
 ]
 
 async function handleDocxImport(e: Event) {

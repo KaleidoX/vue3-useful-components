@@ -17,17 +17,17 @@ import { type CSSProperties } from 'vue'
 import Editor from '@tinymce/tinymce-vue'
 import type { Editor as TinyMCEInstance } from 'tinymce'
 /* Import TinyMCE */
-import tinymce from 'tinymce';
+import tinymce from 'tinymce'
 
 /* Default icons are required. After that, import custom icons if applicable */
-import 'tinymce/icons/default/icons.min.js';
+import 'tinymce/icons/default/icons.min.js'
 
 /* Required TinyMCE components */
-import 'tinymce/themes/silver/theme.min.js';
-import 'tinymce/models/dom/model.min.js';
+import 'tinymce/themes/silver/theme.min.js'
+import 'tinymce/models/dom/model.min.js'
 
 /* Import a skin (can be a custom skin instead of the default) */
-import 'tinymce/skins/ui/oxide/skin.js';
+import 'tinymce/skins/ui/oxide/skin.js'
 
 /* Import plugins */
 import 'tinymce/plugins/advlist'
@@ -49,15 +49,14 @@ import 'tinymce/plugins/visualblocks'
 import 'tinymce/plugins/wordcount'
 
 /* content UI CSS is required */
-import 'tinymce/skins/ui/oxide/content.js';
+import 'tinymce/skins/ui/oxide/content.js'
 
 /* The default content CSS can be changed or replaced with appropriate CSS for the editor content. */
-import 'tinymce/skins/content/default/content.js';
+import 'tinymce/skins/content/default/content.js'
 
 defineOptions({
   name: 'EditorTinyMCE'
 })
-
 ;(window as unknown as Record<string, unknown>).tinymce = tinymce
 
 let editorInstance: TinyMCEInstance | null = null
@@ -79,22 +78,31 @@ const props = defineProps({
 const emit = defineEmits(['ready', 'update:modelValue'])
 
 const simplePlugins = ['lists', 'link']
-const normalPlugins = 'advlist anchor autolink charmap code emoticons fullscreen image link lists media preview searchreplace table visualblocks wordcount'
+const normalPlugins =
+  'advlist anchor autolink charmap code emoticons fullscreen image link lists media preview searchreplace table visualblocks wordcount'
 
 const simpleToolbar = 'bold italic underline | bullist numlist | link'
-const normalToolbar = 'undo redo | blocks fontsize | bold italic underline strikethrough forecolor backcolor | link image media table | align | numlist bullist indent outdent | removeformat charmap emoticons | fullscreen preview'
+const normalToolbar =
+  'undo redo | blocks fontsize | bold italic underline strikethrough forecolor backcolor | link image media table | align | numlist bullist indent outdent | removeformat charmap emoticons | fullscreen preview'
 
 const content = ref(props.modelValue ?? '')
 
-watchDebounced(content, () => emit('update:modelValue', content.value), { debounce: 200, maxWait: 5000 })
+watchDebounced(content, () => emit('update:modelValue', content.value), {
+  debounce: 200,
+  maxWait: 5000
+})
 
-watch(() => props.modelValue, (v) => {
-  if (!v) clearContent()
-  else if (v !== content.value && editorInstance) {
-    editorInstance.setContent(v)
-    content.value = v
-  }
-}, { immediate: true })
+watch(
+  () => props.modelValue,
+  (v) => {
+    if (!v) clearContent()
+    else if (v !== content.value && editorInstance) {
+      editorInstance.setContent(v)
+      content.value = v
+    }
+  },
+  { immediate: true }
+)
 
 const styles = computed(() => {
   const style: CSSProperties = {}
@@ -118,7 +126,9 @@ const editorConfig = computed(() => ({
     editor.on('init', () => {
       if (props.modelValue) editor.setContent(props.modelValue)
     })
-    editor.on('input change', () => { content.value = editor.getContent() })
+    editor.on('input change', () => {
+      content.value = editor.getContent()
+    })
   }
 }))
 
@@ -159,8 +169,12 @@ defineExpose({ getEditor, clearContent })
     min-height: 0;
   }
   &.hidden-toolbar {
-    .tox-editor-header { display: none !important; }
-    .tox-tinymce { border: 1px solid #d1d5db !important; }
+    .tox-editor-header {
+      display: none !important;
+    }
+    .tox-tinymce {
+      border: 1px solid #d1d5db !important;
+    }
   }
 }
 </style>

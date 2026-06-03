@@ -10,7 +10,7 @@ interface Props {
 defineProps<Props>()
 
 const emit = defineEmits<{
-  'toggle': [id: number]
+  toggle: [id: number]
   'update:checked': [id: number, checked: boolean]
 }>()
 

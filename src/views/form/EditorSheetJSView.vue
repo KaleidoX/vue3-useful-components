@@ -19,7 +19,5 @@ import EvaluationTable from './components/EvaluationTable.vue'
 
 defineOptions({ name: 'EditorSheetJSView' })
 
-const evalRows = [
-  ['SheetJS', '★★★', '★★★★', '★★★★★', 'Apache2', '★★★', '★★★★★', '★★★'],
-]
+const evalRows = [['SheetJS', '★★★', '★★★★', '★★★★★', 'Apache2', '★★★', '★★★★★', '★★★']]
 </script>

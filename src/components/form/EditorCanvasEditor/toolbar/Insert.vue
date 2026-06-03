@@ -5,7 +5,17 @@
       <div v-show="ds.table" class="table-picker" @click.stop>
         <div class="table-picker-title">{{ tr }}×{{ tc }}</div>
         <div v-for="r in 10" :key="r" class="table-picker-row">
-          <div v-for="c in 10" :key="c" class="table-picker-cell" :class="{ active: r <= tr && c <= tc }" @mouseenter="tr = r; tc = c" @click="insertTable" />
+          <div
+            v-for="c in 10"
+            :key="c"
+            class="table-picker-cell"
+            :class="{ active: r <= tr && c <= tc }"
+            @mouseenter="
+              tr = r
+              tc = c
+            "
+            @click="insertTable"
+          />
         </div>
       </div>
     </div>
@@ -68,7 +78,8 @@ defineOptions({ name: 'CanvasInsertTool' })
 import { useCanvasEditor } from '../injection'
 const { exec } = useCanvasEditor()
 const ds = reactive<Record<string, boolean>>({})
-const tr = ref(3); const tc = ref(3)
+const tr = ref(3)
+const tc = ref(3)
 const imgRef = ref<HTMLInputElement>()
 
 const showHyperlink = ref(false)
@@ -78,8 +89,15 @@ const hl = reactive({ text: '', url: '' })
 const cbText = ref('')
 const latexStr = ref('')
 
-function toggleDropdown(k: string) { ds[k] = !ds[k] }
-function insertTable() { exec('executeInsertTable', tr.value, tc.value); ds.table = false; tr.value = 3; tc.value = 3 }
+function toggleDropdown(k: string) {
+  ds[k] = !ds[k]
+}
+function insertTable() {
+  exec('executeInsertTable', tr.value, tc.value)
+  ds.table = false
+  tr.value = 3
+  tc.value = 3
+}
 
 function onImage() {
   const file = imgRef.value?.files?.[0]
@@ -95,34 +113,99 @@ function onImage() {
 function doHyperlink() {
   if (!hl.text || !hl.url) return
   exec('executeHyperlink', { url: hl.url, valueList: [{ value: hl.text, size: 16 }] })
-  showHyperlink.value = false; hl.text = ''; hl.url = ''
+  showHyperlink.value = false
+  hl.text = ''
+  hl.url = ''
 }
 function doCodeblock() {
   if (!cbText.value) return
   const lines = cbText.value.split('\n')
-  exec('executeInsertElementList', [{ value: '\n' }, ...lines.map(l => ({ value: l })), { value: '\n' }])
-  showCodeblock.value = false; cbText.value = ''
+  exec('executeInsertElementList', [
+    { value: '\n' },
+    ...lines.map((l) => ({ value: l })),
+    { value: '\n' }
+  ])
+  showCodeblock.value = false
+  cbText.value = ''
 }
 function doLatex() {
   if (!latexStr.value) return
   exec('executeInsertElementList', [{ type: 'latex', value: latexStr.value }])
-  showLatex.value = false; latexStr.value = ''
+  showLatex.value = false
+  latexStr.value = ''
 }
 
 function insertDate() {
   const d = new Date()
-  const s = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
-  exec('executeInsertElementList', [{ type: 'date', value: '', dateFormat: 'yyyy-MM-dd', valueList: [{ value: s }] }])
+  const s = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  exec('executeInsertElementList', [
+    { type: 'date', value: '', dateFormat: 'yyyy-MM-dd', valueList: [{ value: s }] }
+  ])
 }
 </script>
 
 <style scoped>
-.dialog-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); }
-.dialog-box { width: 400px; background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
-.dialog-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
-.dialog-input { width: 100%; height: 32px; border: 1px solid #ddd; border-radius: 4px; padding: 0 8px; margin-bottom: 8px; font-size: 13px; outline: none; box-sizing: border-box; }
-.dialog-textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 8px; margin-bottom: 8px; font-size: 13px; font-family: monospace; outline: none; resize: vertical; box-sizing: border-box; }
-.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
-.dialog-btn { height: 32px; padding: 0 16px; border: 1px solid #ddd; border-radius: 4px; background: #fff; font-size: 13px; cursor: pointer; }
-.dialog-btn.primary { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+.dialog-box {
+  width: 400px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+.dialog-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.dialog-input {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+.dialog-textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-family: monospace;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.dialog-btn {
+  height: 32px;
+  padding: 0 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+.dialog-btn.primary {
+  background: #1a73e8;
+  color: #fff;
+  border-color: #1a73e8;
+}
 </style>

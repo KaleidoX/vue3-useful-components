@@ -1,5 +1,8 @@
 <template>
-  <div ref="containerRef" :style="{ width: '100%', height: height || '600px', overflow: 'hidden' }" />
+  <div
+    ref="containerRef"
+    :style="{ width: '100%', height: height || '600px', overflow: 'hidden' }"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -11,12 +14,15 @@ import '@univerjs/preset-sheets-core/lib/index.css'
 
 defineOptions({ name: 'EditorUniverSheet' })
 
-const props = withDefaults(defineProps<{
-  height?: string
-  data?: object
-}>(), {
-  height: '600px'
-})
+const props = withDefaults(
+  defineProps<{
+    height?: string
+    data?: object
+  }>(),
+  {
+    height: '600px'
+  }
+)
 
 const emit = defineEmits<{
   ready: [api: FUniver]
@@ -32,11 +38,9 @@ onMounted(() => {
   const { univer, univerAPI } = createUniver({
     locale: LocaleType.ZH_CN,
     locales: {
-      [LocaleType.ZH_CN]: mergeLocales(UniverPresetSheetsCoreZhCN),
+      [LocaleType.ZH_CN]: mergeLocales(UniverPresetSheetsCoreZhCN)
     },
-    presets: [
-      UniverSheetsCorePreset({ container: containerRef.value }),
-    ],
+    presets: [UniverSheetsCorePreset({ container: containerRef.value })]
   })
 
   univerAPI.createWorkbook(props.data || {})

@@ -37,20 +37,55 @@ async function refresh() {
   render(containerRef.value, catalog)
 }
 
-watch(visible, (v) => { if (v) nextTick(refresh) })
+watch(visible, (v) => {
+  if (v) nextTick(refresh)
+})
 defineExpose({ refresh })
 </script>
 
 <style scoped>
-.catalog { width: 200px; flex-shrink: 0; background: #fff; border-right: 1px solid #ddd; display: flex; flex-direction: column; overflow-y: auto; }
-.catalog__header { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; font-size: 12px; font-weight: 600; border-bottom: 1px solid #eee; }
-.catalog__close { cursor: pointer; }
-.catalog__main { padding: 4px 0; }
+.catalog {
+  width: 200px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.catalog__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+}
+.catalog__close {
+  cursor: pointer;
+}
+.catalog__main {
+  padding: 4px 0;
+}
 </style>
 
 <style>
-.catalog-item { padding: 2px 0; }
-.catalog-item span { display: block; padding: 3px 12px; font-size: 12px; cursor: pointer; border-radius: 0 4px 4px 0; margin: 0 8px 0 0; }
-.catalog-item span:hover { background: #e8e8e8; }
-.catalog-item .catalog-item { padding-left: 12px; }
+.catalog-item {
+  padding: 2px 0;
+}
+.catalog-item span {
+  display: block;
+  padding: 3px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  margin: 0 8px 0 0;
+}
+.catalog-item span:hover {
+  background: #e8e8e8;
+}
+.catalog-item .catalog-item {
+  padding-left: 12px;
+}
 </style>

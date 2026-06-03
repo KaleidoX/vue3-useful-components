@@ -19,6 +19,14 @@ const { pageState } = useCanvasEditor()
 </script>
 
 <style scoped>
-.footer-center { display: flex; align-items: center; gap: 4px; overflow: hidden; white-space: nowrap; }
-.footer-center span { flex-shrink: 0; }
+.footer-center {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.footer-center span {
+  flex-shrink: 0;
+}
 </style>

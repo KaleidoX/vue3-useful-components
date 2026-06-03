@@ -4,7 +4,7 @@ import VirtualDemoLayout from '@/components/virtual/shared/VirtualDemoLayout.vue
 import VueuseList from '@/components/virtual/vueuse/VueuseList.vue'
 
 defineOptions({
-  name: 'VirtualVueuseListView',
+  name: 'VirtualVueuseListView'
 })
 
 const count = ref(1000)
@@ -29,10 +29,6 @@ function handleCheckedUpdate(id: number, checked: boolean) {
     v-model:enable-memo="enableMemo"
     title="VueUse useVirtualList"
   >
-    <VueuseList
-      :data="data"
-      :content-type="contentType"
-      @update:checked="handleCheckedUpdate"
-    />
+    <VueuseList :data="data" :content-type="contentType" @update:checked="handleCheckedUpdate" />
   </VirtualDemoLayout>
 </template>

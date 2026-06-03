@@ -1,7 +1,11 @@
 <template>
   <div
     class="flex items-center"
-    :class="{ 'px-5 rounded-full': props.round, 'shadow-base': props.shadow, 'bg-base-200': props.background }"
+    :class="{
+      'px-5 rounded-full': props.round,
+      'shadow-base': props.shadow,
+      'bg-base-200': props.background
+    }"
   >
     <label v-if="props.label" class="mr-3 whitespace-nowrap">{{ props.label }}</label>
     <slot>

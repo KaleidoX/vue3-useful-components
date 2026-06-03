@@ -18,7 +18,7 @@ const dataRef = toRef(() => props.data)
 
 const { list, containerProps, wrapperProps } = useVirtualList(dataRef, {
   itemHeight: 50,
-  overscan: 10,
+  overscan: 10
 })
 
 function handleCheckedUpdate(id: number, checked: boolean) {
@@ -30,10 +30,13 @@ function handleCheckedUpdate(id: number, checked: boolean) {
   <div v-bind="containerProps" class="h-128 overflow-y-auto border border-gray-200 rounded">
     <div v-bind="wrapperProps">
       <div
-          v-for="{ data: item } in list"
+        v-for="{ data: item } in list"
         :key="item.id"
         class="border-b border-gray-100 px-4"
-        :style="{ height: props.contentType === 'dynamic' ? (item.height ? `${item.height}px` : '50px') : '50px' }"
+        :style="{
+          height:
+            props.contentType === 'dynamic' ? (item.height ? `${item.height}px` : '50px') : '50px'
+        }"
       >
         <div class="h-full flex items-center">
           <ContentRendererDispatcher

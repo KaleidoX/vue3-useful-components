@@ -12,7 +12,7 @@ defineProps<{
 
 const emit = defineEmits<{
   'resize-end': [nodeId: string, sizes: LayoutSize[]]
-  'collapse': [nodeId: string, childIndex: number]
+  collapse: [nodeId: string, childIndex: number]
   'panel-select': [containerId: string, panelId: string]
   'panel-close': [containerId: string, panelId: string]
 }>()

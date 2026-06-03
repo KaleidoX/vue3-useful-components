@@ -19,7 +19,5 @@ import EvaluationTable from './components/EvaluationTable.vue'
 
 defineOptions({ name: 'EditorUniverDocView' })
 
-const evalRows = [
-  ['Univer Doc', '★★★★', '★★★', '★', 'MIT', '★★★★★', '★★★★', '★★★★'],
-]
+const evalRows = [['Univer Doc', '★★★★', '★★★', '★', 'MIT', '★★★★★', '★★★★', '★★★★']]
 </script>
