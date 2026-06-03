@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import type { CSSProperties } from 'vue'
-import { createEditor } from 'slate'
+import { createEditor } from 'slate-vue3/core'
 import { Slate, Editable } from 'slate-vue3'
 import { withDOM } from 'slate-vue3/dom'
 import { withHistory } from 'slate-vue3/history'
@@ -40,49 +40,45 @@ import { toHtml } from './EditorSlate/converters/toHtml'
 import { toMarkdown } from './EditorSlate/converters/toMarkdown'
 import { fromHtml } from './EditorSlate/converters/fromHtml'
 import { fromMarkdown } from './EditorSlate/converters/fromMarkdown'
-import type { Descendant } from 'slate'
+import type { Descendant } from 'slate-vue3/core'
 
 defineOptions({ name: 'EditorSlate' })
 
-const props = withDefaults(defineProps<{
-  modelValue?: Descendant[]
-  height?: string
-  minHeight?: number
-  placeholder?: string
-  readOnly?: boolean
-  hiddenToolbar?: boolean
-  simple?: boolean
-}>(), {
-  modelValue: () => [],
-  height: '400px',
-  minHeight: 160,
-  placeholder: '请输入内容...',
-  readOnly: false,
-  hiddenToolbar: false,
-  simple: false
-})
+const props = withDefaults(
+  defineProps<{
+    modelValue?: Descendant[]
+    height?: string
+    minHeight?: number
+    placeholder?: string
+    readOnly?: boolean
+    hiddenToolbar?: boolean
+    simple?: boolean
+  }>(),
+  {
+    modelValue: () => [],
+    height: '400px',
+    minHeight: 160,
+    placeholder: '请输入内容...',
+    readOnly: false,
+    hiddenToolbar: false,
+    simple: false
+  }
+)
 
 const emit = defineEmits<{
   'update:modelValue': [value: Descendant[]]
 }>()
 
 const editor = withMentions(
-  withTables(
-    withImages(
-      withLinks(
-        withMarkdown(
-          withHistory(withDOM(createEditor()))
-        )
-      )
-    )
-  )
+  withTables(withImages(withLinks(withMarkdown(withHistory(withDOM(createEditor()))))))
 )
 
 const decorate = () => []
 
-const initialValue: Descendant[] = props.modelValue && props.modelValue.length > 0
-  ? [...props.modelValue]
-  : [{ type: 'paragraph', children: [{ text: '基于 Slate.js + slate-vue3 的编辑器。' }] }]
+const initialValue: Descendant[] =
+  props.modelValue && props.modelValue.length > 0
+    ? [...props.modelValue]
+    : [{ type: 'paragraph', children: [{ text: '基于 Slate.js + slate-vue3 的编辑器。' }] }]
 
 editor.children = initialValue
 editor.onChange()

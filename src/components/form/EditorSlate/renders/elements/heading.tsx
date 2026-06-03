@@ -8,5 +8,9 @@ export function renderHeading({ element, attributes, children }: RenderElementPr
     3: 'text-xl font-medium'
   } as const
   const Tag = `h${level}` as keyof HTMLElementTagNameMap
-  return <Tag {...attributes} class={`${sizeMap[level]} my-2`}>{children}</Tag>
+  return (
+    <Tag {...attributes} class={`${sizeMap[level]} my-2`}>
+      {children}
+    </Tag>
+  )
 }

@@ -46,17 +46,45 @@ export const TOOLBAR_BUTTONS = {
       { icon: 'i-lucide:bold', title: '加粗', action: 'toggleMark', mark: 'bold' },
       { icon: 'i-lucide:italic', title: '斜体', action: 'toggleMark', mark: 'italic' },
       { icon: 'i-lucide:underline', title: '下划线', action: 'toggleMark', mark: 'underline' },
-      { icon: 'i-lucide:strikethrough', title: '删除线', action: 'toggleMark', mark: 'strikethrough' },
+      {
+        icon: 'i-lucide:strikethrough',
+        title: '删除线',
+        action: 'toggleMark',
+        mark: 'strikethrough'
+      },
       { icon: 'i-lucide:code-xml', title: '行内代码', action: 'toggleMark', mark: 'code' }
     ],
     [
-      { icon: 'i-lucide:heading-1', title: '标题 1', action: 'toggleBlock', block: 'heading', level: 1 },
-      { icon: 'i-lucide:heading-2', title: '标题 2', action: 'toggleBlock', block: 'heading', level: 2 },
-      { icon: 'i-lucide:heading-3', title: '标题 3', action: 'toggleBlock', block: 'heading', level: 3 }
+      {
+        icon: 'i-lucide:heading-1',
+        title: '标题 1',
+        action: 'toggleBlock',
+        block: 'heading',
+        level: 1
+      },
+      {
+        icon: 'i-lucide:heading-2',
+        title: '标题 2',
+        action: 'toggleBlock',
+        block: 'heading',
+        level: 2
+      },
+      {
+        icon: 'i-lucide:heading-3',
+        title: '标题 3',
+        action: 'toggleBlock',
+        block: 'heading',
+        level: 3
+      }
     ],
     [
       { icon: 'i-lucide:list', title: '无序列表', action: 'toggleBlock', block: 'bulleted-list' },
-      { icon: 'i-lucide:list-ordered', title: '有序列表', action: 'toggleBlock', block: 'numbered-list' },
+      {
+        icon: 'i-lucide:list-ordered',
+        title: '有序列表',
+        action: 'toggleBlock',
+        block: 'numbered-list'
+      },
       { icon: 'i-lucide:quote', title: '引用', action: 'toggleBlock', block: 'block-quote' },
       { icon: 'i-lucide:braces', title: '代码块', action: 'toggleBlock', block: 'code-block' }
     ],
@@ -71,15 +99,37 @@ export const TOOLBAR_BUTTONS = {
     [
       { icon: 'i-lucide:bold', title: '加粗', action: 'toggleMark', mark: 'bold' },
       { icon: 'i-lucide:italic', title: '斜体', action: 'toggleMark', mark: 'italic' },
-      { icon: 'i-lucide:strikethrough', title: '删除线', action: 'toggleMark', mark: 'strikethrough' }
+      {
+        icon: 'i-lucide:strikethrough',
+        title: '删除线',
+        action: 'toggleMark',
+        mark: 'strikethrough'
+      }
     ],
     [
-      { icon: 'i-lucide:heading-2', title: '标题 2', action: 'toggleBlock', block: 'heading', level: 2 },
-      { icon: 'i-lucide:heading-3', title: '标题 3', action: 'toggleBlock', block: 'heading', level: 3 }
+      {
+        icon: 'i-lucide:heading-2',
+        title: '标题 2',
+        action: 'toggleBlock',
+        block: 'heading',
+        level: 2
+      },
+      {
+        icon: 'i-lucide:heading-3',
+        title: '标题 3',
+        action: 'toggleBlock',
+        block: 'heading',
+        level: 3
+      }
     ],
     [
       { icon: 'i-lucide:list', title: '无序列表', action: 'toggleBlock', block: 'bulleted-list' },
-      { icon: 'i-lucide:list-ordered', title: '有序列表', action: 'toggleBlock', block: 'numbered-list' }
+      {
+        icon: 'i-lucide:list-ordered',
+        title: '有序列表',
+        action: 'toggleBlock',
+        block: 'numbered-list'
+      }
     ]
   ]
 }

@@ -1,9 +1,12 @@
-import type { BaseEditor } from 'slate'
+import type { BaseEditor } from 'slate-vue3/core'
 import type { DOMEditor } from 'slate-vue3/dom'
+import type { HistoryEditor } from 'slate-vue3/history'
 
-export type SlateEditor = BaseEditor & DOMEditor & {
-  // 插件扩展的编辑器属性在此声明
-}
+export type SlateEditor = BaseEditor &
+  DOMEditor &
+  HistoryEditor & {
+    // 插件扩展的编辑器属性在此声明
+  }
 
 export type HeadingLevel = 1 | 2 | 3
 

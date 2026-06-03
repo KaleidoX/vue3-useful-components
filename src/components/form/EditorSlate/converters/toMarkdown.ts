@@ -1,7 +1,7 @@
-import type { Descendant } from 'slate'
+import type { Descendant } from 'slate-vue3/core'
 
 export function toMarkdown(nodes: Descendant[]): string {
-  return nodes.map(node => serializeToMd(node, 0)).join('\n\n')
+  return nodes.map((node) => serializeToMd(node, 0)).join('\n\n')
 }
 
 function serializeToMd(node: any, depth: number): string {
@@ -30,7 +30,10 @@ function serializeToMd(node: any, depth: number): string {
       return `${prefix} ${children}\n`
     }
     case 'block-quote':
-      return children.split('\n').map((l: string) => `> ${l}`).join('\n')
+      return children
+        .split('\n')
+        .map((l: string) => `> ${l}`)
+        .join('\n')
     case 'code-block':
       return '```' + (node.language || '') + '\n' + children + '\n```'
     case 'thematic-break':

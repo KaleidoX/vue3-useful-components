@@ -3,11 +3,17 @@ import { toHtml } from '../converters/toHtml'
 import { toMarkdown } from '../converters/toMarkdown'
 import { fromHtml } from '../converters/fromHtml'
 import { fromMarkdown } from '../converters/fromMarkdown'
-import type { Descendant } from 'slate'
+import type { Descendant } from 'slate-vue3/core'
 
 const testNodes: Descendant[] = [
   { type: 'heading', level: 1, children: [{ text: '标题' }] },
-  { type: 'paragraph', children: [{ text: '普通文本', bold: true }, { text: '和斜体', italic: true }] }
+  {
+    type: 'paragraph',
+    children: [
+      { text: '普通文本', bold: true },
+      { text: '和斜体', italic: true }
+    ]
+  }
 ]
 
 describe('toHtml', () => {
@@ -23,7 +29,9 @@ describe('toHtml', () => {
   })
 
   it('escapes HTML in text', () => {
-    const html = toHtml([{ type: 'paragraph', children: [{ text: '<script>alert("xss")</script>' }] }])
+    const html = toHtml([
+      { type: 'paragraph', children: [{ text: '<script>alert("xss")</script>' }] }
+    ])
     expect(html).not.toContain('<script>')
     expect(html).toContain('&lt;script&gt;')
   })
@@ -34,7 +42,9 @@ describe('toHtml', () => {
   })
 
   it('converts links', () => {
-    const html = toHtml([{ type: 'paragraph', children: [{ text: 'click', link: true, url: 'https://example.com' }] }])
+    const html = toHtml([
+      { type: 'paragraph', children: [{ text: 'click', link: true, url: 'https://example.com' }] }
+    ])
     expect(html).toContain('href="https://example.com"')
   })
 })
@@ -48,7 +58,9 @@ describe('toMarkdown', () => {
   })
 
   it('converts code blocks', () => {
-    const md = toMarkdown([{ type: 'code-block', language: 'ts', children: [{ text: 'const x = 1' }] }])
+    const md = toMarkdown([
+      { type: 'code-block', language: 'ts', children: [{ text: 'const x = 1' }] }
+    ])
     expect(md).toContain('```ts')
     expect(md).toContain('const x = 1')
     expect(md).toContain('```')
@@ -96,7 +108,9 @@ describe('fromMarkdown', () => {
 
 describe('round-trip conversions', () => {
   it('JSON -> HTML -> JSON preserves structure', () => {
-    const original = [{ type: 'paragraph', children: [{ text: 'Hello', bold: true }] }] as Descendant[]
+    const original = [
+      { type: 'paragraph', children: [{ text: 'Hello', bold: true }] }
+    ] as Descendant[]
     const html = toHtml(original)
     const parsed = fromHtml(html)
     expect(parsed).toHaveLength(1)

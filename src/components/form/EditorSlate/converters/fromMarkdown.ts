@@ -1,4 +1,4 @@
-import type { Descendant } from 'slate'
+import type { Descendant } from 'slate-vue3/core'
 
 export function fromMarkdown(md: string): Descendant[] {
   const lines = md.split('\n')
@@ -124,7 +124,8 @@ export function fromMarkdown(md: string): Descendant[] {
 
 function parseInlineMd(text: string): any[] {
   const children: any[] = []
-  const regex = /(\*\*(.+?)\*\*|\*(.+?)\*|~~(.+?)~~|\x60(.+?)\x60|<u>(.+?)<\/u>|\[([^\]]+)\]\(([^)]+)\)|[^*~\x60<\[]+)/g
+  const regex =
+    /(\*\*(.+?)\*\*|\*(.+?)\*|~~(.+?)~~|\x60(.+?)\x60|<u>(.+?)<\/u>|\[([^\]]+)\]\(([^)]+)\)|[^*~\x60<\[]+)/g
   let match
 
   while ((match = regex.exec(text)) !== null) {

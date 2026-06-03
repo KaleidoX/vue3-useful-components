@@ -1,7 +1,7 @@
-import type { Descendant } from 'slate'
+import type { Descendant } from 'slate-vue3/core'
 
 export function toHtml(nodes: Descendant[]): string {
-  return nodes.map(node => serializeNode(node)).join('')
+  return nodes.map((node) => serializeNode(node)).join('')
 }
 
 function serializeNode(node: any): string {
@@ -54,5 +54,9 @@ function escapeHtml(str: string): string {
 }
 
 function escapeAttr(str: string): string {
-  return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
 }

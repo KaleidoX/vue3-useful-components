@@ -1,4 +1,4 @@
-import { Transforms } from 'slate'
+import { Transforms } from 'slate-vue3/core'
 import type { SlateEditor } from '../types'
 
 export function withImages(editor: SlateEditor): SlateEditor {

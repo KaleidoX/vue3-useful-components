@@ -1,5 +1,5 @@
 import type { VNode } from 'vue'
-import type { Text } from 'slate'
+import type { Text } from 'slate-vue3/core'
 import type { VNodeChild } from 'vue'
 import type { RenderElementProps } from 'slate-vue3'
 

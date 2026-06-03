@@ -1,3 +1,5 @@
+ 
+import type { VNodeChild } from 'vue'
 import type { RenderLeafProps } from 'slate-vue3'
 import type { LeafWrapperRegistry } from './types'
 import { boldWrapper } from './leaves/bold'
@@ -22,11 +24,16 @@ const leafWrappers: LeafWrapperRegistry = {
 
 /** 包裹顺序：先外层标记，后内层标记 */
 const wrapperOrder: (keyof typeof leafWrappers)[] = [
-  'bold', 'italic', 'underline', 'strikethrough', 'code', 'link'
+  'bold',
+  'italic',
+  'underline',
+  'strikethrough',
+  'code',
+  'link'
 ]
 
 export function renderLeaf({ leaf, children, attributes }: RenderLeafProps) {
-  let content = <>{children}</>
+  let content: VNodeChild = <>{children}</>
 
   for (const key of wrapperOrder) {
     const wrapper = leafWrappers[key]

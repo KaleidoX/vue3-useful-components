@@ -1,4 +1,4 @@
-import { Editor, Transforms, Range, Element as SlateElement } from 'slate'
+import { Editor, Transforms, Range, Element as SlateElement } from 'slate-vue3/core'
 import { MARKDOWN_SHORTCUTS } from '../constants'
 import type { SlateEditor } from '../types'
 
@@ -9,7 +9,8 @@ export function withMarkdown(editor: SlateEditor): SlateEditor {
     const { selection } = editor
     if (selection && Range.isCollapsed(selection)) {
       const [match] = Editor.nodes(editor, {
-        match: (n) => !Editor.isEditor(n) && SlateElement.isElement(n) && (n as any).type === 'code-block'
+        match: (n) =>
+          !Editor.isEditor(n) && SlateElement.isElement(n) && (n as any).type === 'code-block'
       })
       if (match) {
         insertBreak()

@@ -33,10 +33,21 @@ import TestHtml from './assets/test.html?raw'
 
 defineOptions({ name: 'EditorSlateView' })
 
-const slateInitial = TestHtml.split(/\n\s*\n/).filter(s => s.trim()).slice(1, 6).map(text => ({
-  type: 'paragraph' as const,
-  children: [{ text: text.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().substring(0, 200) }]
-}))
+const slateInitial = TestHtml.split(/\n\s*\n/)
+  .filter((s) => s.trim())
+  .slice(1, 6)
+  .map((text) => ({
+    type: 'paragraph' as const,
+    children: [
+      {
+        text: text
+          .replace(/<[^>]+>/g, '')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .substring(0, 200)
+      }
+    ]
+  }))
 
 const content = ref<any[]>(slateInitial)
 const editorRef = ref<InstanceType<typeof EditorSlate>>()
@@ -44,7 +55,5 @@ const editorRef = ref<InstanceType<typeof EditorSlate>>()
 const htmlOutput = computed(() => editorRef.value?.getHTML?.() ?? '')
 const mdOutput = computed(() => editorRef.value?.getMarkdown?.() ?? '')
 
-const evalRows = [
-  ['Slate.js', '★★★★', '★★', '★★★★', 'MIT', '★★★', '★★★★★', '★★★'],
-]
+const evalRows = [['Slate.js', '★★★★', '★★', '★★★★', 'MIT', '★★★', '★★★★★', '★★★']]
 </script>

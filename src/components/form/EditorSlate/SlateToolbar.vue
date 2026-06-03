@@ -16,18 +16,21 @@
 </template>
 
 <script lang="ts" setup>
-import { Editor, Transforms, Element as SlateElement } from 'slate'
+import { Editor, Transforms, Element as SlateElement } from 'slate-vue3/core'
 import { TOOLBAR_BUTTONS } from './constants'
 import type { SlateEditor } from './types'
 
 defineOptions({ name: 'SlateToolbar' })
 
-const props = withDefaults(defineProps<{
-  editor?: SlateEditor | null
-  simple?: boolean
-}>(), {
-  simple: false
-})
+const props = withDefaults(
+  defineProps<{
+    editor?: SlateEditor | null
+    simple?: boolean
+  }>(),
+  {
+    simple: false
+  }
+)
 
 const buttonGroups = computed(() => {
   return props.simple ? TOOLBAR_BUTTONS.simple : TOOLBAR_BUTTONS.full
@@ -40,15 +43,15 @@ function isActive(btn: any): boolean {
 
   if (btn.mark) {
     const marks = Editor.marks(props.editor)
-    return marks ? marks[btn.mark] === true : false
+    return marks ? (marks as Record<string, unknown>)[btn.mark] === true : false
   }
 
   if (btn.action === 'toggleBlock' && btn.block) {
     const [match] = Array.from(
       Editor.nodes(props.editor, {
         at: Editor.unhangRange(props.editor, selection),
-        match: (n) => (n as any).type === btn.block
-          && (!btn.level || (n as any).level === btn.level)
+        match: (n) =>
+          (n as any).type === btn.block && (!btn.level || (n as any).level === btn.level)
       })
     )
     return !!match
@@ -113,7 +116,7 @@ function handleAction(btn: any) {
 function toggleMark(mark: string) {
   if (!props.editor) return
   const marks = Editor.marks(props.editor)
-  const isActive = marks ? marks[mark] === true : false
+  const isActive = marks ? (marks as Record<string, unknown>)[mark] === true : false
   if (isActive) {
     Editor.removeMark(props.editor, mark)
   } else {
@@ -129,7 +132,8 @@ function toggleBlock(block: string, level?: number) {
 
   if (isList) {
     Transforms.unwrapNodes(props.editor, {
-      match: (n) => !!(n as any).type && ['bulleted-list', 'numbered-list'].includes((n as any).type),
+      match: (n: { type?: string }) =>
+        !!n.type && ['bulleted-list', 'numbered-list'].includes(n.type),
       split: true
     } as any)
 
@@ -144,7 +148,7 @@ function toggleBlock(block: string, level?: number) {
   } else if (block === 'heading') {
     Transforms.setNodes(props.editor, {
       type: isActive ? 'paragraph' : 'heading',
-      level: isActive ? undefined : (level || 1)
+      level: isActive ? undefined : level || 1
     } as any)
   } else {
     Transforms.setNodes(props.editor, {
