@@ -69,7 +69,7 @@ function getRowStyle(ct: string): Record<string, string> {
               <ElCheckbox
                 :model-value="row.col1"
                 size="small"
-                @change="(v) => emit('update:cell', row.id, 'col1', v)"
+                @change="(v: string | number | boolean) => emit('update:cell', row.id, 'col1', v)"
               />
             </template>
             <template v-else-if="contentType === 'native-checkbox'">

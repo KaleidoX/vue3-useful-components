@@ -7,22 +7,8 @@
     <div title="页面模式" @click="toggleDropdown('pm')">
       <i class="i-lucide:layout-template" />
       <div v-show="ds.pm" class="menu-options" style="right: 0; left: auto" @click.stop>
-        <li
-          @click="
-            exec('executePageMode', 'page')
-            ds.pm = false
-          "
-        >
-          分页模式
-        </li>
-        <li
-          @click="
-            exec('executePageMode', 'continuous')
-            ds.pm = false
-          "
-        >
-          连续模式
-        </li>
+        <li @click="applyPageMode('page')">分页模式</li>
+        <li @click="applyPageMode('continuous')">连续模式</li>
       </div>
     </div>
     <div title="全屏" @click="toggleFullscreen"><i class="i-lucide:maximize" /></div>
@@ -48,6 +34,10 @@ function cycleMode() {
   modeIndex = (modeIndex + 1) % modes.length
   mode.value = modes[modeIndex]
   exec('executeMode', modeKeys[modeIndex])
+}
+function applyPageMode(pageMode: 'page' | 'continuous') {
+  exec('executePageMode', pageMode)
+  ds.pm = false
 }
 function toggleFullscreen() {
   if (document.fullscreenElement) document.exitFullscreen()

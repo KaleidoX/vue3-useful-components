@@ -122,7 +122,9 @@ defineExpose({ scrollContainerRef, measureRender })
         <ElRadioGroup
           :model-value="contentType"
           size="small"
-          @update:model-value="(val) => emit('update:contentType', String(val))"
+          @update:model-value="
+            (val: string | number | boolean | undefined) => emit('update:contentType', String(val))
+          "
         >
           <ElRadioButton v-for="opt in contentTypeOptions" :key="opt.value" :value="opt.value">
             {{ opt.label }}
@@ -135,7 +137,9 @@ defineExpose({ scrollContainerRef, measureRender })
         <ElSwitch
           :model-value="enableMemo"
           size="small"
-          @update:model-value="(val) => emit('update:enableMemo', Boolean(val))"
+          @update:model-value="
+            (val: boolean | string | number) => emit('update:enableMemo', Boolean(val))
+          "
         />
       </div>
 

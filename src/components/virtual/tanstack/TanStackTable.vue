@@ -78,7 +78,10 @@ const virtualizer = useVirtualizer(
             <ElCheckbox
               :model-value="data[virtualRow.index].col1"
               size="small"
-              @change="(v) => emit('update:cell', data[virtualRow.index].id, 'col1', v)"
+              @change="
+                (v: string | number | boolean) =>
+                  emit('update:cell', data[virtualRow.index].id, 'col1', v)
+              "
             />
           </template>
           <template v-else-if="contentType === 'native-checkbox'">

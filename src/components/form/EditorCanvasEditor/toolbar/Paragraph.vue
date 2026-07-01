@@ -18,14 +18,7 @@
     <div class="menu-item__row-margin" @click="toggleDropdown('rowmargin')">
       <span>行距</span>
       <div v-show="ds.rowmargin" class="menu-options" @click.stop>
-        <li
-          v-for="r in rowMarginList"
-          :key="r.value"
-          @click="
-            exec('executeRowMargin', r.value)
-            ds.rowmargin = false
-          "
-        >
+        <li v-for="r in rowMarginList" :key="r.value" @click="applyRowMargin(r.value)">
           {{ r.label }}
         </li>
       </div>
@@ -33,22 +26,8 @@
     <div class="menu-item__list" @click="toggleDropdown('list')">
       <span>列表</span>
       <div v-show="ds.list" class="menu-options" @click.stop>
-        <li
-          @click="
-            exec('executeList', 0, null)
-            ds.list = false
-          "
-        >
-          无序列表
-        </li>
-        <li
-          @click="
-            exec('executeList', 1, null)
-            ds.list = false
-          "
-        >
-          有序列表
-        </li>
+        <li @click="applyList(0)">无序列表</li>
+        <li @click="applyList(1)">有序列表</li>
       </div>
     </div>
   </div>
@@ -87,5 +66,15 @@ function applyTitle(t: (typeof titleList)[number]) {
   exec('executeTitle', t.level)
   currentTitle.value = t.label
   ds.title = false
+}
+
+function applyRowMargin(value: number) {
+  exec('executeRowMargin', value)
+  ds.rowmargin = false
+}
+
+function applyList(type: 0 | 1) {
+  exec('executeList', type, null)
+  ds.list = false
 }
 </script>

@@ -10,10 +10,7 @@
             :key="c"
             class="table-picker-cell"
             :class="{ active: r <= tr && c <= tc }"
-            @mouseenter="
-              tr = r
-              tc = c
-            "
+            @mouseenter="updateTablePicker(r, c)"
             @click="insertTable"
           />
         </div>
@@ -97,6 +94,11 @@ function insertTable() {
   ds.table = false
   tr.value = 3
   tc.value = 3
+}
+
+function updateTablePicker(row: number, col: number) {
+  tr.value = row
+  tc.value = col
 }
 
 function onImage() {
