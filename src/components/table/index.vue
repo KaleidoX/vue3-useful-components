@@ -36,7 +36,7 @@ const emits = defineEmits(['update:modelValue'])
 // }
 
 const props = defineProps({
-  ...ElTable.props,
+  ...(ElTable as unknown as { props: Record<string, unknown> }).props,
   stripe: {
     type: Boolean,
     default: true

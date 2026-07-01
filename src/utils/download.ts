@@ -45,8 +45,9 @@ export default {
       .then((res) => {
         const isBlob = blobValidate(res.data)
         if (isBlob) {
+          const contentType = res.headers['content-type']
           const blob = new Blob([res.data], {
-            type: res.headers['content-type']
+            type: typeof contentType === 'string' ? contentType : undefined
           })
           this.save(blob, getFileNameFormHeaders(res) || name)
         } else {

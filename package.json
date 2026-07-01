@@ -11,7 +11,7 @@
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "build-only": "vite build",
+    "build-only": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
     "format": "prettier --write src/"
@@ -39,10 +39,12 @@
     "@notectl/core": "^2.0.6",
     "@tanstack/vue-virtual": "^3.13.26",
     "@tinymce/tinymce-vue": "^6.3.0",
-    "@tiptap/extension-image": "^3.22.5",
-    "@tiptap/extension-placeholder": "^3.22.5",
-    "@tiptap/starter-kit": "^3.22.5",
-    "@tiptap/vue-3": "^3.22.5",
+    "@tiptap/core": "3.27.1",
+    "@tiptap/extension-image": "3.27.1",
+    "@tiptap/extension-placeholder": "3.27.1",
+    "@tiptap/pm": "3.27.1",
+    "@tiptap/starter-kit": "3.27.1",
+    "@tiptap/vue-3": "3.27.1",
     "@umoteam/editor": "^10.1.0",
     "@univerjs/core": "^0.21.1",
     "@univerjs/design": "^0.21.1",
@@ -50,6 +52,7 @@
     "@univerjs/docs-ui": "^0.21.1",
     "@univerjs/engine-formula": "^0.21.1",
     "@univerjs/engine-render": "^0.21.1",
+    "@univerjs/icons": "1.1.1",
     "@univerjs/network": "^0.21.1",
     "@univerjs/preset-docs-core": "^0.21.1",
     "@univerjs/preset-sheets-core": "^0.21.1",
@@ -148,5 +151,11 @@
     "vite-plugin-vue-devtools": "^8.1.0",
     "vitest": "^4.1.0",
     "vue-tsc": "^3.2.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@tiptap/core": "3.27.1",
+      "@tiptap/pm": "3.27.1"
+    }
   }
 }
