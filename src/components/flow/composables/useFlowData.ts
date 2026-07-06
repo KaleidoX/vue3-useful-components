@@ -84,7 +84,7 @@ export const COMPLEX_FORM_START_Y = COMPLEX_INFO_GAP_Y * Math.ceil(INFO_NODES.le
 
 export function useFlowData() {
   const mode = ref<FlowMode>('simple')
-  const nodeCount = ref(10)
+  const nodeCount = ref(50)
   const infoData = reactive<InfoNodeData[]>(INFO_NODES.map((n) => ({ ...n })))
   const formData = reactive<FormNodeData[]>(FORM_NODES.map((n) => ({ ...n })))
 

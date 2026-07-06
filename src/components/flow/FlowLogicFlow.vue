@@ -3,7 +3,6 @@
     <FlowToolbar
       :mode="mode"
       :node-count="nodeCount"
-      :counts="[10, 50, 100]"
       @update:mode="onModeChange"
       @update:node-count="onCountChange"
     />
