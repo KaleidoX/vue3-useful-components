@@ -3,7 +3,7 @@ import FlowG6 from '@/components/flow/FlowG6.vue'
 import EvaluationTable from '@/views/form/components/EvaluationTable.vue'
 
 const flowHeaders = ['工具', '渲染', '功能', '性能', '开发难度', '可扩展', '体积', '许可']
-const evalRows = [['G6 v5', 'Canvas·SVG·WebGL', '★★★', '★★★★★', '★★★', '★★★', '★★★', 'MIT']]
+const evalRows = [['G6 v5', 'Canvas·SVG·WebGL', '★★★', '★', '★★★', '★★★', '★★★', 'MIT']]
 </script>
 
 <template>
