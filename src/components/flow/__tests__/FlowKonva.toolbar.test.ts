@@ -6,7 +6,7 @@ import { nextTick } from 'vue'
  * FlowKonva toolbar 测试 — 使用共享 useFlowData composable + FlowToolbar
  *
  * Features:
- *   - FlowToolbar: 简单/复杂模式按钮 + [10, 50, 100, 500] 计数按钮
+ *   - FlowToolbar: 简单/复杂模式按钮 + [50, 500, 1000, 2000, 2500, 3000] 计数按钮
  *   - Composables: useFlowData 管理节点数据和模式
  *   - Konva: 保持所有渲染逻辑
  */
@@ -30,7 +30,7 @@ vi.mock('vue-konva', () => {
 })
 
 describe('FlowKonva toolbar — 简单节点模式', () => {
-  it('toolbar renders mode buttons + count buttons [10, 50, 100, 500]', async () => {
+  it('toolbar renders mode buttons and six count buttons', async () => {
     const FlowKonva = (await import('../FlowKonva.vue')).default
     const wrapper = mount(FlowKonva, { attachTo: document.body })
     await nextTick()
@@ -38,58 +38,61 @@ describe('FlowKonva toolbar — 简单节点模式', () => {
     const toolbar = wrapper.find('.absolute.left-2.top-2')
     expect(toolbar.exists()).toBe(true)
     const buttons = toolbar.findAll('button')
-    // FlowToolbar: 2 mode buttons + 4 count buttons = 6 total in simple mode
-    expect(buttons).toHaveLength(6)
+    expect(buttons).toHaveLength(8)
     // Mode buttons
     expect(buttons[0].text()).toBe('简单节点')
     expect(buttons[1].text()).toBe('复杂节点')
     // "简单节点" should be active by default
     expect(buttons[0].classes()).toContain('bg-blue-500')
     // Count buttons
-    expect(buttons[2].text()).toBe('10')
-    expect(buttons[3].text()).toBe('50')
-    expect(buttons[4].text()).toBe('100')
-    expect(buttons[5].text()).toBe('500')
-    // First count button (10) should be active
+    expect(buttons.slice(2).map((button) => button.text())).toEqual([
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
+    // First count button (50) should be active
     expect(buttons[2].classes()).toContain('bg-blue-500')
   })
 
-  it('clicking "50" button regenerates nodes and edges', async () => {
+  it('clicking "500" button regenerates nodes and edges', async () => {
     const FlowKonva = (await import('../FlowKonva.vue')).default
     const wrapper = mount(FlowKonva, { attachTo: document.body })
     await nextTick()
 
-    // Initial: 10 nodes (from composable default)
+    // Initial: 50 nodes (from composable default)
     const vm = wrapper.vm as any
-    expect(vm.nodes).toHaveLength(10)
+    expect(vm.nodes).toHaveLength(50)
 
-    // Click "50" (button index: 0=简单节点, 1=复杂节点, 2=10, 3=50, 4=100, 5=500)
+    // Click "500" (button index 3)
     const buttons = wrapper.findAll('.absolute.left-2.top-2 button')
     await buttons[3].trigger('click')
 
     await nextTick()
-    expect(vm.nodes).toHaveLength(50)
-    // Active class should switch to "50" button
+    expect(vm.nodes).toHaveLength(500)
+    // Active class should switch to "500" button
     expect(buttons[3].classes()).toContain('bg-blue-500')
     expect(buttons[2].classes()).not.toContain('bg-blue-500')
   })
 
-  it('node count 10 uses larger node size (100x40) while 50+ use smaller (80x32)', async () => {
+  it('node counts 50 and 500 use 80x32 nodes', async () => {
     const FlowKonva = (await import('../FlowKonva.vue')).default
     const wrapper = mount(FlowKonva, { attachTo: document.body })
     await nextTick()
 
     const vm = wrapper.vm as any
-    // Initial 10 nodes should have 100x40
-    expect(vm.nodes[0].width).toBe(100)
-    expect(vm.nodes[0].height).toBe(40)
+    expect(vm.nodes).toHaveLength(50)
+    expect(vm.nodes[0].width).toBe(80)
+    expect(vm.nodes[0].height).toBe(32)
 
-    // Click "50" (button index 3)
+    // Click "500" (button index 3)
     const buttons = wrapper.findAll('.absolute.left-2.top-2 button')
     await buttons[3].trigger('click')
     await nextTick()
 
-    // 50 nodes should have 80x32
+    expect(vm.nodes).toHaveLength(500)
     expect(vm.nodes[0].width).toBe(80)
     expect(vm.nodes[0].height).toBe(32)
   })
@@ -186,8 +189,8 @@ describe('FlowKonva toolbar — 复杂节点模式', () => {
     await nextTick()
 
     expect(vm.mode).toBe('simple')
-    // Default count 10 still active
-    expect(vm.nodes).toHaveLength(10)
+    // Default count 50 remains active
+    expect(vm.nodes).toHaveLength(50)
     // Simple nodes have no type
     expect(vm.nodes[0].type).toBeUndefined()
   })

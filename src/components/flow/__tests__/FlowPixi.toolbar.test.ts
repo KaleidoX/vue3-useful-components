@@ -5,7 +5,7 @@ import { nextTick } from 'vue'
 /**
  * FlowPixi toolbar 测试 — 使用共享 FlowToolbar 组件和 useFlowData composable
  *
- * FlowToolbar 在 simple 模式下显示：2 个模式按钮 + 4 个数量按钮 = 6 个按钮
+ * FlowToolbar 在 simple 模式下显示：2 个模式按钮 + 6 个数量按钮 = 8 个按钮
  * FlowToolbar 在 complex 模式下显示：2 个模式按钮
  */
 
@@ -59,14 +59,13 @@ vi.mock('pixi.js', () => {
 })
 
 describe('FlowPixi toolbar', () => {
-  it('renders 2 mode buttons and 4 count buttons in simple mode (default)', async () => {
+  it('renders 2 mode buttons and 6 count buttons in simple mode (default)', async () => {
     const FlowPixi = (await import('../FlowPixi.vue')).default
     const wrapper = mount(FlowPixi, { attachTo: document.body })
     await nextTick()
 
     const allButtons = wrapper.findAll('button')
-    // 2 mode buttons + 4 count buttons = 6
-    expect(allButtons).toHaveLength(6)
+    expect(allButtons).toHaveLength(8)
 
     // Mode buttons exist
     const simpleBtn = allButtons.find((b) => b.text() === '简单节点')
@@ -78,33 +77,39 @@ describe('FlowPixi toolbar', () => {
     expect(simpleBtn!.classes()).toContain('bg-blue-500')
     expect(complexBtn!.classes()).not.toContain('bg-blue-500')
 
-    // Count buttons [10, 50, 100, 500]
+    // Count buttons
     const countButtons = allButtons.filter((b) =>
-      ['10', '50', '100', '500'].includes(b.text())
+      ['50', '500', '1000', '2000', '2500', '3000'].includes(b.text())
     )
-    expect(countButtons).toHaveLength(4)
-    // First count button (10) should be active (default count is 10)
+    expect(countButtons.map((button) => button.text())).toEqual([
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
+    // First count button (50) should be active
     expect(countButtons[0].classes()).toContain('bg-blue-500')
   })
 
-  it('clicking count button "100" activates it and deactivates "10"', async () => {
+  it('clicking count button "500" activates it and deactivates "50"', async () => {
     const FlowPixi = (await import('../FlowPixi.vue')).default
     const wrapper = mount(FlowPixi, { attachTo: document.body })
     await nextTick()
 
     const allButtons = wrapper.findAll('button')
-    const btn10 = allButtons.find((b) => b.text() === '10')!
-    const btn100 = allButtons.find((b) => b.text() === '100')!
+    const btn50 = allButtons.find((b) => b.text() === '50')!
+    const btn500 = allButtons.find((b) => b.text() === '500')!
 
-    expect(btn10.classes()).toContain('bg-blue-500')
-    expect(btn100.classes()).not.toContain('bg-blue-500')
+    expect(btn50.classes()).toContain('bg-blue-500')
+    expect(btn500.classes()).not.toContain('bg-blue-500')
 
-    // Click "100"
-    await btn100.trigger('click')
+    await btn500.trigger('click')
     await nextTick()
 
-    expect(btn100.classes()).toContain('bg-blue-500')
-    expect(btn10.classes()).not.toContain('bg-blue-500')
+    expect(btn500.classes()).toContain('bg-blue-500')
+    expect(btn50.classes()).not.toContain('bg-blue-500')
   })
 
   it('switches to complex mode — hides count buttons and activates 复杂节点', async () => {
@@ -140,9 +145,9 @@ describe('FlowPixi toolbar', () => {
     await simpleBtn.trigger('click')
     await nextTick()
 
-    // 6 buttons again
+    // 8 buttons again
     const allButtons = wrapper.findAll('button')
-    expect(allButtons).toHaveLength(6)
+    expect(allButtons).toHaveLength(8)
 
     // 简单节点 should be active
     expect(simpleBtn.classes()).toContain('bg-blue-500')

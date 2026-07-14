@@ -31,3 +31,6 @@ src/auto-imports.d.ts
 *.sw?
 
 pnpm-lock.yaml
+
+# Local deepwork session state
+.slim/deepwork/
