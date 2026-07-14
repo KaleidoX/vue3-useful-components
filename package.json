@@ -56,7 +56,7 @@
     "@univerjs/network": "^0.21.1",
     "@univerjs/preset-docs-core": "^0.21.1",
     "@univerjs/preset-sheets-core": "^0.21.1",
-    "@univerjs/presets": "^0.21.1",
+    "@univerjs/presets": "^0.22.0",
     "@univerjs/rpc": "^0.21.1",
     "@univerjs/sheets": "^0.21.1",
     "@univerjs/sheets-formula": "^0.21.1",
