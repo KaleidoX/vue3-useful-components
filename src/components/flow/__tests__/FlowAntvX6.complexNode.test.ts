@@ -16,6 +16,7 @@ const mockAddEdge = vi.fn()
 const mockCenterContent = vi.fn()
 const mockResize = vi.fn()
 const mockDispose = vi.fn()
+const mockUse = vi.fn()
 
 let nodeIdCounter = 0
 
@@ -31,6 +32,7 @@ const MockGraph = vi.fn(function (this: any) {
   this.centerContent = mockCenterContent
   this.resize = mockResize
   this.dispose = mockDispose
+  this.use = mockUse
 })
 ;(MockGraph as any).registerNode = mockRegisterNode
 
@@ -45,7 +47,8 @@ vi.mock('@antv/x6-vue-shape', () => ({
 
 vi.mock('@antv/x6', () => ({
   Graph: MockGraph,
-  Shape: MockShape
+  Shape: MockShape,
+  Selection: class Selection {}
 }))
 
 describe('FlowAntvX6 complex-node toggle', () => {
@@ -58,6 +61,7 @@ describe('FlowAntvX6 complex-node toggle', () => {
     mockAddEdge.mockClear()
     mockClearCells.mockClear()
     mockCenterContent.mockClear()
+    mockUse.mockClear()
   })
 
   it('renders both "简单节点" and "复杂节点" mode buttons', async () => {
@@ -71,6 +75,7 @@ describe('FlowAntvX6 complex-node toggle', () => {
     const complexBtn = buttons.find((b) => b.text().trim() === '复杂节点')
     expect(simpleBtn).toBeDefined()
     expect(complexBtn).toBeDefined()
+    expect(buttons).toHaveLength(8)
   })
 
   it('"简单节点" button has active class by default', async () => {
@@ -145,8 +150,8 @@ describe('FlowAntvX6 complex-node toggle', () => {
     await simpleBtn!.trigger('click')
     await nextTick()
 
-    // Should be back to 10 simple nodes (default nodeCount)
-    expect(mockAddNode).toHaveBeenCalledTimes(10)
+    // Should be back to 50 simple nodes (default nodeCount)
+    expect(mockAddNode).toHaveBeenCalledTimes(50)
   })
 
   it('active highlight switches between mode buttons', async () => {

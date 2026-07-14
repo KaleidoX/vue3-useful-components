@@ -125,44 +125,47 @@ describe('FlowG6 wheel', () => {
     const toolbar = wrapper.find('.absolute.top-2.left-2')
     expect(toolbar.exists()).toBe(true)
     const buttons = toolbar.findAll('button')
-    // 2 mode buttons (简单节点, 复杂节点) + 4 count buttons = 6 buttons
-    expect(buttons).toHaveLength(6)
+    expect(buttons).toHaveLength(8)
     expect(buttons[0].text()).toBe('简单节点')
     expect(buttons[1].text()).toBe('复杂节点')
-    expect(buttons[2].text()).toBe('10')
-    expect(buttons[3].text()).toBe('50')
-    expect(buttons[4].text()).toBe('100')
-    expect(buttons[5].text()).toBe('500')
+    expect(buttons.slice(2).map((button) => button.text())).toEqual([
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
     // "简单节点" mode button should be active by default
     expect(buttons[0].classes()).toContain('bg-blue-500')
     // "复杂节点" mode button should not be active
     expect(buttons[1].classes()).not.toContain('bg-blue-500')
-    // "10" count button should be active by default
+    // "50" count button should be active by default
     expect(buttons[2].classes()).toContain('bg-blue-500')
   })
 
-  it('clicking "50" button rebuilds graph with 50 nodes', async () => {
+  it('clicking "500" button rebuilds graph with 500 nodes', async () => {
     vi.clearAllMocks()
     const FlowG6 = (await import('../FlowG6.vue')).default
     const wrapper = mount(FlowG6, { attachTo: document.body })
     await nextTick()
 
-    // After onMounted, buildSimpleGraph() calls setData with 10 nodes
+    // After onMounted, buildSimpleGraph() calls setData with 50 nodes
     expect(mockSetData).toHaveBeenCalled()
     const firstSetDataCall = mockSetData.mock.calls[0][0]
-    expect(firstSetDataCall.nodes.length).toBe(10)
+    expect(firstSetDataCall.nodes.length).toBe(50)
 
     mockRender.mockClear()
     mockSetData.mockClear()
 
-    // Click the "50" button (index 3: after 简单节点, 复杂节点, 10)
+    // Click the "500" button (index 3)
     const buttons = wrapper.findAll('.absolute.top-2.left-2 button')
     await buttons[3].trigger('click')
 
-    // After rebuild, setData should have been called with 50 nodes
+    // After rebuild, setData should have been called with 500 nodes
     expect(mockSetData).toHaveBeenCalled()
     const setDataCall = mockSetData.mock.calls[0][0]
-    expect(setDataCall.nodes.length).toBe(50)
+    expect(setDataCall.nodes.length).toBe(500)
     expect(mockRender).toHaveBeenCalled()
   })
 })
@@ -197,8 +200,7 @@ describe('FlowG6 complex node mode', () => {
     expect(toolbar.exists()).toBe(true)
 
     const allButtons = toolbar.findAll('button')
-    // 2 mode buttons + 4 count buttons = 6 buttons in simple mode
-    expect(allButtons).toHaveLength(6)
+    expect(allButtons).toHaveLength(8)
 
     // "简单节点" button at index 0, "复杂节点" at index 1
     expect(allButtons[0].text()).toBe('简单节点')
@@ -279,10 +281,10 @@ describe('FlowG6 complex node mode', () => {
     // "简单节点" button should be active again
     expect(buttons[0].classes()).toContain('bg-blue-500')
 
-    // Should rebuild with 10 simple nodes (default count)
+    // Should rebuild with 50 simple nodes (default count)
     expect(mockSetData).toHaveBeenCalled()
     const setDataCall = mockSetData.mock.calls[0][0]
-    expect(setDataCall.nodes.length).toBe(10)
+    expect(setDataCall.nodes.length).toBe(50)
     // Simple nodes don't have explicit type set
     const typedNodes = setDataCall.nodes.filter((n: any) => n.type)
     expect(typedNodes).toHaveLength(0)

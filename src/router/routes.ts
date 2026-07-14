@@ -225,7 +225,7 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
     key: 'flow',
     path: 'flow',
     label: '流程编辑器',
-    description: '7 种流程编辑器引擎对比（SVG / Canvas），基本流图 + 交互演示。',
+    description: '8 种流程编辑器引擎对比（SVG / Canvas），基本流图 + 交互演示。',
     children: [
       {
         path: 'vue-flow',
@@ -268,6 +268,15 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         name: 'FlowFabric',
         component: () => import('@/views/flow/FlowFabricView.vue'),
         meta: routeMeta('Fabric.js', 'Canvas 引擎 · 对象模型丰富 · 自建编辑器')
+      },
+      {
+        path: 'elkjs-worker',
+        name: 'FlowElkjsWorker',
+        component: () => import('@/views/flow/FlowElkjsWorkerView.vue'),
+        meta: routeMeta(
+          'ELKJS Worker',
+          'ELKJS 0.11.1 分层自动布局 · Web Worker 计算 · Vue Flow 渲染'
+        )
       }
     ]
   },

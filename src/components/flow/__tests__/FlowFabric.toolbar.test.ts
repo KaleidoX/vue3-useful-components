@@ -5,7 +5,7 @@ import { nextTick } from 'vue'
 /**
  * FlowFabric node-count toolbar 测试
  *
- * Feature: 添加节点数量控制工具栏 [10, 50, 100]
+ * Feature: 添加节点数量控制工具栏 [50, 500, 1000, 2000, 2500, 3000]
  * 点击按钮重新生成整个图。
  *
  * 重构后使用共享 FlowToolbar 组件：
@@ -66,7 +66,7 @@ vi.mock('fabric', () => {
 })
 
 describe('FlowFabric toolbar', () => {
-  it('toolbar renders mode buttons [简单节点, 复杂节点] and count buttons [10, 50, 100]', async () => {
+  it('toolbar renders mode buttons and six count buttons', async () => {
     const FlowFabric = (await import('../FlowFabric.vue')).default
     const wrapper = mount(FlowFabric, { attachTo: document.body })
     await nextTick()
@@ -74,33 +74,37 @@ describe('FlowFabric toolbar', () => {
     const toolbar = wrapper.find('.absolute.left-2.top-2')
     expect(toolbar.exists()).toBe(true)
     const buttons = toolbar.findAll('button')
-    // FlowToolbar order: 简单节点, 复杂节点, 10, 50, 100
-    expect(buttons).toHaveLength(5)
+    expect(buttons).toHaveLength(8)
     expect(buttons[0].text()).toBe('简单节点')
     expect(buttons[1].text()).toBe('复杂节点')
-    expect(buttons[2].text()).toBe('10')
-    expect(buttons[3].text()).toBe('50')
-    expect(buttons[4].text()).toBe('100')
+    expect(buttons.slice(2).map((button) => button.text())).toEqual([
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
     // 简单节点 should be active by default
     expect(buttons[0].classes()).toContain('bg-blue-500')
-    // First count button (10) should be active by default
+    // First count button (50) should be active by default
     expect(buttons[2].classes()).toContain('bg-blue-500')
   })
 
-  it('clicking "100" button sets active class', async () => {
+  it('clicking "500" button sets active class', async () => {
     const FlowFabric = (await import('../FlowFabric.vue')).default
     const wrapper = mount(FlowFabric, { attachTo: document.body })
     await nextTick()
 
     const buttons = wrapper.findAll('.absolute.left-2.top-2 button')
-    // Button 10 at index 2 should be active by default
+    // Button 50 at index 2 should be active by default
     expect(buttons[2].classes()).toContain('bg-blue-500')
 
-    // Click "100" (index 4)
-    await buttons[4].trigger('click')
+    // Click "500" (index 3)
+    await buttons[3].trigger('click')
     await nextTick()
 
-    expect(buttons[4].classes()).toContain('bg-blue-500')
+    expect(buttons[3].classes()).toContain('bg-blue-500')
     expect(buttons[2].classes()).not.toContain('bg-blue-500')
   })
 
@@ -150,7 +154,7 @@ describe('FlowFabric toolbar', () => {
 
     // Count buttons should be visible again
     buttons = toolbar.findAll('button')
-    expect(buttons).toHaveLength(5)
+    expect(buttons).toHaveLength(8)
     expect(buttons[0].classes()).toContain('bg-blue-500')
     expect(buttons[1].classes()).not.toContain('bg-blue-500')
   })

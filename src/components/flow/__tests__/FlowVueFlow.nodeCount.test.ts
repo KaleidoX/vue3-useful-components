@@ -5,7 +5,7 @@ import { nextTick } from 'vue'
 /**
  * FlowVueFlow 节点数控制工具栏测试
  *
- * 功能：在画布左上角添加浮动工具栏，按钮 [10 | 50 | 100]，
+ * 功能：在画布左上角添加浮动工具栏，按钮 [50 | 500 | 1000 | 2000 | 2500 | 3000]，
  * 点击后重新生成对应数量的节点（网格排布，cols=5）和边。
  */
 
@@ -44,7 +44,7 @@ describe('FlowVueFlow node-count toolbar', () => {
     vi.clearAllMocks()
   })
 
-  it('renders toolbar with buttons for 10, 50, 100 nodes', async () => {
+  it('renders toolbar with buttons for 50, 500, 1000, 2000, 2500, 3000 nodes', async () => {
     const FlowVueFlow = (await import('../FlowVueFlow.vue')).default
 
     const wrapper = mount(FlowVueFlow)
@@ -53,12 +53,19 @@ describe('FlowVueFlow node-count toolbar', () => {
     const buttons = wrapper.findAll('button')
     const buttonTexts = buttons.map((b) => b.text().trim())
 
-    expect(buttonTexts).toContain('10')
-    expect(buttonTexts).toContain('50')
-    expect(buttonTexts).toContain('100')
+    expect(buttonTexts).toEqual([
+      '简单节点',
+      '复杂节点',
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
   })
 
-  it('default nodeCount is 10 and generates 10 nodes', async () => {
+  it('default nodeCount is 50 and generates 50 nodes', async () => {
     const FlowVueFlow = (await import('../FlowVueFlow.vue')).default
 
     const wrapper = mount(FlowVueFlow)
@@ -66,15 +73,15 @@ describe('FlowVueFlow node-count toolbar', () => {
 
     // Access the component's refs via vm
     const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(10)
+    expect(vm.nodeCount).toBe(50)
 
-    // The underlying nodes reactive data should have 10 entries
+    // The underlying nodes reactive data should have 50 entries
     // We access it via __vue_app__ internals or the component setup state
     // Since nodes is a ref exposed by the setup, it should be accessible
     const nodes = vm.nodes
     expect(nodes).toBeDefined()
     expect(Array.isArray(nodes)).toBe(true)
-    expect(nodes.length).toBe(10)
+    expect(nodes.length).toBe(50)
 
     // Verify grid layout: first node at col 0 row 0, second at col 1 row 0
     // Composables use offset 50, SIMPLE_GAP_X=160, SIMPLE_GAP_Y=70
@@ -84,52 +91,57 @@ describe('FlowVueFlow node-count toolbar', () => {
     expect(nodes[1].position.y).toBe(50)
   })
 
-  it('clicking "50" button changes nodeCount to 50 and regenerates 50 nodes', async () => {
+  it('clicking "500" button changes nodeCount to 500 and regenerates 500 nodes', async () => {
     const FlowVueFlow = (await import('../FlowVueFlow.vue')).default
 
     const wrapper = mount(FlowVueFlow)
     await nextTick()
 
     const buttons = wrapper.findAll('button')
-    const btn50 = buttons.find((b) => b.text().trim() === '50')
-    expect(btn50).toBeDefined()
+    const btn500 = buttons.find((b) => b.text().trim() === '500')
+    expect(btn500).toBeDefined()
 
-    await btn50!.trigger('click')
+    await btn500!.trigger('click')
     await nextTick()
 
     const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(50)
-    expect(vm.nodes.length).toBe(50)
+    expect(vm.nodeCount).toBe(500)
+    expect(vm.nodes.length).toBe(500)
     expect(vm.edges.length).toBeGreaterThan(0)
   })
 
-  it('clicking "100" button regenerates 100 nodes with grid layout', async () => {
+  it('clicking "1000" button regenerates 1000 nodes with grid layout', async () => {
     const FlowVueFlow = (await import('../FlowVueFlow.vue')).default
 
     const wrapper = mount(FlowVueFlow)
     await nextTick()
 
     const buttons = wrapper.findAll('button')
-    const btn100 = buttons.find((b) => b.text().trim() === '100')
-    expect(btn100).toBeDefined()
+    const btn1000 = buttons.find((b) => b.text().trim() === '1000')
+    expect(btn1000).toBeDefined()
 
-    await btn100!.trigger('click')
+    await btn1000!.trigger('click')
     await nextTick()
 
     const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(100)
-    expect(vm.nodes.length).toBe(100)
+    expect(vm.nodeCount).toBe(1000)
+    expect(vm.nodes.length).toBe(1000)
 
     // Grid layout: SIMPLE_COLS=5, SIMPLE_GAP_X=160, SIMPLE_GAP_Y=70, offset=50
     const COLS = 5
     const GAP_X = 160
     const GAP_Y = 70
-    for (let i = 0; i < 100; i++) {
-      const expectedX = 50 + (i % COLS) * GAP_X
-      const expectedY = 50 + Math.floor(i / COLS) * GAP_Y
-      expect(vm.nodes[i].position.x).toBe(expectedX)
-      expect(vm.nodes[i].position.y).toBe(expectedY)
+    const expectPosition = (index: number) => {
+      expect(vm.nodes[index].position).toEqual({
+        x: 50 + (index % COLS) * GAP_X,
+        y: 50 + Math.floor(index / COLS) * GAP_Y
+      })
     }
+
+    expectPosition(0)
+    expectPosition(COLS - 1)
+    expectPosition(COLS)
+    expectPosition(999)
   })
 
   it('generates sequential edges plus cross-links', async () => {
@@ -138,12 +150,7 @@ describe('FlowVueFlow node-count toolbar', () => {
     const wrapper = mount(FlowVueFlow)
     await nextTick()
 
-    // Click 50 to get more interesting edge structure
-    const buttons = wrapper.findAll('button')
-    const btn50 = buttons.find((b) => b.text().trim() === '50')
-    await btn50!.trigger('click')
-    await nextTick()
-
+    // The default 50 nodes provide a compact edge structure.
     const vm = wrapper.vm as any
     const edges = vm.edges
 
@@ -176,22 +183,20 @@ describe('FlowVueFlow node-count toolbar', () => {
     await nextTick()
 
     const buttons = wrapper.findAll('button')
-    const btn10 = buttons.find((b) => b.text().trim() === '10')
     const btn50 = buttons.find((b) => b.text().trim() === '50')
+    const btn500 = buttons.find((b) => b.text().trim() === '500')
 
-    // Default is 10, so btn10 should have active class
-    expect(btn10!.classes()).toContain('bg-blue-500')
+    expect(btn50!.classes()).toContain('bg-blue-500')
 
-    // Click 50
-    await btn50!.trigger('click')
+    await btn500!.trigger('click')
     await nextTick()
 
-    // Now btn50 should be active, btn10 should not
+    // Now btn500 should be active, btn50 should not
     const buttonsAfter = wrapper.findAll('button')
-    const btn10After = buttonsAfter.find((b) => b.text().trim() === '10')
     const btn50After = buttonsAfter.find((b) => b.text().trim() === '50')
+    const btn500After = buttonsAfter.find((b) => b.text().trim() === '500')
 
-    expect(btn50After!.classes()).toContain('bg-blue-500')
-    expect(btn10After!.classes()).not.toContain('bg-blue-500')
+    expect(btn500After!.classes()).toContain('bg-blue-500')
+    expect(btn50After!.classes()).not.toContain('bg-blue-500')
   })
 })

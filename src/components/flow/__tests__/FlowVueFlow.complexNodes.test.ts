@@ -77,7 +77,7 @@ describe('FlowVueFlow complex node mode', () => {
     expect(buttonTexts).toContain('复杂节点')
   })
 
-  it('default mode is simple and renders the count buttons [10, 50, 100]', async () => {
+  it('default mode is simple and renders all six count buttons', async () => {
     const FlowVueFlow = (await import('../FlowVueFlow.vue')).default
     const wrapper = mount(FlowVueFlow)
     await nextTick()
@@ -85,9 +85,16 @@ describe('FlowVueFlow complex node mode', () => {
     const buttons = wrapper.findAll('button')
     const buttonTexts = buttons.map((b) => b.text().trim())
 
-    expect(buttonTexts).toContain('10')
-    expect(buttonTexts).toContain('50')
-    expect(buttonTexts).toContain('100')
+    expect(buttonTexts).toEqual([
+      '简单节点',
+      '复杂节点',
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
   })
 
   it('switching to 复杂节点 generates 20 info nodes + 10 form nodes = 30 total', async () => {
@@ -220,8 +227,15 @@ describe('FlowVueFlow complex node mode', () => {
     // Count buttons should be visible again
     buttons = wrapper.findAll('button')
     const buttonTexts = buttons.map((b) => b.text().trim())
-    expect(buttonTexts).toContain('10')
-    expect(buttonTexts).toContain('50')
-    expect(buttonTexts).toContain('100')
+    expect(buttonTexts).toEqual([
+      '简单节点',
+      '复杂节点',
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
   })
 })

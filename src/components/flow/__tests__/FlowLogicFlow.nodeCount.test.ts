@@ -5,7 +5,7 @@ import { nextTick } from 'vue'
 /**
  * FlowLogicFlow 节点数控制工具栏测试
  *
- * 功能：在画布左上角添加浮动工具栏，按钮 [10 | 50 | 100] 和模式切换按钮，
+ * 功能：在画布左上角添加浮动工具栏，按钮 [50 | 500 | 1000 | 2000 | 2500 | 3000] 和模式切换按钮，
  * 点击后重新渲染对应数量的节点（网格排布，cols=5）和边。
  */
 
@@ -82,7 +82,7 @@ describe('FlowLogicFlow node-count toolbar', () => {
     mockTranslateCenter.mockClear()
   })
 
-  it('renders toolbar with buttons for 10, 50, 100 and mode toggle', async () => {
+  it('renders toolbar with all six count buttons and mode toggle', async () => {
     const FlowLogicFlow = (await import('../FlowLogicFlow.vue')).default
 
     const wrapper = mount(FlowLogicFlow)
@@ -91,75 +91,52 @@ describe('FlowLogicFlow node-count toolbar', () => {
     const buttons = wrapper.findAll('button')
     const buttonTexts = buttons.map((b) => b.text().trim())
 
-    // 简单模式下显示 [10, 50, 100] 和 "复杂节点" 切换按钮
-    expect(buttonTexts).toContain('10')
-    expect(buttonTexts).toContain('50')
-    expect(buttonTexts).toContain('100')
-    expect(buttonTexts).toContain('复杂节点')
+    expect(buttonTexts).toEqual([
+      '简单节点',
+      '复杂节点',
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
   })
 
-  it('default nodeCount is 10', async () => {
+  it('default nodeCount is 50', async () => {
     const FlowLogicFlow = (await import('../FlowLogicFlow.vue')).default
 
     const wrapper = mount(FlowLogicFlow)
     await nextTick()
 
     const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(10)
+    expect(vm.nodeCount).toBe(50)
   })
 
-  it('clicking "50" button sets nodeCount to 50 and calls lf.render with 50 nodes', async () => {
+  it('clicking "500" button renders 500 nodes and 570 edges', async () => {
     const FlowLogicFlow = (await import('../FlowLogicFlow.vue')).default
 
     const wrapper = mount(FlowLogicFlow)
     await nextTick()
 
     const buttons = wrapper.findAll('button')
-    const btn50 = buttons.find((b) => b.text().trim() === '50')
-    expect(btn50).toBeDefined()
+    const btn500 = buttons.find((b) => b.text().trim() === '500')
+    expect(btn500).toBeDefined()
 
-    await btn50!.trigger('click')
+    await btn500!.trigger('click')
     await nextTick()
 
     const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(50)
+    expect(vm.nodeCount).toBe(500)
 
     // lf.render should have been called with the new nodes/edges
     // The initial render happens in onMounted, then this is the second call
     expect(mockRender).toHaveBeenCalledTimes(2) // initial + click
 
     const renderCall = mockRender.mock.calls[1][0]
-    expect(renderCall.nodes.length).toBe(50)
+    expect(renderCall.nodes.length).toBe(500)
 
-    // Sequential edges: 49 + cross-links (i%7===0 && i+5<50 → 7 cross-links)
-    // Total edges: 49 + 7 = 56
-    expect(renderCall.edges.length).toBe(56)
-  })
-
-  it('clicking "100" button regenerates 100 nodes', async () => {
-    const FlowLogicFlow = (await import('../FlowLogicFlow.vue')).default
-
-    const wrapper = mount(FlowLogicFlow)
-    await nextTick()
-
-    const buttons = wrapper.findAll('button')
-    const btn100 = buttons.find((b) => b.text().trim() === '100')
-    expect(btn100).toBeDefined()
-
-    await btn100!.trigger('click')
-    await nextTick()
-
-    const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(100)
-
-    // lf.render called twice
-    expect(mockRender).toHaveBeenCalledTimes(2)
-
-    const renderCall = mockRender.mock.calls[1][0]
-    expect(renderCall.nodes.length).toBe(100)
-
-    // 99 sequential + 14 cross-links = 113
-    expect(renderCall.edges.length).toBe(113)
+    expect(renderCall.edges.length).toBe(570)
   })
 
   it('nodes are arranged in grid with COLS=5', async () => {
@@ -220,20 +197,20 @@ describe('FlowLogicFlow node-count toolbar', () => {
     await nextTick()
 
     const buttons = wrapper.findAll('button')
-    const btn10 = buttons.find((b) => b.text().trim() === '10')
     const btn50 = buttons.find((b) => b.text().trim() === '50')
+    const btn500 = buttons.find((b) => b.text().trim() === '500')
 
-    expect(btn10!.classes()).toContain('bg-blue-500')
+    expect(btn50!.classes()).toContain('bg-blue-500')
 
-    await btn50!.trigger('click')
+    await btn500!.trigger('click')
     await nextTick()
 
     const buttonsAfter = wrapper.findAll('button')
-    const btn10After = buttonsAfter.find((b) => b.text().trim() === '10')
     const btn50After = buttonsAfter.find((b) => b.text().trim() === '50')
+    const btn500After = buttonsAfter.find((b) => b.text().trim() === '500')
 
-    expect(btn50After!.classes()).toContain('bg-blue-500')
-    expect(btn10After!.classes()).not.toContain('bg-blue-500')
+    expect(btn500After!.classes()).toContain('bg-blue-500')
+    expect(btn50After!.classes()).not.toContain('bg-blue-500')
   })
 
   it('calls translateCenter after regenerating graph', async () => {

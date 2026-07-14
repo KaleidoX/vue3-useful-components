@@ -5,7 +5,7 @@ import { nextTick } from 'vue'
 /**
  * FlowAntvX6 节点数控制工具栏测试
  *
- * 功能：在画布左上角添加浮动工具栏，按钮 [10 | 50 | 100]，
+ * 功能：在画布左上角添加浮动工具栏，按钮 [50 | 500 | 1000 | 2000 | 2500 | 3000]，
  * 点击后 clearCells 再重新添加节点（网格排布，cols=5）和边。
  */
 
@@ -15,6 +15,7 @@ const mockAddEdge = vi.fn()
 const mockCenterContent = vi.fn()
 const mockResize = vi.fn()
 const mockDispose = vi.fn()
+const mockUse = vi.fn()
 
 // Track added nodes to return incrementing IDs
 let nodeIdCounter = 0
@@ -28,6 +29,7 @@ const MockGraph = vi.fn(function (this: any) {
   this.centerContent = mockCenterContent
   this.resize = mockResize
   this.dispose = mockDispose
+  this.use = mockUse
 })
 
 // Mock Shape.Rect for type checking
@@ -42,7 +44,8 @@ vi.mock('@antv/x6-vue-shape', () => ({
 
 vi.mock('@antv/x6', () => ({
   Graph: MockGraph,
-  Shape: MockShape
+  Shape: MockShape,
+  Selection: class Selection {}
 }))
 
 describe('FlowAntvX6 node-count toolbar', () => {
@@ -54,9 +57,10 @@ describe('FlowAntvX6 node-count toolbar', () => {
     mockAddEdge.mockClear()
     mockClearCells.mockClear()
     mockCenterContent.mockClear()
+    mockUse.mockClear()
   })
 
-  it('renders toolbar with buttons for 10, 50, 100 nodes', async () => {
+  it('renders toolbar with all six count buttons', async () => {
     const FlowAntvX6 = (await import('../FlowAntvX6.vue')).default
 
     const wrapper = mount(FlowAntvX6)
@@ -65,22 +69,29 @@ describe('FlowAntvX6 node-count toolbar', () => {
     const buttons = wrapper.findAll('button')
     const buttonTexts = buttons.map((b) => b.text().trim())
 
-    expect(buttonTexts).toContain('10')
-    expect(buttonTexts).toContain('50')
-    expect(buttonTexts).toContain('100')
+    expect(buttonTexts).toEqual([
+      '简单节点',
+      '复杂节点',
+      '50',
+      '500',
+      '1000',
+      '2000',
+      '2500',
+      '3000'
+    ])
   })
 
-  it('default nodeCount is 10', async () => {
+  it('default nodeCount is 50', async () => {
     const FlowAntvX6 = (await import('../FlowAntvX6.vue')).default
 
     const wrapper = mount(FlowAntvX6)
     await nextTick()
 
     const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(10)
+    expect(vm.nodeCount).toBe(50)
   })
 
-  it('clicking "50" button sets nodeCount to 50 and calls clearCells + addNode 50 times', async () => {
+  it('clicking "500" button regenerates 500 nodes and 570 edges', async () => {
     const FlowAntvX6 = (await import('../FlowAntvX6.vue')).default
 
     const wrapper = mount(FlowAntvX6)
@@ -92,23 +103,23 @@ describe('FlowAntvX6 node-count toolbar', () => {
     mockClearCells.mockClear()
 
     const buttons = wrapper.findAll('button')
-    const btn50 = buttons.find((b) => b.text().trim() === '50')
-    expect(btn50).toBeDefined()
+    const btn500 = buttons.find((b) => b.text().trim() === '500')
+    expect(btn500).toBeDefined()
 
-    await btn50!.trigger('click')
+    await btn500!.trigger('click')
     await nextTick()
 
     const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(50)
+    expect(vm.nodeCount).toBe(500)
 
     // Should call clearCells to remove old nodes
     expect(mockClearCells).toHaveBeenCalled()
 
-    // Should add 50 nodes
-    expect(mockAddNode).toHaveBeenCalledTimes(50)
+    expect(mockAddNode).toHaveBeenCalledTimes(500)
+    expect(mockAddEdge).toHaveBeenCalledTimes(570)
   })
 
-  it('clicking "100" button regenerates 100 nodes and edges', async () => {
+  it('nodes are arranged in grid with COLS=5', async () => {
     const FlowAntvX6 = (await import('../FlowAntvX6.vue')).default
 
     const wrapper = mount(FlowAntvX6)
@@ -119,34 +130,9 @@ describe('FlowAntvX6 node-count toolbar', () => {
     mockClearCells.mockClear()
 
     const buttons = wrapper.findAll('button')
-    const btn100 = buttons.find((b) => b.text().trim() === '100')
-    expect(btn100).toBeDefined()
-
-    await btn100!.trigger('click')
-    await nextTick()
-
-    const vm = wrapper.vm as any
-    expect(vm.nodeCount).toBe(100)
-    expect(mockClearCells).toHaveBeenCalled()
-    expect(mockAddNode).toHaveBeenCalledTimes(100)
-
-    // Should generate sequential edges (99 for 100 nodes) + cross-links
-    // Cross-links: i%7===0 && i+5<100 → i=0,7,14,21,28,35,42,49,56,63,70,77,84,91
-    // That's 14 cross-links. Total edges: 99 + 14 = 113
-    expect(mockAddEdge).toHaveBeenCalledTimes(113)
-  })
-
-  it('nodes are arranged in grid with COLS=5', async () => {
-    const FlowAntvX6 = (await import('../FlowAntvX6.vue')).default
-
-    const wrapper = mount(FlowAntvX6)
-    await nextTick()
-
-    mockAddNode.mockClear()
-    mockClearCells.mockClear()
-
-    const buttons = wrapper.findAll('button')
     const btn50 = buttons.find((b) => b.text().trim() === '50')
+    expect(btn50).toBeDefined()
+
     await btn50!.trigger('click')
     await nextTick()
 
@@ -175,22 +161,20 @@ describe('FlowAntvX6 node-count toolbar', () => {
     await nextTick()
 
     const buttons = wrapper.findAll('button')
-    const btn10 = buttons.find((b) => b.text().trim() === '10')
     const btn50 = buttons.find((b) => b.text().trim() === '50')
+    const btn500 = buttons.find((b) => b.text().trim() === '500')
 
-    // Default is 10, should have active class
-    expect(btn10!.classes()).toContain('bg-blue-500')
+    expect(btn50!.classes()).toContain('bg-blue-500')
 
-    // Click 50
-    await btn50!.trigger('click')
+    await btn500!.trigger('click')
     await nextTick()
 
     const buttonsAfter = wrapper.findAll('button')
-    const btn10After = buttonsAfter.find((b) => b.text().trim() === '10')
     const btn50After = buttonsAfter.find((b) => b.text().trim() === '50')
+    const btn500After = buttonsAfter.find((b) => b.text().trim() === '500')
 
-    expect(btn50After!.classes()).toContain('bg-blue-500')
-    expect(btn10After!.classes()).not.toContain('bg-blue-500')
+    expect(btn500After!.classes()).toContain('bg-blue-500')
+    expect(btn50After!.classes()).not.toContain('bg-blue-500')
   })
 
   it('calls centerContent after regenerating graph', async () => {
