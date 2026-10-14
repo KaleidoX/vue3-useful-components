@@ -9,6 +9,7 @@
     <slot name="paragraph"><Paragraph /></slot>
     <div class="menu-divider" />
     <slot name="insert"><Insert /></slot>
+    <slot name="table-operations"><TableOperations /></slot>
     <div class="menu-divider" />
     <slot name="search-print"><SearchPrint @toggle-search="showSearch = !showSearch" /></slot>
     <slot name="right"><RightTools /></slot>
@@ -23,6 +24,7 @@ import Format from './toolbar/Format.vue'
 import Color from './toolbar/Color.vue'
 import Paragraph from './toolbar/Paragraph.vue'
 import Insert from './toolbar/Insert.vue'
+import TableOperations from './toolbar/TableOperations.vue'
 import SearchPrint from './toolbar/SearchPrint.vue'
 import RightTools from './toolbar/RightTools.vue'
 

@@ -18,6 +18,7 @@ import Editor from '@tinymce/tinymce-vue'
 import type { Editor as TinyMCEInstance } from 'tinymce'
 /* Import TinyMCE */
 import tinymce from 'tinymce'
+import { createTinyMCEConfig } from './tinyMCEConfig'
 
 /* Default icons are required. After that, import custom icons if applicable */
 import 'tinymce/icons/default/icons.min.js'
@@ -77,14 +78,6 @@ const props = defineProps({
 })
 const emit = defineEmits(['ready', 'update:modelValue'])
 
-const simplePlugins = ['lists', 'link']
-const normalPlugins =
-  'advlist anchor autolink charmap code emoticons fullscreen image link lists media preview searchreplace table visualblocks wordcount'
-
-const simpleToolbar = 'bold italic underline | bullist numlist | link'
-const normalToolbar =
-  'undo redo | blocks fontsize | bold italic underline strikethrough forecolor backcolor | link image media table | align | numlist bullist indent outdent | removeformat charmap emoticons | fullscreen preview'
-
 const content = ref(props.modelValue ?? '')
 
 watchDebounced(content, () => emit('update:modelValue', content.value), {
@@ -111,26 +104,23 @@ const styles = computed(() => {
   return style
 })
 
-const editorConfig = computed(() => ({
-  height: props.height || 360,
-  min_height: props.minHeight,
-  menubar: false,
-  promotion: false,
-  base_url: '',
-  plugins: props.simple ? simplePlugins : normalPlugins,
-  toolbar: props.simple ? simpleToolbar : normalToolbar,
-  toolbar_mode: 'sliding',
-  placeholder: props.placeholder,
-  readonly: props.readOnly,
-  setup: (editor: TinyMCEInstance) => {
-    editor.on('init', () => {
-      if (props.modelValue) editor.setContent(props.modelValue)
-    })
-    editor.on('input change', () => {
-      content.value = editor.getContent()
-    })
-  }
-}))
+const editorConfig = computed(() =>
+  createTinyMCEConfig({
+    simple: props.simple,
+    height: props.height || 360,
+    minHeight: props.minHeight,
+    placeholder: props.placeholder,
+    readOnly: props.readOnly,
+    setup: (editor: TinyMCEInstance) => {
+      editor.on('init', () => {
+        if (props.modelValue) editor.setContent(props.modelValue)
+      })
+      editor.on('input change', () => {
+        content.value = editor.getContent()
+      })
+    }
+  })
+)
 
 function clearContent() {
   if (editorInstance) {

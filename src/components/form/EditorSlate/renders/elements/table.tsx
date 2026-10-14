@@ -1,7 +1,8 @@
 import type { RenderElementProps } from 'slate-vue3'
 
 export function renderTable({ element, attributes, children }: RenderElementProps) {
-  const type = (element as any).type
+  const tableElement = element as any
+  const type = tableElement.type
   if (type === 'table') {
     return (
       <table {...attributes} class="my-2 w-full border-collapse border border-gray-300">
@@ -12,8 +13,20 @@ export function renderTable({ element, attributes, children }: RenderElementProp
   if (type === 'table-row') {
     return <tr {...attributes}>{children}</tr>
   }
+  if (tableElement.hiddenBy) {
+    return (
+      <td {...attributes} style={{ display: 'none' }}>
+        {children}
+      </td>
+    )
+  }
   return (
-    <td {...attributes} class="border border-gray-300 px-2 py-1">
+    <td
+      {...attributes}
+      rowspan={tableElement.rowspan ?? 1}
+      colspan={tableElement.colspan ?? 1}
+      class="border border-gray-300 px-2 py-1"
+    >
       {children}
     </td>
   )

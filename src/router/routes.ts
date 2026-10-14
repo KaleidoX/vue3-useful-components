@@ -1,4 +1,6 @@
-import type { RouteRecordRaw } from 'vue-router'
+import type { RouteMeta, RouteRecordRaw } from 'vue-router'
+
+import type { EditorCapabilityMeta } from './editorCapabilities'
 
 export interface PreviewRouteGroup {
   key: string
@@ -8,11 +10,18 @@ export interface PreviewRouteGroup {
   children: RouteRecordRaw[]
 }
 
-const routeMeta = (title: string, description?: string) => ({
+const routeMeta = (
+  title: string,
+  description?: string,
+  editorCapability?: EditorCapabilityMeta
+): RouteMeta => ({
   title,
-  description,
-  inHomeLayout: true
+  ...(description ? { description } : {}),
+  inHomeLayout: true,
+  ...(editorCapability ? { editorCapability } : {})
 })
+
+const checkedAt = '2026-09-04'
 
 export const previewRouteGroups: PreviewRouteGroup[] = [
   {
@@ -21,6 +30,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
     label: '表单编辑',
     description: '富文本与编辑器能力统一归类，适合直接在右侧预览交互效果。',
     children: [
+      {
+        path: 'comparison',
+        name: 'FormEditorComparison',
+        component: () => import('@/views/form/EditorComparisonView.vue'),
+        meta: routeMeta('编辑器能力对比', '集中查看表格合并、数据格式、许可证与维护状态。')
+      },
       {
         path: 'conversion',
         name: 'FormEditorConversion',
@@ -31,97 +46,325 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         path: 'editor-sheetjs',
         name: 'FormEditorSheetJS',
         component: () => import('@/views/form/EditorSheetJSView.vue'),
-        meta: routeMeta('SheetJS电子表格')
+        meta: routeMeta('SheetJS电子表格', undefined, {
+          kind: 'spreadsheet',
+          contentFormat: 'workbook',
+          mergeSupport: 'unsupported',
+          persistence: 'unsupported',
+          maintenance: 'limited',
+          maintenanceCheckedAt: checkedAt,
+          license: 'Apache-2.0',
+          staticDeployment: true,
+          notes: '当前页面只解析与展示文件，不可编辑合并。'
+        })
       },
       {
         path: 'editor-univer-sheet',
         name: 'FormEditorUniverSheet',
         component: () => import('@/views/form/EditorUniverView.vue'),
-        meta: routeMeta('Univer电子表格')
+        meta: routeMeta('Univer电子表格', undefined, {
+          kind: 'spreadsheet',
+          contentFormat: 'workbook',
+          mergeSupport: 'built-in',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'Apache-2.0',
+          staticDeployment: true,
+          notes: '工作簿 JSON 回读已验证；合并仅保留左上角内容。'
+        })
       },
       {
         path: 'editor-univer-doc',
         name: 'FormEditorUniverDoc',
         component: () => import('@/views/form/EditorUniverDocView.vue'),
-        meta: routeMeta('Univer文档')
+        meta: routeMeta('Univer文档', undefined, {
+          kind: 'document',
+          contentFormat: 'json',
+          mergeSupport: 'unsupported',
+          persistence: 'unsupported',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'Apache-2.0',
+          staticDeployment: true,
+          notes: '当前文档预设没有表格合并操作。'
+        })
       },
       {
         path: 'editor-umo',
         name: 'FormEditorUmoEditor',
         component: () => import('@/views/form/EditorUmoEditorView.vue'),
-        meta: routeMeta('Umo编辑器')
+        meta: routeMeta('Umo编辑器', undefined, {
+          kind: 'document',
+          contentFormat: 'html',
+          mergeSupport: 'built-in',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: 'HTML 回读已验证；拆分后合并内容保留在首格。'
+        })
       },
       {
         path: 'editor-canvas',
         name: 'FormEditorCanvasEditor',
         component: () => import('@/views/form/EditorCanvasEditorView.vue'),
-        meta: routeMeta('Canvas编辑器', '基于 Canvas 渲染的富文本编辑器，支持分页模式。')
+        meta: routeMeta('Canvas编辑器', '基于 Canvas 渲染的富文本编辑器，支持分页模式。', {
+          kind: 'document',
+          contentFormat: 'json',
+          mergeSupport: 'built-in',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: 'JSON 回读已验证；拆分后合并内容保留在首格。'
+        })
       },
       {
         path: 'editor-slate',
         name: 'FormEditorSlate',
         component: () => import('@/views/form/EditorSlateView.vue'),
-        meta: routeMeta('Slate编辑器', '高度可定制的富文本编辑器框架，slate-vue3 提供 Vue3 绑定。')
+        meta: routeMeta(
+          'Slate编辑器',
+          '高度可定制的富文本编辑器框架，slate-vue3 提供 Vue3 绑定。',
+          {
+            kind: 'rich-text',
+            contentFormat: 'json',
+            mergeSupport: 'experimental',
+            persistence: 'round-trip',
+            maintenance: 'limited',
+            maintenanceCheckedAt: checkedAt,
+            license: 'MIT',
+            staticDeployment: true,
+            notes: '自定义 JSON span/hidden-cell 模型；合并、拆分、重建与单批次撤销重做已验证。'
+          }
+        )
       },
       {
         path: 'editor-ckeditor5',
         name: 'FormEditorCKEditor5',
         component: () => import('@/views/form/EditorCKEditor5View.vue'),
-        meta: routeMeta('CKEditor5编辑器')
+        meta: routeMeta('CKEditor5编辑器', undefined, {
+          kind: 'rich-text',
+          contentFormat: 'html',
+          mergeSupport: 'official-extension',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'GPL-2.0-or-later / commercial',
+          staticDeployment: true,
+          notes: '官方 Table 插件已启用；HTML 回读已验证，拆分后内容集中在首格。'
+        })
+      },
+      {
+        path: 'editor-blocknote',
+        name: 'FormEditorBlockNote',
+        component: () => import('@/views/form/EditorBlockNoteView.vue'),
+        meta: routeMeta('BlockNote编辑器', '在 Vue 页面中隔离挂载官方 React 编辑器子树。', {
+          kind: 'block',
+          contentFormat: 'json',
+          mergeSupport: 'built-in',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MPL-2.0',
+          staticDeployment: true,
+          notes: '已启用 tables.splitCells 与公开 TableHandles 扩展；JSON 合并、重建与拆分闭环已覆盖。'
+        })
       },
       {
         path: 'editor-editorjs',
         name: 'FormEditorEditorJs',
         component: () => import('@/views/form/EditorEditorJsView.vue'),
-        meta: routeMeta('EditorJS编辑器')
+        meta: routeMeta('EditorJS编辑器', undefined, {
+          kind: 'block',
+          contentFormat: 'json',
+          mergeSupport: 'unsupported',
+          persistence: 'unsupported',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'Apache-2.0',
+          staticDeployment: true,
+          notes: '表格块不表达 rowspan/colspan。'
+        })
+      },
+      {
+        path: 'editor-jodit',
+        name: 'FormEditorJodit',
+        component: () => import('@/views/form/EditorJoditView.vue'),
+        meta: routeMeta('Jodit编辑器', '直接封装持续维护的 Jodit Core，不依赖 Vue wrapper。', {
+          kind: 'rich-text',
+          contentFormat: 'html',
+          mergeSupport: 'built-in',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '内置表格模块已接入；HTML 合并、重建与拆分已验证，拆分后内容集中在首格。'
+        })
       },
       {
         path: 'editor-milkdown',
         name: 'FormEditorMilkdown',
         component: () => import('@/views/form/EditorMilkdownView.vue'),
-        meta: routeMeta('Milkdown编辑器')
+        meta: routeMeta('Milkdown编辑器', undefined, {
+          kind: 'markdown',
+          contentFormat: 'markdown',
+          mergeSupport: 'experimental',
+          persistence: 'runtime-only',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '底层运行时可合并；实测 GFM Markdown 回读会丢失 rowspan/colspan，因此不开放按钮。'
+        })
+      },
+      {
+        path: 'editor-lexical',
+        name: 'FormEditorLexical',
+        component: () => import('@/views/form/EditorLexicalView.vue'),
+        meta: routeMeta('Lexical编辑器', '直接封装 Lexical 内核与官方表格包。', {
+          kind: 'rich-text',
+          contentFormat: 'json',
+          mergeSupport: 'official-extension',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '官方 @lexical/table 已接入；EditorState JSON 合并、重建与拆分闭环已覆盖。'
+        })
+      },
+      {
+        path: 'editor-prosemirror',
+        name: 'FormEditorProseMirror',
+        component: () => import('@/views/form/EditorProseMirrorView.vue'),
+        meta: routeMeta('ProseMirror编辑器', '直接集成 prosemirror-tables 的底层能力基线。', {
+          kind: 'rich-text',
+          contentFormat: 'json',
+          mergeSupport: 'official-extension',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '官方 prosemirror-tables 已接入；JSON 合并、重建与拆分闭环已覆盖。'
+        })
       },
       {
         path: 'editor-notectl',
         name: 'FormEditorNotectl',
         component: () => import('@/views/form/EditorNotectlView.vue'),
-        meta: routeMeta('Notectl编辑器')
+        meta: routeMeta('Notectl编辑器', undefined, {
+          kind: 'block',
+          contentFormat: 'json',
+          mergeSupport: 'unsupported',
+          persistence: 'unsupported',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '当前没有合并模型或扩展入口。'
+        })
       },
       {
         path: 'editor-quill',
         name: 'FormEditorQuill',
         component: () => import('@/views/form/EditorQuillView.vue'),
-        meta: routeMeta('富文本编辑器')
+        meta: routeMeta('Quill编辑器', undefined, {
+          kind: 'rich-text',
+          contentFormat: 'html',
+          mergeSupport: 'third-party-extension',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'BSD-3-Clause',
+          staticDeployment: true,
+          notes: 'Quill Table Up HTML 回读已验证；拆分后合并内容集中在首格。'
+        })
       },
       {
         path: 'editor-tiptap',
         name: 'FormEditorTiptap',
         component: () => import('@/views/form/EditorTiptapView.vue'),
-        meta: routeMeta('Tiptap编辑器')
+        meta: routeMeta('Tiptap编辑器', undefined, {
+          kind: 'rich-text',
+          contentFormat: 'html',
+          mergeSupport: 'official-extension',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '官方 TableKit 已接入；HTML 回读与合并内容保留情况已验证。'
+        })
       },
       {
         path: 'editor-tinymce',
         name: 'FormEditorTinyMCE',
         component: () => import('@/views/form/EditorTinyMCEView.vue'),
-        meta: routeMeta('TinyMCE编辑器')
+        meta: routeMeta('TinyMCE编辑器', undefined, {
+          kind: 'rich-text',
+          contentFormat: 'html',
+          mergeSupport: 'built-in',
+          persistence: 'round-trip',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'GPL-2.0-or-later / commercial',
+          staticDeployment: true,
+          notes: 'HTML 回读已验证；拆分后合并内容保留在首格。'
+        })
       },
       {
         path: 'editor-trix',
         name: 'FormEditorTrix',
         component: () => import('@/views/form/EditorTrixView.vue'),
-        meta: routeMeta('Trix编辑器')
+        meta: routeMeta('Trix编辑器', undefined, {
+          kind: 'rich-text',
+          contentFormat: 'html',
+          mergeSupport: 'unsupported',
+          persistence: 'unsupported',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '原生文档模型不提供表格合并。'
+        })
       },
       {
         path: 'editor-vditor',
         name: 'FormEditorVditor',
         component: () => import('@/views/form/EditorVditorView.vue'),
-        meta: routeMeta('Vditor编辑器')
+        meta: routeMeta('Vditor编辑器', undefined, {
+          kind: 'markdown',
+          contentFormat: 'markdown',
+          mergeSupport: 'unsupported',
+          persistence: 'unsupported',
+          maintenance: 'active',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '标准 Markdown 表格不表达 span。'
+        })
       },
       {
         path: 'editor-wang',
         name: 'FormEditorWang',
         component: () => import('@/views/form/EditorWangView.vue'),
-        meta: routeMeta('WangEditor编辑器')
+        meta: routeMeta('WangEditor编辑器', undefined, {
+          kind: 'rich-text',
+          contentFormat: 'html',
+          mergeSupport: 'unsupported',
+          persistence: 'unsupported',
+          maintenance: 'limited',
+          maintenanceCheckedAt: checkedAt,
+          license: 'MIT',
+          staticDeployment: true,
+          notes: '现有表格模块没有合并命令。'
+        })
       }
     ]
   },

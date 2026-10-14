@@ -92,6 +92,8 @@ export const TOOLBAR_BUTTONS = {
       { icon: 'i-lucide:image', title: '插入图片', action: 'insertImage' },
       { icon: 'i-lucide:link', title: '插入链接', action: 'insertLink' },
       { icon: 'i-lucide:table', title: '插入表格', action: 'insertTable' },
+      { icon: 'i-lucide:combine', title: '合并单元格', action: 'mergeTableCells' },
+      { icon: 'i-lucide:split-square-horizontal', title: '拆分单元格', action: 'splitTableCell' },
       { icon: 'i-lucide:minus', title: '分隔线', action: 'insertDivider' }
     ]
   ],

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import EditorUniverDoc from '@/components/form/EditorUniverDoc.vue'
+import EditorUniverDoc from '@/components/form/EditorUniverDoc/index.vue'
 import EvaluationTable from './components/EvaluationTable.vue'
 
 defineOptions({ name: 'EditorUniverDocView' })

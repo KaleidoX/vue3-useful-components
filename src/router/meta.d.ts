@@ -1,5 +1,7 @@
 import 'vue-router'
 
+import type { EditorCapabilityMeta } from './editorCapabilities'
+
 declare module 'vue-router' {
   export interface RouteMeta {
     title?: string
@@ -9,5 +11,6 @@ declare module 'vue-router' {
     groupLabel?: string
     groupDescription?: string
     fullPath?: string
+    editorCapability?: EditorCapabilityMeta
   }
 }

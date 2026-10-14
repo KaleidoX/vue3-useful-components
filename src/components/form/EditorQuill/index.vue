@@ -10,6 +10,9 @@ import type { CSSProperties, PropType } from 'vue'
 import 'quill/dist/quill.snow.css'
 import Quill, { Delta } from 'quill'
 import type { QuillOptions } from 'quill'
+import { TableUp } from 'quill-table-up'
+import 'quill-table-up/index.css'
+import 'quill-table-up/table-creator.css'
 import 'quill-image-uploader/dist/quill.imageUploader.min.css'
 // import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
 // @ts-expect-error 缺少ts类型
@@ -20,6 +23,7 @@ import BlotFormatter from '@enzedonline/quill-blot-formatter2'
 import { Mention, MentionBlot, type MentionOption } from 'quill-mention'
 import { uploadImage } from '@/api/upload'
 import { formatUploadBase } from '@/utils/format'
+import { createQuillTableUpOptions, quillTableUpToolbarControl } from './quillTableUpConfig'
 
 interface IMentionData {
   id: string
@@ -32,6 +36,9 @@ defineOptions({
 })
 
 // console.log(Quill, Quill.register)
+if (!Quill.imports[`modules/${TableUp.moduleName}`]) {
+  Quill.register({ [`modules/${TableUp.moduleName}`]: TableUp }, true)
+}
 if (!Quill.imports['modules/imageUploader']) {
   Quill.register('modules/imageUploader', ImageUploader)
 }
@@ -126,8 +133,11 @@ const toolbar = props.simple
       [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
       [{ align: [] }], // 对齐方式
       ['clean'], // 清除文本格式
-      ['link', 'image', 'video'] // 链接、图片、视频
+      ['link', 'image', 'video'], // 链接、图片、视频
+      [quillTableUpToolbarControl]
     ]
+
+const tableUpOptions = createQuillTableUpOptions(props.simple)
 
 const options: QuillOptions = {
   theme: 'snow',
@@ -176,7 +186,8 @@ const options: QuillOptions = {
           renderList(matches, textAfter)
         }
       }
-    } as MentionOption
+    } as MentionOption,
+    ...(tableUpOptions ? { [TableUp.moduleName]: tableUpOptions } : {})
   }
   // formats: ['bold', 'italic', 'mention']
 }
@@ -288,6 +299,8 @@ onUnmounted(() => {
 // 定义组件接口
 defineExpose({
   getQuill,
+  getContents,
+  setContents,
   getModule,
   addMention,
   clearContent

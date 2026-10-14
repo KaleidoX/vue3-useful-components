@@ -118,6 +118,31 @@
         </button>
         <span class="divider" />
         <button @click="editor.chain().focus().setHorizontalRule().run()">—</button>
+        <span class="divider" />
+        <button
+          type="button"
+          title="插入 3×3 表格"
+          @click="editor.chain().focus().insertTable({ rows: 3, cols: 3 }).run()"
+        >
+          插入表格
+        </button>
+        <button
+          type="button"
+          title="合并当前选区中的单元格"
+          :disabled="!editor.can().mergeCells()"
+          @click="editor.chain().focus().mergeCells().run()"
+        >
+          合并单元格
+        </button>
+        <button
+          type="button"
+          title="拆分当前合并单元格"
+          :disabled="!editor.can().splitCell()"
+          @click="editor.chain().focus().splitCell().run()"
+        >
+          拆分单元格
+        </button>
+        <span class="divider" />
         <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().undo()">
           ↩
         </button>
@@ -134,9 +159,7 @@
 <script lang="ts" setup>
 import { type CSSProperties } from 'vue'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import Image from '@tiptap/extension-image'
-import Placeholder from '@tiptap/extension-placeholder'
+import { createTiptapExtensions } from './tiptapExtensions'
 
 defineOptions({
   name: 'EditorTiptap'
@@ -157,11 +180,7 @@ const emit = defineEmits(['ready', 'update:modelValue'])
 const editor = useEditor({
   content: props.modelValue,
   editable: !props.readOnly,
-  extensions: [
-    StarterKit.configure(),
-    Image.configure({ inline: true }),
-    Placeholder.configure({ placeholder: props.placeholder })
-  ],
+  extensions: createTiptapExtensions({ simple: props.simple, placeholder: props.placeholder }),
   onUpdate: () => {
     // HTML getter
     emit('update:modelValue', editor.value?.getHTML() ?? '')
@@ -272,6 +291,29 @@ defineExpose({ getEditor, clearContent })
       float: left;
       height: 0;
       pointer-events: none;
+    }
+
+    table {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    td,
+    th {
+      border: 1px solid #9ca3af;
+      min-width: 1em;
+      padding: 8px;
+      position: relative;
+      vertical-align: top;
+    }
+
+    .selectedCell::after {
+      background: rgb(59 130 246 / 18%);
+      content: '';
+      inset: 0;
+      pointer-events: none;
+      position: absolute;
     }
   }
 }

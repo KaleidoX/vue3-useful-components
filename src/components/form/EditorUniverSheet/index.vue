@@ -9,7 +9,7 @@
 import { createUniver, LocaleType, mergeLocales } from '@univerjs/presets'
 import { UniverSheetsCorePreset } from '@univerjs/preset-sheets-core'
 import UniverPresetSheetsCoreZhCN from '@univerjs/preset-sheets-core/locales/zh-CN'
-import type { FUniver, Univer } from '@univerjs/presets'
+import type { FUniver, IWorkbookData, Univer } from '@univerjs/presets'
 import '@univerjs/preset-sheets-core/lib/index.css'
 
 defineOptions({ name: 'EditorUniverSheet' })
@@ -17,7 +17,7 @@ defineOptions({ name: 'EditorUniverSheet' })
 const props = withDefaults(
   defineProps<{
     height?: string
-    data?: object
+    data?: IWorkbookData
   }>(),
   {
     height: '600px'
@@ -43,7 +43,7 @@ onMounted(() => {
     presets: [UniverSheetsCorePreset({ container: containerRef.value })]
   })
 
-  univerAPI.createWorkbook(props.data || {})
+  univerAPI.createWorkbook(props.data ? structuredClone(toRaw(props.data)) : {})
   univerInstance = univer
   univerAPIInstance = univerAPI
   emit('ready', univerAPI)
@@ -57,5 +57,6 @@ onUnmounted(() => {
 })
 
 const getAPI = () => univerAPIInstance
-defineExpose({ getAPI })
+const saveWorkbook = () => univerAPIInstance?.getActiveWorkbook()?.save() ?? null
+defineExpose({ getAPI, saveWorkbook })
 </script>

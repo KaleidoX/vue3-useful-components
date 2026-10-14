@@ -40,7 +40,8 @@ function serializeNode(node: any): string {
     case 'table-row':
       return `<tr>${children}</tr>`
     case 'table-cell':
-      return `<td>${children}</td>`
+      if (node.hiddenBy) return ''
+      return `<td${node.rowspan && node.rowspan > 1 ? ` rowspan="${node.rowspan}"` : ''}${node.colspan && node.colspan > 1 ? ` colspan="${node.colspan}"` : ''}>${children}</td>`
     case 'mention':
       return `<span data-mention="${escapeAttr(node.userId)}">@${escapeHtml(node.userName)}</span>`
     case 'paragraph':

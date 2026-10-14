@@ -1,5 +1,10 @@
 <template>
-  <div class="editor-slate" :class="{ 'hidden-toolbar': hiddenToolbar }" :style="styles">
+  <div
+    ref="rootRef"
+    class="editor-slate"
+    :class="{ 'hidden-toolbar': hiddenToolbar }"
+    :style="styles"
+  >
     <SlateToolbar v-if="editor && !hiddenToolbar" :editor="editor" :simple="simple" />
     <div class="slate-content">
       <Slate
@@ -23,23 +28,23 @@
 
 <script lang="ts" setup>
 import type { CSSProperties } from 'vue'
-import { createEditor } from 'slate-vue3/core'
+import { createEditor, Transforms } from 'slate-vue3/core'
 import { Slate, Editable } from 'slate-vue3'
 import { withDOM } from 'slate-vue3/dom'
 import { withHistory } from 'slate-vue3/history'
-import { renderElement } from './EditorSlate/renders/renderElement'
-import { renderLeaf } from './EditorSlate/renders/renderLeaf'
-import { renderPlaceholder } from './EditorSlate/renders/renderPlaceholder'
-import { withMarkdown } from './EditorSlate/plugins/withMarkdown'
-import { withLinks } from './EditorSlate/plugins/withLinks'
-import { withImages } from './EditorSlate/plugins/withImages'
-import { withTables } from './EditorSlate/plugins/withTables'
-import { withMentions, onMentionKeyDown } from './EditorSlate/plugins/withMentions'
-import SlateToolbar from './EditorSlate/SlateToolbar.vue'
-import { toHtml } from './EditorSlate/converters/toHtml'
-import { toMarkdown } from './EditorSlate/converters/toMarkdown'
-import { fromHtml } from './EditorSlate/converters/fromHtml'
-import { fromMarkdown } from './EditorSlate/converters/fromMarkdown'
+import { renderElement } from './renders/renderElement'
+import { renderLeaf } from './renders/renderLeaf'
+import { renderPlaceholder } from './renders/renderPlaceholder'
+import { withMarkdown } from './plugins/withMarkdown'
+import { withLinks } from './plugins/withLinks'
+import { withImages } from './plugins/withImages'
+import { withTables } from './plugins/withTables'
+import { withMentions, onMentionKeyDown } from './plugins/withMentions'
+import SlateToolbar from './SlateToolbar.vue'
+import { toHtml } from './converters/toHtml'
+import { toMarkdown } from './converters/toMarkdown'
+import { fromHtml } from './converters/fromHtml'
+import { fromMarkdown } from './converters/fromMarkdown'
 import type { Descendant } from 'slate-vue3/core'
 
 defineOptions({ name: 'EditorSlate' })
@@ -68,6 +73,8 @@ const props = withDefaults(
 const emit = defineEmits<{
   'update:modelValue': [value: Descendant[]]
 }>()
+
+const rootRef = ref<HTMLElement>()
 
 const editor = withMentions(
   withTables(withImages(withLinks(withMarkdown(withHistory(withDOM(createEditor()))))))
@@ -126,7 +133,25 @@ function setMarkdown(md: string) {
   editor.onChange()
 }
 
-defineExpose({ getEditor, getHTML, getMarkdown, clearContent, setHTML, setMarkdown })
+function prepareForRemount() {
+  const activeElement = document.activeElement
+  if (activeElement instanceof HTMLElement && rootRef.value?.contains(activeElement)) {
+    activeElement.blur()
+  }
+  Transforms.deselect(editor)
+}
+
+onBeforeUnmount(prepareForRemount)
+
+defineExpose({
+  getEditor,
+  getHTML,
+  getMarkdown,
+  clearContent,
+  setHTML,
+  setMarkdown,
+  prepareForRemount
+})
 </script>
 
 <style scoped>

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import EditorSheetJS from '@/components/form/EditorSheetJS.vue'
+import EditorSheetJS from '@/components/form/EditorSheetJS/index.vue'
 import EvaluationTable from './components/EvaluationTable.vue'
 
 defineOptions({ name: 'EditorSheetJSView' })

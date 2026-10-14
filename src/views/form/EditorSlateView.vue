@@ -1,7 +1,21 @@
 <template>
   <div class="space-y-10">
     <section>
-      <EditorSlate ref="editorRef" v-model="content" height="400px" />
+      <h2 class="mb-2 text-xl font-semibold">自定义 JSON 表格模型</h2>
+      <p class="mb-3 text-sm text-gray-600">
+        拖选 A1:B2 后点击工具栏“合并单元格”；合并跨度写入主格，被覆盖单元格仍保留在 JSON，拆分后可原样恢复。
+      </p>
+      <div class="mb-3 flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          class="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50"
+          @click="rebuildEditor"
+        >
+          重建编辑器
+        </button>
+        <span class="text-sm text-gray-500">{{ mergeStatus }}</span>
+      </div>
+      <EditorSlate :key="editorKey" ref="editorRef" v-model="content" height="400px" />
     </section>
 
     <section v-if="content.length > 0" class="border rounded bg-gray-50 p-4">
@@ -27,30 +41,29 @@
 </template>
 
 <script lang="ts" setup>
-import EditorSlate from '@/components/form/EditorSlate.vue'
+import EditorSlate from '@/components/form/EditorSlate/index.vue'
+import { createTableFromRows } from '@/components/form/EditorSlate/plugins/withTables'
 import EvaluationTable from './components/EvaluationTable.vue'
-import TestHtml from './assets/test.html?raw'
+import { tableMergeFixture } from './fixtures/tableMergeFixture'
 
 defineOptions({ name: 'EditorSlateView' })
 
-const slateInitial = TestHtml.split(/\n\s*\n/)
-  .filter((s) => s.trim())
-  .slice(1, 6)
-  .map((text) => ({
-    type: 'paragraph' as const,
-    children: [
-      {
-        text: text
-          .replace(/<[^>]+>/g, '')
-          .replace(/\s+/g, ' ')
-          .trim()
-          .substring(0, 200)
-      }
-    ]
-  }))
-
-const content = ref<any[]>(slateInitial)
+const editorKey = ref(0)
+const content = ref<any[]>([createTableFromRows(tableMergeFixture.rows)])
 const editorRef = ref<InstanceType<typeof EditorSlate>>()
+const mergeStatus = computed(() => {
+  const firstCell = content.value[0]?.children?.[0]?.children?.[0]
+  return firstCell?.rowspan === 2 && firstCell?.colspan === 2
+    ? '当前 JSON 已包含 2×2 合并跨度'
+    : '当前为 3×3 未合并表格'
+})
+
+async function rebuildEditor() {
+  content.value = JSON.parse(JSON.stringify(content.value))
+  editorRef.value?.prepareForRemount()
+  await nextTick()
+  editorKey.value += 1
+}
 
 const htmlOutput = computed(() => editorRef.value?.getHTML?.() ?? '')
 const mdOutput = computed(() => editorRef.value?.getMarkdown?.() ?? '')

@@ -33,7 +33,7 @@ defineOptions({ name: 'EditorCanvasEditor' })
 
 const props = defineProps<{
   height?: string
-  content?: { value: string; size?: number; bold?: boolean }[]
+  content?: IElement[]
 }>()
 const emit = defineEmits<{ ready: [editor: Editor] }>()
 
@@ -99,7 +99,7 @@ onMounted(() => {
   if (!editorRef.value) return
 
   const initialData: IElement[] = props.content?.length
-    ? props.content.map((item) => ({ value: item.value, size: item.size, bold: item.bold }))
+    ? structuredClone(toRaw(props.content))
     : [
         { value: 'Canvas Editor', size: 40, bold: true },
         { value: '' },

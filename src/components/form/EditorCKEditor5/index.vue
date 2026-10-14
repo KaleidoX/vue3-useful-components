@@ -14,25 +14,10 @@
 <script lang="ts" setup>
 import { type CSSProperties } from 'vue'
 
-import {
-  ClassicEditor,
-  Essentials,
-  Paragraph,
-  Bold,
-  Italic,
-  Underline,
-  Strikethrough
-} from 'ckeditor5'
-import { Heading } from 'ckeditor5'
-import { List } from 'ckeditor5'
-import { Link } from 'ckeditor5'
-import { BlockQuote } from 'ckeditor5'
-import { CodeBlock } from 'ckeditor5'
-import { HorizontalLine } from 'ckeditor5'
-import { Indent, IndentBlock } from 'ckeditor5'
-import { Undo } from 'ckeditor5'
+import { ClassicEditor } from 'ckeditor5'
 
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
+import { createCKEditor5Config } from './ckeditor5Config'
 import 'ckeditor5/ckeditor5.css'
 
 defineOptions({
@@ -81,80 +66,9 @@ const styles = computed(() => {
   return style
 })
 
-const simplePlugins = [
-  Essentials,
-  Paragraph,
-  Bold,
-  Italic,
-  Heading,
-  List,
-  Link,
-  Indent,
-  IndentBlock,
-  Undo
-]
-const normalPlugins = [
-  Essentials,
-  Paragraph,
-  Bold,
-  Italic,
-  Underline,
-  Strikethrough,
-  Heading,
-  List,
-  Link,
-  Indent,
-  IndentBlock,
-  BlockQuote,
-  CodeBlock,
-  HorizontalLine,
-  Undo
-]
-
-const simpleToolbar = [
-  'heading',
-  '|',
-  'bold',
-  'italic',
-  '|',
-  'bulletedList',
-  'numberedList',
-  '|',
-  'link',
-  '|',
-  'undo',
-  'redo'
-]
-const normalToolbar = [
-  'undo',
-  'redo',
-  '|',
-  'heading',
-  '|',
-  'bold',
-  'italic',
-  'underline',
-  'strikethrough',
-  '|',
-  'bulletedList',
-  'numberedList',
-  '|',
-  'outdent',
-  'indent',
-  '|',
-  'link',
-  'blockQuote',
-  'codeBlock',
-  '|',
-  'horizontalLine'
-]
-
-const editorConfig = computed(() => ({
-  licenseKey: 'GPL',
-  plugins: props.simple ? simplePlugins : normalPlugins,
-  toolbar: props.simple ? simpleToolbar : normalToolbar,
-  placeholder: props.placeholder
-}))
+const editorConfig = computed(() =>
+  createCKEditor5Config({ simple: props.simple, placeholder: props.placeholder })
+)
 
 function clearContent() {
   if (editorInstance) {

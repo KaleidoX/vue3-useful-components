@@ -37,13 +37,19 @@ export function withTables(editor: SlateEditor): SlateEditor {
 }
 
 export function createDefaultTable(rows = 3, cols = 3): Descendant {
+  return createTableFromRows(
+    Array.from({ length: rows }, () => Array.from({ length: cols }, () => ''))
+  )
+}
+
+export function createTableFromRows(rows: readonly (readonly string[])[]): Descendant {
   return {
     type: 'table',
-    children: Array.from({ length: rows }, () => ({
+    children: rows.map((row) => ({
       type: 'table-row',
-      children: Array.from({ length: cols }, () => ({
+      children: row.map((text) => ({
         type: 'table-cell',
-        children: [{ type: 'paragraph', children: [{ text: '' }] }]
+        children: [{ type: 'paragraph', children: [{ text }] }]
       }))
     }))
   } as any

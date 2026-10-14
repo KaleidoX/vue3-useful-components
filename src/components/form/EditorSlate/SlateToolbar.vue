@@ -19,6 +19,7 @@
 import { Editor, Transforms, Element as SlateElement } from 'slate-vue3/core'
 import { TOOLBAR_BUTTONS } from './constants'
 import type { SlateEditor } from './types'
+import { mergeSelectedTableCells, splitSelectedTableCell } from './plugins/tableMerge'
 
 defineOptions({ name: 'SlateToolbar' })
 
@@ -103,6 +104,12 @@ function handleAction(btn: any) {
     }
     case 'insertTable':
       insertTable()
+      break
+    case 'mergeTableCells':
+      mergeSelectedTableCells(props.editor)
+      break
+    case 'splitTableCell':
+      splitSelectedTableCell(props.editor)
       break
     case 'insertDivider':
       Transforms.insertNodes(props.editor, {
