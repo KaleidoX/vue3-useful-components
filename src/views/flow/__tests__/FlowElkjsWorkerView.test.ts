@@ -27,8 +27,10 @@ describe('FlowElkjsWorkerView', () => {
       global: { stubs: { FlowElkjsWorker: false } }
     })
 
-    expect(wrapper.get('h2').text()).toBe('ELKJS Worker')
-    expect(wrapper.find('.h-\\[calc\\(100dvh-210px\\)\\]').exists()).toBe(true)
+    expect(wrapper.get('header p').text()).toBe(
+      'ELKJS 0.11.1 分层自动布局 · Web Worker 计算 · Vue Flow 渲染'
+    )
+    expect(wrapper.find('.h-\\[var\\(--preview-content-height\\)\\]').exists()).toBe(true)
     expect(wrapper.findComponent({ name: 'FlowElkjsWorker' }).exists()).toBe(true)
   })
 })

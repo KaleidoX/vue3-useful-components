@@ -1,20 +1,19 @@
 <template>
-  <section class="p-10">
-    <h2 class="mb-2 text-xl font-semibold">ProseMirror：原始表格基线</h2>
-    <p class="mb-3 text-sm text-gray-600">
-      直接组合 prosemirror-tables，不经过 Tiptap 等上层封装；合并后重建以验证 JSON 回读。
-    </p>
+  <PreviewSection
+    title="ProseMirror：原始表格基线"
+    description="直接组合 prosemirror-tables，不经过 Tiptap 等上层封装；合并后重建以验证 JSON 回读。"
+  >
     <div class="mb-3 flex items-center gap-2">
-      <button type="button" class="rounded border border-gray-300 px-3 py-1.5 text-sm" @click="rebuild">
-        重建编辑器
-      </button>
-      <span class="text-sm text-gray-500">{{ status }}</span>
+      <PreviewButton @click="rebuild">重建编辑器</PreviewButton>
+      <span class="text-sm text-slate-500">{{ status }}</span>
     </div>
     <EditorProseMirror :key="editorKey" ref="editorRef" v-model="documentValue" />
-  </section>
+  </PreviewSection>
 </template>
 
 <script lang="ts" setup>
+import PreviewSection from '@/views/components/PreviewSection.vue'
+import PreviewButton from '@/views/components/PreviewButton.vue'
 import EditorProseMirror from '@/components/form/EditorProseMirror/index.vue'
 import { prosemirrorTableFixture } from '@/components/form/EditorProseMirror/prosemirrorTable'
 

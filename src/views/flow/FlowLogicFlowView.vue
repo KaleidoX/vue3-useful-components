@@ -8,9 +8,8 @@ const evalRows = [['LogicFlow', 'SVG', '★★★★', '★★★', '★★★',
 </script>
 
 <template>
-  <div class="p-4 space-y-8">
-    <h2 class="text-xl font-bold">LogicFlow — SVG 编辑器（自执行引擎 · BPMN）</h2>
-    <div class="h-[calc(100vh-300px)] overflow-hidden border rounded-lg">
+  <div class="space-y-8">
+    <div class="h-[var(--preview-content-height)] overflow-hidden border rounded-lg">
       <FlowLogicFlow />
     </div>
 

@@ -8,9 +8,8 @@ const evalRows = [['AntV X6', 'SVG', '★★★★★', '★★★', '★★★'
 </script>
 
 <template>
-  <div class="p-4 space-y-8">
-    <h2 class="text-xl font-bold">AntV X6 — SVG 编辑器（企业级 · 虚拟渲染）</h2>
-    <div class="h-[calc(100vh-300px)] overflow-hidden border rounded-lg">
+  <div class="space-y-8">
+    <div class="h-[var(--preview-content-height)] overflow-hidden border rounded-lg">
       <FlowAntvX6 />
     </div>
 

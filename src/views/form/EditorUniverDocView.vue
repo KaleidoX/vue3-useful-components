@@ -1,10 +1,11 @@
 <template>
-  <div class="p-6 space-y-10">
-    <section>
-      <h2 class="mb-4 text-2xl font-bold">Univer — 文档</h2>
-      <p class="mb-4 text-gray-500">在线文档编辑器，支持协同编辑。需 react/react-dom 依赖。</p>
+  <div class="space-y-8">
+    <PreviewSection
+      title="Univer — 文档"
+      description="在线文档编辑器，支持协同编辑。需 react/react-dom 依赖。"
+    >
       <EditorUniverDoc height="650px" />
-    </section>
+    </PreviewSection>
 
     <section>
       <h3 class="mb-3 text-lg font-semibold">评估</h3>
@@ -14,6 +15,7 @@
 </template>
 
 <script lang="ts" setup>
+import PreviewSection from '@/views/components/PreviewSection.vue'
 import EditorUniverDoc from '@/components/form/EditorUniverDoc/index.vue'
 import EvaluationTable from './components/EvaluationTable.vue'
 

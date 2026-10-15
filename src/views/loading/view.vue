@@ -43,10 +43,6 @@ defineOptions({
 })
 </script>
 <style scoped lang="scss">
-.loading-demo {
-  padding: 20px;
-}
-
 .loading-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));

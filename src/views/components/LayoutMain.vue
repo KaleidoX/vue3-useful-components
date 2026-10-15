@@ -1,47 +1,33 @@
 <template>
-  <main class="min-w-0">
-    <section
-      class="relative overflow-hidden border border-white/70 rounded-[30px] bg-[#0f172a] px-6 py-6 text-white shadow-[0_24px_70px_rgba(15,23,42,0.16)] sm:px-8"
+  <main
+    class="min-w-0 border border-white/80 rounded-2xl bg-white/92 shadow-[0_18px_45px_rgba(15,23,42,0.06)]"
+    :style="{ '--preview-content-height': contentHeight + 'px' }"
+  >
+    <header
+      class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-base-400/70 px-4 py-3 lg:px-5"
     >
-      <div
-        class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(92,157,222,0.42),transparent_34%),radial-gradient(circle_at_left_center,rgba(28,117,255,0.28),transparent_30%)]"
-      ></div>
-      <div class="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div class="max-w-3xl">
-          <p class="text-xs text-white/60 font-semibold tracking-[0.32em] uppercase">
-            {{ currentGroup?.label || 'overview' }}
-          </p>
-          <h2 class="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
-            {{ currentTitle }}
-          </h2>
-          <p class="mt-4 text-sm text-slate-300 leading-7 sm:text-base">
-            {{ currentDescription }}
-          </p>
-        </div>
-        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          <div class="border border-white/10 rounded-2xl bg-white/8 px-4 py-3 backdrop-blur-sm">
-            <div class="text-2xl font-semibold">{{ groupedRoutes.length }}</div>
-            <div class="mt-1 text-xs text-white/55 tracking-[0.2em] uppercase">groups</div>
-          </div>
-          <div class="border border-white/10 rounded-2xl bg-white/8 px-4 py-3 backdrop-blur-sm">
-            <div class="text-2xl font-semibold">{{ totalRoutes }}</div>
-            <div class="mt-1 text-xs text-white/55 tracking-[0.2em] uppercase">routes</div>
-          </div>
-          <div
-            class="col-span-2 border border-white/10 rounded-2xl bg-white/8 px-4 py-3 backdrop-blur-sm sm:col-span-1"
-          >
-            <div class="truncate text-lg font-semibold">{{ route.path }}</div>
-            <div class="mt-1 text-xs text-white/55 tracking-[0.2em] uppercase">current</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="mt-6 border border-white/80 rounded-[30px] bg-white/92 p-4 shadow-[0_18px_45px_rgba(15,23,42,0.06)] lg:p-6 sm:p-5"
-    >
+      <p class="text-[10px] text-slate-400 font-semibold tracking-[0.2em] uppercase">
+        {{ currentGroup?.label || 'overview' }}
+      </p>
+      <h2 class="text-lg text-slate-900 font-semibold leading-6">
+        {{ currentTitle }}
+      </h2>
+      <p
+        class="max-w-[60%] truncate text-xs text-slate-500"
+        :title="currentDescription"
+      >
+        {{ currentDescription }}
+      </p>
+      <span
+        class="ml-auto hidden max-w-[280px] truncate rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-500 font-medium sm:inline-block"
+        :title="route.path"
+      >
+        {{ route.path }}
+      </span>
+    </header>
+    <div class="p-4 lg:p-5">
       <slot />
-    </section>
+    </div>
   </main>
 </template>
 
@@ -76,10 +62,6 @@ const groupedRoutes = computed<PreviewGroup[]>(() => {
   }))
 })
 
-const totalRoutes = computed(() => {
-  return groupedRoutes.value.reduce((total, group) => total + group.items.length, 0)
-})
-
 const currentGroup = computed(() => {
   return groupedRoutes.value.find((group) => route.path.startsWith(`/${group.key}/`))
 })
@@ -99,6 +81,11 @@ const currentDescription = computed(() => {
 
   return '右侧区域直接使用 RouterView 渲染组件页面；左侧分组和菜单项则完全由 route 配置生成。'
 })
+
+// 满高演示组件的统一高度基准：视口高 − 骨架固定开销
+// （外层 py-4 上下共 32px + 页头一行约 45px + 内容卡片 padding 上下 + 预留路径徽标换行余量）
+const { height: winHeight } = useWindowSize()
+const contentHeight = computed(() => Math.max(360, winHeight.value - 140))
 </script>
 
 <style scoped>

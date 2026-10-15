@@ -1,13 +1,5 @@
 <template>
   <section class="space-y-6">
-    <header class="rounded-[28px] bg-slate-900 px-6 py-7 text-white">
-      <p class="text-xs text-sky-300 font-semibold tracking-[0.2em] uppercase">Editor matrix</p>
-      <h2 class="mt-2 text-2xl font-semibold">编辑器表格合并能力对比</h2>
-      <p class="mt-3 max-w-3xl text-sm text-slate-300 leading-6">
-        “支持方式”描述引擎能力来源；只有完成合并、保存、重新挂载验证后，持久化状态才会标记为“已验证”。
-      </p>
-    </header>
-
     <div class="overflow-x-auto border border-slate-200 rounded-[24px] bg-white">
       <table class="min-w-[1120px] w-full border-collapse text-left text-sm">
         <thead class="bg-slate-50 text-xs text-slate-500 tracking-wide uppercase">

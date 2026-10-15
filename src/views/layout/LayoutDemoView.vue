@@ -200,7 +200,7 @@ function handleAddPanel(containerId: string) {
 </script>
 
 <template>
-  <div class="h-[75vh] min-h-[400px] flex flex-col bg-slate-50 dark:bg-[#0d1117]">
+  <div class="h-[var(--preview-content-height)] min-h-[400px] flex flex-col bg-slate-50 dark:bg-[#0d1117]">
     <!-- Toolbar -->
     <div
       class="h-[40px] flex shrink-0 select-none items-center gap-2 border-b border-slate-200 bg-white px-4 dark:border-white/[0.06] dark:bg-[#161b22]"

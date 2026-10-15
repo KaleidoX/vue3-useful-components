@@ -1,10 +1,10 @@
 <template>
-  <div class="p-6 space-y-10">
-    <section>
-      <h2 class="mb-4 text-2xl font-bold">格式转换/生成工具</h2>
-      <p class="mb-4 text-gray-500">mammoth.js — .docx 导入预览；docx — 内容导出为 .docx。</p>
-
-      <div class="grid gap-8 lg:grid-cols-2">
+  <div class="space-y-8">
+    <PreviewSection
+      title="格式转换/生成工具"
+      description="mammoth.js — .docx 导入预览；docx — 内容导出为 .docx。"
+    >
+      <div class="grid gap-6 lg:grid-cols-2">
         <div class="border rounded p-4">
           <h3 class="mb-3 text-lg font-semibold">.docx → HTML</h3>
           <input type="file" accept=".docx" class="mb-3 block" @change="handleDocxImport" />
@@ -20,15 +20,12 @@
             rows="6"
             placeholder="输入文本，每行一个段落"
           />
-          <button
-            class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            @click="handleDocxExport"
-          >
+          <PreviewButton variant="primary" @click="handleDocxExport">
             生成并下载 .docx
-          </button>
+          </PreviewButton>
         </div>
       </div>
-    </section>
+    </PreviewSection>
 
     <section>
       <h3 class="mb-3 text-lg font-semibold">评估</h3>
@@ -38,6 +35,8 @@
 </template>
 
 <script lang="ts" setup>
+import PreviewSection from '@/views/components/PreviewSection.vue'
+import PreviewButton from '@/views/components/PreviewButton.vue'
 import { convertDocxToHtml } from '@/utils/mammoth'
 import { generateDocx } from '@/utils/docx'
 import TestHtml from './assets/test.html?raw'

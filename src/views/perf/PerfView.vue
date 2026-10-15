@@ -1,7 +1,6 @@
 <template>
   <div class="perf-view">
     <div class="mb-6">
-      <h2 class="mb-2 text-xl text-slate-900 font-semibold">性能监控面板</h2>
       <p class="text-sm text-slate-500 leading-6">
         右键点击页面，浮动性能监控面板会显示在右下角。<br />
         可拖拽、折叠、切换不同监控维度，支持 FPS、Web Vitals、网络请求、路由性能和自定义埋点。

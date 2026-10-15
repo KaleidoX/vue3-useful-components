@@ -7,10 +7,9 @@ const evalRows = [['G6 v5', 'Canvas·SVG·WebGL', '★★★', '★', '★★★
 </script>
 
 <template>
-  <div class="p-4 space-y-8">
+  <div class="space-y-8">
     <div>
-      <h2 class="mb-4 text-xl font-bold">G6 v5 — Canvas 可视化（三模式 · 丰富布局）</h2>
-      <div class="h-[calc(100vh-300px)] overflow-hidden border rounded-lg">
+      <div class="h-[var(--preview-content-height)] overflow-hidden border rounded-lg">
         <FlowG6 />
       </div>
     </div>

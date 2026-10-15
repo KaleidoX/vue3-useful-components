@@ -1,19 +1,20 @@
 <template>
-  <section class="p-6">
-    <h2 class="mb-4 text-2xl font-bold">mlightcad/cad-viewer — 浏览器端 CAD 图纸查看</h2>
-    <p class="mb-4 text-gray-500">
-      完全运行在浏览器端的 DXF/DWG 查看与编辑器，无后端服务。默认加载示例图纸，可通过顶部菜单打开本地文件或拖拽打开。
-    </p>
+  <PreviewSection
+    title="mlightcad/cad-viewer — 浏览器端 CAD 图纸查看"
+    description="完全运行在浏览器端的 DXF/DWG 查看与编辑器，无后端服务。默认加载示例图纸，可通过顶部菜单打开本地文件或拖拽打开。"
+  >
     <CadViewer
       locale="zh"
       theme="light"
       :url="sampleUrl"
       :height="viewerHeight + 'px'"
     />
-  </section>
+  </PreviewSection>
 </template>
 
 <script lang="ts" setup>
+import PreviewSection from '@/views/components/PreviewSection.vue'
+import { usePreviewContentHeight } from '@/composables/usePreviewContentHeight'
 defineOptions({
   name: 'CadMlightView'
 })
@@ -25,7 +26,5 @@ const sampleUrl = new URL(
   window.location.origin
 ).href
 
-const { height } = useWindowSize()
-
-const viewerHeight = computed(() => Math.max(480, height.value - 220))
+const { editorHeight: viewerHeight } = usePreviewContentHeight(80)
 </script>

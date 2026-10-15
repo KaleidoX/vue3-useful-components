@@ -8,9 +8,8 @@ const evalRows = [['Vue Flow', 'SVG', '★★★★', '★★★★', '★★★
 </script>
 
 <template>
-  <div class="p-4 space-y-8">
-    <h2 class="text-xl font-bold">Vue Flow — SVG 编辑器（Vue 3 原生）</h2>
-    <div class="h-[calc(100vh-300px)] overflow-hidden border rounded-lg">
+  <div class="space-y-8">
+    <div class="h-[var(--preview-content-height)] overflow-hidden border rounded-lg">
       <FlowVueFlow />
     </div>
 

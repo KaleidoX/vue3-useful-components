@@ -1,20 +1,19 @@
 <template>
-  <section class="p-10">
-    <h2 class="mb-2 text-xl font-semibold">BlockNote：React 子树桥接</h2>
-    <p class="mb-3 text-sm text-gray-600">
-      BlockNote 原生面向 React，本页在 Vue 中挂载独立 React 子树；按钮调用公开 TableHandles 扩展，浮动菜单仍可正常使用。
-    </p>
+  <PreviewSection
+    title="BlockNote：React 子树桥接"
+    description="BlockNote 原生面向 React，本页在 Vue 中挂载独立 React 子树；按钮调用公开 TableHandles 扩展，浮动菜单仍可正常使用。"
+  >
     <div class="mb-3 flex items-center gap-2">
-      <button type="button" class="rounded border border-gray-300 px-3 py-1.5 text-sm" @click="rebuild">
-        重建编辑器
-      </button>
-      <span class="text-sm text-gray-500">{{ status }}</span>
+      <PreviewButton @click="rebuild">重建编辑器</PreviewButton>
+      <span class="text-sm text-slate-500">{{ status }}</span>
     </div>
     <EditorBlockNote :key="editorKey" ref="editorRef" v-model="documentValue" />
-  </section>
+  </PreviewSection>
 </template>
 
 <script lang="ts" setup>
+import PreviewSection from '@/views/components/PreviewSection.vue'
+import PreviewButton from '@/views/components/PreviewButton.vue'
 import EditorBlockNote from '@/components/form/EditorBlockNote/index.vue'
 import { blockNoteTableFixture } from '@/components/form/EditorBlockNote/blockNoteTableFixture'
 

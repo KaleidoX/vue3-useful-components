@@ -1,20 +1,11 @@
 <template>
-  <div class="space-y-10">
-    <section class="space-y-4">
-      <header>
-        <h2 class="text-2xl font-bold">Canvas Editor — 表格合并</h2>
-        <p class="mt-2 text-sm text-slate-500 leading-6">
-          在画布中拖动选中 A1:B2，再点击顶部“合并”；选中合并单元格后点击“拆分”。
-        </p>
-      </header>
-      <div class="flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          class="rounded-xl bg-primary px-3 py-2 text-sm text-white font-semibold"
-          @click="rebuildEditor"
-        >
-          导出并重建编辑器
-        </button>
+  <div class="space-y-8">
+    <PreviewSection
+      title="Canvas Editor — 表格合并"
+      description="在画布中拖动选中 A1:B2，再点击顶部“合并”；选中合并单元格后点击“拆分”。"
+    >
+      <div class="mb-3 flex flex-wrap items-center gap-3">
+        <PreviewButton variant="primary" @click="rebuildEditor">导出并重建编辑器</PreviewButton>
         <span class="text-xs text-slate-500">{{ mergeStatus }}</span>
       </div>
       <EditorCanvasEditor
@@ -23,7 +14,7 @@
         height="700px"
         :content="canvasContent"
       />
-    </section>
+    </PreviewSection>
 
     <section>
       <h3 class="mb-3 text-lg font-semibold">评估</h3>
@@ -35,6 +26,8 @@
 <script lang="ts" setup>
 import type { IElement } from '@hufe921/canvas-editor'
 
+import PreviewSection from '@/views/components/PreviewSection.vue'
+import PreviewButton from '@/views/components/PreviewButton.vue'
 import EditorCanvasEditor from '@/components/form/EditorCanvasEditor/index.vue'
 import { createCanvasTableMergeFixture } from '@/components/form/EditorCanvasEditor/canvasTableMergeFixture'
 import EvaluationTable from './components/EvaluationTable.vue'

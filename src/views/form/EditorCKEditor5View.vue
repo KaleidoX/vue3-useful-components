@@ -1,20 +1,12 @@
 <template>
-  <div class="grid grid-cols-1 gap-10 p-10 lg:grid-cols-2">
-    <section>
-      <h2 class="mb-2 text-xl font-semibold">完整模式：官方 Table 插件</h2>
-      <p class="mb-3 text-sm text-gray-600">
-        在表格中选中 A1:B2，通过浮动表格工具栏的“合并单元格”操作；随后重建编辑器验证 HTML
-        回读，并可从同一按钮拆分。
-      </p>
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <PreviewSection
+      title="完整模式：官方 Table 插件"
+      description="在表格中选中 A1:B2，通过浮动表格工具栏的“合并单元格”操作；随后重建编辑器验证 HTML 回读，并可从同一按钮拆分。"
+    >
       <div class="mb-3 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          class="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50"
-          @click="rebuildEditor"
-        >
-          重建编辑器
-        </button>
-        <span class="text-sm text-gray-500">{{ mergeStatus }}</span>
+        <PreviewButton @click="rebuildEditor">重建编辑器</PreviewButton>
+        <span class="text-sm text-slate-500">{{ mergeStatus }}</span>
       </div>
       <EditorCKEditor5
         :key="editorKey"
@@ -22,15 +14,17 @@
         v-model="content1"
         :height="editorHeight"
       />
-    </section>
-    <section>
-      <h2 class="mb-2 text-xl font-semibold">简洁模式：保持无表格入口</h2>
+    </PreviewSection>
+    <PreviewSection title="简洁模式：保持无表格入口">
       <EditorCKEditor5 v-model="content2" :height="editorHeight" simple />
-    </section>
+    </PreviewSection>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { usePreviewContentHeight } from '@/composables/usePreviewContentHeight'
+import PreviewSection from '@/views/components/PreviewSection.vue'
+import PreviewButton from '@/views/components/PreviewButton.vue'
 import EditorCKEditor5 from '@/components/form/EditorCKEditor5/index.vue'
 import TestContent from '@/views/form/assets/test.html?raw'
 import { tableMergeFixtureHtml } from './fixtures/tableMergeFixture'
@@ -53,17 +47,10 @@ function rebuildEditor() {
   editorKey.value += 1
 }
 
-const { width, height } = useWindowSize()
-
-const safeAreaInsetTop = parseInt(
-  document.documentElement.style.getPropertyValue('--safe-area-inset-top') || '0px'
-)
-const safeAreaInsetBottom = parseInt(
-  document.documentElement.style.getPropertyValue('--safe-area-inset-bottom') || '0px'
-)
+const { width, contentHeight } = usePreviewContentHeight()
 
 const editorHeight = computed(() => {
-  const fullHeight = height.value - (46 + 4 * 10 * 2 + safeAreaInsetTop + safeAreaInsetBottom)
+  const fullHeight = contentHeight.value - 60
   return width.value > 1024 ? fullHeight : Math.ceil((fullHeight - 4 * 10) / 2)
 })
 </script>

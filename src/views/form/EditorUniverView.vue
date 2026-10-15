@@ -1,47 +1,15 @@
 <template>
-  <div class="p-6 space-y-10">
-    <section>
-      <h2 class="mb-4 text-2xl font-bold">Univer — 电子表格</h2>
-      <p class="mb-4 text-gray-500">
-        完整在线电子表格，支持公式、图表、条件格式等。需 react/react-dom 依赖。
-      </p>
-      <p class="mb-3 text-sm text-gray-600">
-        使用同一份 3×3 数据验证内置合并。电子表格按标准语义合并时只保留左上角 A1，拆分不会恢复
-        A2、B1、B2。
-      </p>
+  <div class="space-y-8">
+    <PreviewSection
+      title="Univer — 电子表格"
+      description="完整在线电子表格，支持公式、图表、条件格式等。需 react/react-dom 依赖。使用同一份 3×3 数据验证内置合并。电子表格按标准语义合并时只保留左上角 A1，拆分不会恢复 A2、B1、B2。"
+    >
       <div class="mb-3 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          class="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50 disabled:opacity-50"
-          :disabled="!univerAPI || isMerged"
-          @click="mergeRange"
-        >
-          合并 A1:B2
-        </button>
-        <button
-          type="button"
-          class="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50 disabled:opacity-50"
-          :disabled="!univerAPI || !isMerged"
-          @click="splitRange"
-        >
-          拆分 A1:B2
-        </button>
-        <button
-          type="button"
-          class="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50 disabled:opacity-50"
-          :disabled="!univerAPI"
-          @click="rebuildEditor"
-        >
-          导出并重建
-        </button>
-        <button
-          type="button"
-          class="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50"
-          @click="resetFixture"
-        >
-          重置 3×3
-        </button>
-        <span class="text-sm text-gray-500">{{ mergeStatus }}</span>
+        <PreviewButton :disabled="!univerAPI || isMerged" @click="mergeRange">合并 A1:B2</PreviewButton>
+        <PreviewButton :disabled="!univerAPI || !isMerged" @click="splitRange">拆分 A1:B2</PreviewButton>
+        <PreviewButton :disabled="!univerAPI" @click="rebuildEditor">导出并重建</PreviewButton>
+        <PreviewButton @click="resetFixture">重置 3×3</PreviewButton>
+        <span class="text-sm text-slate-500">{{ mergeStatus }}</span>
       </div>
       <EditorUniverSheet
         :key="editorKey"
@@ -49,7 +17,7 @@
         height="650px"
         @ready="onReady"
       />
-    </section>
+    </PreviewSection>
 
     <section>
       <h3 class="mb-3 text-lg font-semibold">评估</h3>
@@ -59,6 +27,8 @@
 </template>
 
 <script lang="ts" setup>
+import PreviewSection from '@/views/components/PreviewSection.vue'
+import PreviewButton from '@/views/components/PreviewButton.vue'
 import EditorUniverSheet from '@/components/form/EditorUniverSheet/index.vue'
 import {
   createUniverTableMergeFixture,

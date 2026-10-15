@@ -16,7 +16,10 @@ export default defineConfigWithVueTs(
     files: ['**/*.{ts,mts,tsx,vue}'],
   },
 
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+  // public/ 下的 vendored 产物（wasm-apps 官方构建等）不参与 lint：
+  // eslint --fix 会重排格式，破坏 index.html 记录的 SRI sha384 完整性哈希，
+  // 导致浏览器拒绝加载 wasm 模块（*Craft 白屏）
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**', 'public/**']),
 
   pluginVue.configs['flat/essential'],
   unocss,

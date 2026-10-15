@@ -1,22 +1,15 @@
 <template>
-  <div class="space-y-10">
-    <section>
-      <h2 class="mb-2 text-xl font-semibold">自定义 JSON 表格模型</h2>
-      <p class="mb-3 text-sm text-gray-600">
-        拖选 A1:B2 后点击工具栏“合并单元格”；合并跨度写入主格，被覆盖单元格仍保留在 JSON，拆分后可原样恢复。
-      </p>
+  <div class="space-y-8">
+    <PreviewSection
+      title="自定义 JSON 表格模型"
+      description="拖选 A1:B2 后点击工具栏“合并单元格”；合并跨度写入主格，被覆盖单元格仍保留在 JSON，拆分后可原样恢复。"
+    >
       <div class="mb-3 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          class="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50"
-          @click="rebuildEditor"
-        >
-          重建编辑器
-        </button>
-        <span class="text-sm text-gray-500">{{ mergeStatus }}</span>
+        <PreviewButton @click="rebuildEditor">重建编辑器</PreviewButton>
+        <span class="text-sm text-slate-500">{{ mergeStatus }}</span>
       </div>
       <EditorSlate :key="editorKey" ref="editorRef" v-model="content" height="400px" />
-    </section>
+    </PreviewSection>
 
     <section v-if="content.length > 0" class="border rounded bg-gray-50 p-4">
       <h3 class="mb-2 text-sm font-semibold">输出 (JSON)</h3>
@@ -41,6 +34,8 @@
 </template>
 
 <script lang="ts" setup>
+import PreviewSection from '@/views/components/PreviewSection.vue'
+import PreviewButton from '@/views/components/PreviewButton.vue'
 import EditorSlate from '@/components/form/EditorSlate/index.vue'
 import { createTableFromRows } from '@/components/form/EditorSlate/plugins/withTables'
 import EvaluationTable from './components/EvaluationTable.vue'

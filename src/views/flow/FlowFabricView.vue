@@ -7,10 +7,9 @@ const evalRows = [['Fabric.js', 'Canvas 2D', '★★', '★★★★', '★★',
 </script>
 
 <template>
-  <div class="p-4 space-y-8">
+  <div class="space-y-8">
     <div>
-      <h2 class="mb-4 text-xl font-bold">Fabric.js — Canvas 引擎（对象模型 · 自建编辑器）</h2>
-      <div class="h-[calc(100vh-300px)] overflow-hidden border rounded-lg">
+      <div class="h-[var(--preview-content-height)] overflow-hidden border rounded-lg">
         <FlowFabric />
       </div>
     </div>

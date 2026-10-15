@@ -3,7 +3,7 @@
        直接嵌入时会顶到页面边缘；transform 会创建新的包含块，把 fixed 子树限制在本容器内，
        使查看器呈现为嵌入区域的尺寸 -->
   <div
-    class="relative w-full translate-z-0 overflow-hidden rounded-lg border border-gray-200 bg-gray-100"
+    class="relative w-full translate-z-0 overflow-hidden border border-gray-200 rounded-lg bg-gray-100"
     :style="{ height }"
   >
     <component :is="viewerComp" v-if="viewerComp" v-bind="$attrs" />
@@ -14,13 +14,7 @@
     >
       <span class="i-lucide:alert-triangle text-2xl text-orange-500" />
       <span>CAD 查看器加载失败：{{ loadError }}</span>
-      <button
-        type="button"
-        class="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50"
-        @click="load"
-      >
-        重试
-      </button>
+      <PreviewButton @click="load">重试</PreviewButton>
     </div>
 
     <div
@@ -34,6 +28,8 @@
 </template>
 
 <script lang="ts" setup>
+import PreviewButton from '@/views/components/PreviewButton.vue'
+
 /**
  * @mlightcad/cad-viewer 的懒加载包装组件：
  * - 路由进入时才拉取完整查看器 chunk（含 three.js 等）
