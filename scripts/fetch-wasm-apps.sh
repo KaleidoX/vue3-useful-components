@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Download self-contained web builds of the ArtCraft Rust apps (WordCraft /
-# PdfCraft / CADCraft) from their official GitHub Releases and unpack them
-# into public/wasm-apps/<app>/ so the gallery can embed them via iframe.
+# PdfCraft / CADCraft / GridCraft) from their official GitHub Releases and unpack
+# them into public/wasm-apps/<app>/ so the gallery can embed them via iframe.
 #
 # Usage:
 #   bash scripts/fetch-wasm-apps.sh           # skip apps already fetched
@@ -16,6 +16,7 @@ set -euo pipefail
 WORDCRAFT_VERSION="0.5.0"
 PDFCRAFT_VERSION="0.6.0"
 CADCRAFT_VERSION="0.5.0"
+GRIDCRAFT_VERSION="0.7.0"
 # -----------------------------------------------------------------------------
 
 FORCE=0
@@ -71,5 +72,6 @@ mkdir -p "${TARGET_DIR}"
 fetch_app "wordcraft" "${WORDCRAFT_VERSION}" "wordcraft"
 fetch_app "pdfcraft" "${PDFCRAFT_VERSION}" "pdfcraft"
 fetch_app "cadcraft" "${CADCRAFT_VERSION}" "cadcraft"
+fetch_app "gridcraft" "${GRIDCRAFT_VERSION}" "gridcraft"
 
 echo "done. apps are in ${TARGET_DIR}"

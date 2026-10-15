@@ -541,7 +541,7 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
     key: 'wasm-apps',
     path: 'wasm-apps',
     label: 'Rust Web 应用',
-    description: 'WordCraft / PdfCraft / CADCraft 的 WebAssembly 版本，经 iframe 嵌入官方 Web 构建。',
+    description: 'WordCraft / PdfCraft / CADCraft / GridCraft 的 WebAssembly 版本，经 iframe 嵌入官方 Web 构建。',
     children: [
       {
         path: 'wordcraft',
@@ -560,6 +560,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         name: 'WasmAppCadcraft',
         component: () => import('@/views/wasm-apps/CadcraftView.vue'),
         meta: routeMeta('CADCraft', '纯 Rust 编写的 AutoCAD 风格 CAD 应用，egui + WebAssembly。')
+      },
+      {
+        path: 'gridcraft',
+        name: 'WasmAppGridcraft',
+        component: () => import('@/views/wasm-apps/GridcraftView.vue'),
+        meta: routeMeta('GridCraft', '纯 Rust 重写的 Microsoft Excel 风格电子表格，egui + WebAssembly。')
       }
     ]
   },
