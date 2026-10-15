@@ -32,5 +32,9 @@ src/auto-imports.d.ts
 
 pnpm-lock.yaml
 
+# Downloaded wasm app builds (scripts/fetch-wasm-apps.sh)
+public/wasm-apps/
+public/cad-samples/*.dwg
+
 # Local deepwork session state
 .slim/deepwork/

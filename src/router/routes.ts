@@ -524,6 +524,46 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
     ]
   },
   {
+    key: 'cad',
+    path: 'cad',
+    label: 'CAD 图纸',
+    description: '浏览器端 CAD 图纸查看与编辑，DXF/DWG 解析渲染全程无后端。',
+    children: [
+      {
+        path: 'mlight',
+        name: 'CadMlight',
+        component: () => import('@/views/cad/CadMlightView.vue'),
+        meta: routeMeta('mlightcad查看器', '基于 @mlightcad/cad-viewer 的浏览器端 DXF/DWG 查看/编辑器。')
+      }
+    ]
+  },
+  {
+    key: 'wasm-apps',
+    path: 'wasm-apps',
+    label: 'Rust Web 应用',
+    description: 'WordCraft / PdfCraft / CADCraft 的 WebAssembly 版本，经 iframe 嵌入官方 Web 构建。',
+    children: [
+      {
+        path: 'wordcraft',
+        name: 'WasmAppWordcraft',
+        component: () => import('@/views/wasm-apps/WordcraftView.vue'),
+        meta: routeMeta('WordCraft', '纯 Rust 重写的 Word，egui + WebAssembly。')
+      },
+      {
+        path: 'pdfcraft',
+        name: 'WasmAppPdfcraft',
+        component: () => import('@/views/wasm-apps/PdfcraftView.vue'),
+        meta: routeMeta('PdfCraft', '纯 Rust 编写的 PDF 阅读与编辑器，egui + WebAssembly。')
+      },
+      {
+        path: 'cadcraft',
+        name: 'WasmAppCadcraft',
+        component: () => import('@/views/wasm-apps/CadcraftView.vue'),
+        meta: routeMeta('CADCraft', '纯 Rust 编写的 AutoCAD 风格 CAD 应用，egui + WebAssembly。')
+      }
+    ]
+  },
+  {
     key: 'virtual',
     path: 'virtual',
     label: '虚拟滚动',

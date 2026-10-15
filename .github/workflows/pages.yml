@@ -52,6 +52,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Fetch wasm app builds
+        run: bash scripts/fetch-wasm-apps.sh
+
       - name: Build site
         run: pnpm run build-only
 
