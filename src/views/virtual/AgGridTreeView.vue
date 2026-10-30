@@ -8,7 +8,7 @@ defineOptions({ name: 'VirtualAgGridTreeView' })
 const count = ref(100)
 const contentType = ref('plain')
 const enableMemo = ref(false)
-const { allNodes } = useTreeData(count)
+const { allNodes, toggleExpand } = useTreeData(count)
 </script>
 
 <template>
@@ -18,6 +18,6 @@ const { allNodes } = useTreeData(count)
     v-model:enable-memo="enableMemo"
     title="AG Grid Community 树"
   >
-    <AgGridTree :nodes="allNodes" :content-type="contentType" />
+    <AgGridTree :nodes="allNodes" :content-type="contentType" @toggle="toggleExpand" />
   </VirtualDemoLayout>
 </template>

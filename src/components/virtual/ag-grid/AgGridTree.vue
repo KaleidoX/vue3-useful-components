@@ -14,6 +14,9 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const emit = defineEmits<{
+  toggle: [id: number]
+}>()
 
 const CellRendererContent = defineComponent({
   props: ['params'],
@@ -53,8 +56,7 @@ const colDefs = computed(() => [
     cellRenderer: 'cellRendererContent',
     cellRendererParams: {
       contentType: props.contentType,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      toggleNode: (id: number) => {}
+      toggleNode: (id: number) => emit('toggle', id)
     }
   }
 ])
