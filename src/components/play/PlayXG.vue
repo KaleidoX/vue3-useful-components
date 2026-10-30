@@ -247,7 +247,7 @@ const getPlayTime = () => {
   return Math.floor(player?.currentTime || 0)
 }
 const setPlayTime = (seconds: number) => {
-  player?.currentTime(seconds)
+  if (player) player.currentTime = seconds
 }
 
 defineExpose({

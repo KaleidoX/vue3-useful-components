@@ -37,7 +37,7 @@ onMounted(() => {
     presets: [UniverDocsCorePreset({ container: containerRef.value })]
   })
 
-  univerAPI.createUniverDoc({})
+  univerAPI.createDocument({})
   univerInstance = univer
   univerAPIInstance = univerAPI
   emit('ready', univerAPI)

@@ -129,7 +129,7 @@ const emit = defineEmits<{
       <DynamicScrollerItem
         :item="item"
         :active="active"
-        :data-index="index"
+        :index="index"
         :size-dependencies="[(item as ITableRow).col0]"
       >
         <div
