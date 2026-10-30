@@ -11,6 +11,7 @@
         :content="content"
         :final="final"
         :virtualization="virtualization"
+        :code-highlight="codeHighlight"
         class="h-full"
       />
       <StreamMarkdownPane
@@ -18,6 +19,7 @@
         ref="streamMarkdownRef"
         :content="content"
         :mode="vsmMode"
+        :code-highlight="codeHighlight"
         class="h-full"
       />
       <div v-else class="h-full flex items-center justify-center text-sm text-slate-400">
@@ -30,6 +32,7 @@
 <script lang="ts" setup>
 import MarkstreamPane from './MarkstreamPane.vue'
 import StreamMarkdownPane from './StreamMarkdownPane.vue'
+import { warmupMarkstreamHighlight, warmupVsmHighlight } from './highlight'
 import { runBenchmarkRound } from './runner'
 import type { RendererKey, RunMetrics } from './metrics'
 import { afterPaint } from './metrics'
@@ -42,15 +45,18 @@ defineOptions({
   name: 'MarkdownBenchmarkHarness'
 })
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     idleHint?: string
     /** 传给 markstream 的虚拟化开关；关闭即为一次性渲染全部节点的基线口径 */
     virtualization?: boolean
+    /** 两边同时开启代码块 shiki 高亮，保证对照条件一致 */
+    codeHighlight?: boolean
   }>(),
   {
     idleHint: '点击「开始跑分」后，流式渲染将在此处逐片推进',
-    virtualization: true
+    virtualization: true,
+    codeHighlight: false
   }
 )
 
@@ -84,12 +90,30 @@ async function runRound(
     return streamMarkdownRef.value?.getContainer()
   }
 
+  /**
+   * 挂载前预热高亮引擎。
+   *
+   * 两个库的代码块高亮都需要额外包并在首次使用时动态加载，若不预热，
+   * 第一个代码块触发的模块拉取会被算进首片耗时，两库的加载成本也不对等。
+   * 预热在挂载前完成、计时从挂载开始，因此不计入任何指标；
+   * 预热本身是单例的，多轮只付一次。
+   */
+  const warmup = async () => {
+    if (!props.codeHighlight) return
+    if (renderer === 'markstream-vue') await warmupMarkstreamHighlight()
+    else await warmupVsmHighlight()
+  }
+
   try {
+    // 预热必须在挂载与计时之前：否则模块加载会落在首片耗时里
+    await warmup()
+
     return await runBenchmarkRound({
       renderer,
       chunks,
       chunkSize,
       autoScroll,
+      codeHighlight: props.codeHighlight,
       signal,
       mount: async () => {
         // 每轮从空内容、非终态开始，保证两库起点一致

@@ -51,6 +51,8 @@ export interface RunMetrics {
   heapPeakMb?: number
   /** 切片总数 */
   chunkCount: number
+  /** 是否启用了代码块 shiki 语法高亮 */
+  codeHighlight?: boolean
   /** 是否启用了自动滚动到底部 */
   autoScroll?: boolean
   /**
@@ -71,6 +73,7 @@ export interface BenchmarkReport {
   rounds: number
   chunkSize: number
   autoScroll: boolean
+  codeHighlight: boolean
   runs: RunMetrics[]
 }
 
@@ -154,6 +157,7 @@ export function aggregateRuns(runs: RunMetrics[]): RunMetrics[] {
       ),
       peakNodes: median(group.map((run) => run.peakNodes)),
       heapPeakMb: pickMedian(group.map((run) => run.heapPeakMb).filter(isNumber)),
+      codeHighlight: first.codeHighlight,
       autoScroll: first.autoScroll,
       scrollLagPx: aggregatePercentiles(
         group.map((run) => run.scrollLagPx).filter(isPercentiles)

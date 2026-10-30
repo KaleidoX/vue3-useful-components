@@ -46,6 +46,8 @@ export interface BenchRunnerOptions {
    * 开启后滚动动作计入该片耗时，并额外采样滚动跟随滞后。
    */
   autoScroll?: boolean
+  /** 代码块是否启用 shiki 高亮，仅用于结果记录 */
+  codeHighlight?: boolean
   onProgress?: (done: number, total: number) => void
   /** 每次采样到新指标时的回调，用于实时刷新界面 */
   onSample?: (metrics: Partial<RunMetrics>) => void
@@ -126,6 +128,7 @@ export async function runBenchmarkRound(options: BenchRunnerOptions): Promise<Ru
     applyFinal,
     unmount,
     autoScroll = false,
+    codeHighlight = false,
     onProgress,
     onSample,
     signal,
@@ -270,6 +273,7 @@ export async function runBenchmarkRound(options: BenchRunnerOptions): Promise<Ru
       peakNodes,
       heapPeakMb: heapPeak,
       chunkCount: chunks.length,
+      codeHighlight,
       autoScroll,
       scrollLagPx: scrollLagSamples.length > 0 ? summarize(scrollLagSamples) : undefined,
       scrollMs: scrollSamples.length > 0 ? summarize(scrollSamples) : undefined

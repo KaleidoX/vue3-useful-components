@@ -129,6 +129,21 @@ describe('aggregateRuns', () => {
     expect(summary[0].scrollMs?.p50).toBe(2)
   })
 
+  it('carries the codeHighlight flag through aggregation', () => {
+    const summary = aggregateRuns([
+      makeRun({ codeHighlight: true }),
+      makeRun({ codeHighlight: true })
+    ])
+
+    expect(summary[0].codeHighlight).toBe(true)
+  })
+
+  it('leaves codeHighlight undefined when the run did not report it', () => {
+    const summary = aggregateRuns([makeRun()])
+
+    expect(summary[0].codeHighlight).toBeUndefined()
+  })
+
   it('leaves scroll metrics undefined when autoScroll was off', () => {
     const summary = aggregateRuns([makeRun({ autoScroll: false })])
 

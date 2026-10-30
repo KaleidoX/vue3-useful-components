@@ -38,6 +38,16 @@
         </label>
 
         <label class="flex items-center gap-2 text-sm text-slate-600">
+          <span
+            class="whitespace-nowrap"
+            title="两边同时用 shiki 给代码块做语法高亮，代码块会走各自的增强渲染路径"
+          >
+            代码高亮
+          </span>
+          <ElSwitch v-model="codeHighlight" size="small" :disabled="running" />
+        </label>
+
+        <label class="flex items-center gap-2 text-sm text-slate-600">
           <span class="whitespace-nowrap" title="每片渲染完成后自动滚动到底部，模拟聊天窗口跟随最新输出">
             自动滚到底
           </span>
@@ -58,6 +68,7 @@
         <span>文档：{{ docStats.chars.toLocaleString() }} 字符 / {{ docStats.size }}</span>
         <span>切片：{{ chunkCount }} 片</span>
         <span v-if="running" class="text-primary">进度 {{ progressLabel }}</span>
+        <span v-if="highlightNotice" class="text-amber-600">{{ highlightNotice }}</span>
       </div>
     </PreviewSection>
 
@@ -70,6 +81,7 @@
         ref="harnessRef"
         :key="harnessKey"
         :virtualization="virtualization"
+        :code-highlight="codeHighlight"
         @progress="onProgress"
         @sample="onSample"
       />
@@ -131,8 +143,14 @@
           markstream 无此行为。
         </li>
         <li>
-          · 代码块统一渲染为无高亮的纯 <code class="rounded bg-base-300 px-1">&lt;pre&gt;</code>：未安装
-          stream-diffs 与 shiki 扩展，避免单方开启高亮造成失真。
+          · 未开启「代码高亮」时，代码块统一渲染为无高亮的纯
+          <code class="rounded bg-base-300 px-1">&lt;pre&gt;</code>，两边一致。
+        </li>
+        <li>
+          · 开启「代码高亮」后两边同时启用 shiki：markstream-vue 走 stream-diffs + @pierre/diffs 的
+          虚拟化代码渲染器，vue-stream-markdown 走 @stream-markdown/code 扩展。两者都会换成各自的增强渲染路径，
+          节点结构与布局成本随之改变，因此这是「高亮场景」的独立口径，不能与无高亮基线直接横向比较。
+          高亮引擎在挂载前预热，模块加载不计入任何指标。
         </li>
         <li>
           · 收敛判据为「容器节点数与内容高度连续 4 帧不变」，不依赖任一方的事件；markstream 的
@@ -164,6 +182,7 @@ import { buildBenchmarkDocument, sliceChunks, utf8Bytes } from '@/components/mar
 import { aggregateRuns } from '@/components/markdown/metrics'
 import type { BenchmarkReport, RendererKey, RunMetrics } from '@/components/markdown/metrics'
 import { formatMs, formatMsPrecise, formatNumber } from '@/components/markdown/metrics'
+import { warmupHighlightEngines } from '@/components/markdown/highlight'
 
 defineOptions({ name: 'MarkdownBenchmarkView' })
 
@@ -181,10 +200,13 @@ const targetChars = ref(500 * 1024)
 const chunkSize = ref(2000)
 const rounds = ref(3)
 const virtualization = ref(true)
+const codeHighlight = ref(false)
 const autoScroll = ref(false)
 
 const running = ref(false)
 const errorMessage = ref('')
+/** 预热高亮引擎失败时的提示；不影响跑分，只是说明该轮实际是无高亮基线 */
+const highlightNotice = ref('')
 const progress = ref<{ renderer: RendererKey; done: number; total: number } | null>(null)
 const liveMetrics = ref<Partial<RunMetrics> | null>(null)
 const runs = ref<RunMetrics[]>([])
@@ -227,8 +249,6 @@ interface TableRow {
 function compare(a: number | undefined, b: number | undefined): string {
   if (a === undefined || b === undefined) return '—'
   if (a === 0 || b === 0) return '—'
-  // 两个值都在 1ms 以下时，差异落在计时器分辨率附近，比值放大没有意义
-  if (Math.max(a, b) < 1) return '差异低于计时精度'
   const ratio = a / b
   if (ratio > 1.05) return `vsm 快 ${ratio.toFixed(2)}×`
   if (ratio < 0.95) return `markstream 快 ${(1 / ratio).toFixed(2)}×`
@@ -238,11 +258,28 @@ function compare(a: number | undefined, b: number | undefined): string {
 function verdictClass(a: number | undefined, b: number | undefined): string {
   if (a === undefined || b === undefined) return 'text-slate-400'
   if (a === 0 || b === 0) return 'text-slate-400'
-  if (Math.max(a, b) < 1) return 'text-slate-400'
   const ratio = a / b
   if (ratio > 1.05) return 'text-emerald-600'
   if (ratio < 0.95) return 'text-sky-600'
   return 'text-slate-400'
+}
+
+/**
+ * 计时类指标的对比：两个值都低于 1ms 时，差异落在 performance.now 的 0.1ms 分辨率附近，
+ * 比值放大没有意义，直接标注为低于计时精度。非计时指标（CLS 等）不走这条规则。
+ */
+function compareTiming(a: number | undefined, b: number | undefined): string {
+  if (a !== undefined && b !== undefined && a > 0 && b > 0 && Math.max(a, b) < 1) {
+    return '差异低于计时精度'
+  }
+  return compare(a, b)
+}
+
+function timingVerdictClass(a: number | undefined, b: number | undefined): string {
+  if (a !== undefined && b !== undefined && a > 0 && b > 0 && Math.max(a, b) < 1) {
+    return 'text-slate-400'
+  }
+  return verdictClass(a, b)
 }
 
 const tableRows = computed<TableRow[]>(() => {
@@ -255,7 +292,9 @@ const tableRows = computed<TableRow[]>(() => {
     pick: (metric: RunMetrics) => number | undefined,
     format: (value: number | undefined) => string,
     /** 仅在满足条件时展示该行，例如滚动指标只在开启自动滚动后才有意义 */
-    when = true
+    when = true,
+    /** 计时类指标用计时精度规则判定，非计时指标（CLS 等）传 false */
+    isTiming = true
   ): TableRow | null => {
     if (!when) return null
     const av = pick(a)
@@ -264,8 +303,8 @@ const tableRows = computed<TableRow[]>(() => {
       label,
       hint,
       values: [format(av), format(bv)],
-      verdict: compare(av, bv),
-      verdictClass: verdictClass(av, bv)
+      verdict: isTiming ? compareTiming(av, bv) : compare(av, bv),
+      verdictClass: isTiming ? timingVerdictClass(av, bv) : verdictClass(av, bv)
     }
   }
 
@@ -291,13 +330,13 @@ const tableRows = computed<TableRow[]>(() => {
       (v) => (v === undefined ? '—' : `${v.toFixed(0)} px`),
       autoScroll.value
     ),
-    define('长任务次数', '单次超过 50ms 的主线程任务数', (m) => m.longTask?.count, (v) => formatNumber(v, 0)),
+    define('长任务次数', '单次超过 50ms 的主线程任务数', (m) => m.longTask?.count, (v) => formatNumber(v, 0), true, false),
     define('长任务总时长', '长任务累计占用主线程时间', (m) => m.longTask?.totalMs, formatMs),
-    define('累计布局偏移', 'CLS，越小越稳定', (m) => m.layoutShift, (v) => formatNumber(v, 3)),
+    define('累计布局偏移', 'CLS，越小越稳定', (m) => m.layoutShift, (v) => formatNumber(v, 3), true, false),
     define('帧间隔 p95', 'rAF 间隔 95 分位，越大越卡', (m) => m.frameGapMs?.p95, formatMs),
-    define('掉帧数', '帧间隔超过 25ms 的帧数', (m) => m.droppedFrames, (v) => formatNumber(v, 0)),
-    define('节点峰值', '渲染过程中的 DOM 元素峰值', (m) => m.peakNodes, (v) => formatNumber(v, 0)),
-    define('堆占用峰值', '仅 Chromium 可用', (m) => m.heapPeakMb, (v) => (v === undefined ? '—' : `${v.toFixed(1)} MB`))
+    define('掉帧数', '帧间隔超过 25ms 的帧数', (m) => m.droppedFrames, (v) => formatNumber(v, 0), true, false),
+    define('节点峰值', '渲染过程中的 DOM 元素峰值', (m) => m.peakNodes, (v) => formatNumber(v, 0), true, false),
+    define('堆占用峰值', '仅 Chromium 可用', (m) => m.heapPeakMb, (v) => (v === undefined ? '—' : `${v.toFixed(1)} MB`), true, false)
   ]
 
   return rows.filter((row): row is TableRow => row !== null)
@@ -314,6 +353,7 @@ function onSample(payload: { renderer: RendererKey; metrics: Partial<RunMetrics>
 async function start() {
   if (running.value) return
   errorMessage.value = ''
+  highlightNotice.value = ''
   runs.value = []
   progress.value = null
   liveMetrics.value = null
@@ -321,6 +361,19 @@ async function start() {
   harnessKey.value++
 
   try {
+    // 先预热高亮引擎：加载失败就明确告知本轮退化成了无高亮基线，而不是静默降级
+    if (codeHighlight.value) {
+      const warmup = await warmupHighlightEngines()
+      const failed = [
+        warmup.markstream.ready ? null : `markstream-vue：${warmup.markstream.error ?? '未就绪'}`,
+        warmup.vsm.ready ? null : `vue-stream-markdown：${warmup.vsm.error ?? '未就绪'}`
+      ].filter((item): item is string => item !== null)
+      if (failed.length > 0) {
+        highlightNotice.value = `高亮未就绪，已按无高亮基线渲染（${failed.join('；')}）`
+        codeHighlight.value = false
+      }
+    }
+
     // 语料本地生成，两个库共用同一份字符串
     const generated = buildBenchmarkDocument({ targetChars: targetChars.value })
     benchmarkDoc.value = generated
@@ -375,6 +428,7 @@ function buildReport(): BenchmarkReport {
     rounds: rounds.value,
     chunkSize: chunkSize.value,
     autoScroll: autoScroll.value,
+    codeHighlight: codeHighlight.value,
     runs: runs.value
   }
 }
@@ -404,6 +458,7 @@ function applyQueryParams(query: LocationQuery): boolean {
   const roundCount = Number(query.rounds)
   if (Number.isFinite(roundCount) && roundCount > 0) rounds.value = roundCount
   if (query.virtual !== undefined) virtualization.value = String(query.virtual) !== '0'
+  if (query.highlight !== undefined) codeHighlight.value = String(query.highlight) !== '0'
   if (query.scroll !== undefined) autoScroll.value = String(query.scroll) !== '0'
   return String(query.autorun ?? '') === '1'
 }
