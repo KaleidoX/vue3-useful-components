@@ -17,6 +17,8 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
 import type { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 
+defineOptions({ name: 'EditorWang' })
+
 const editor = shallowRef<IDomEditor>()
 
 const getWang = () => {

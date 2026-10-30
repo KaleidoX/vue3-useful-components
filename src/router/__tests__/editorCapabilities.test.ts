@@ -28,13 +28,20 @@ describe('editor capability routes', () => {
 
       expect(capability.maintenanceCheckedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/)
       expect(capability.notes.trim().length).toBeGreaterThan(0)
+    }
 
-      if (capability.mergeSupport === 'unsupported') {
-        expect(capability.persistence).toBe('unsupported')
-      }
-      if (capability.persistence === 'round-trip') {
-        expect(capability.mergeSupport).not.toBe('unsupported')
-      }
+    const unsupportedMergeRoutes = editorRoutes.filter(
+      (route) => route.meta?.editorCapability?.mergeSupport === 'unsupported'
+    )
+    for (const route of unsupportedMergeRoutes) {
+      expect(route.meta?.editorCapability?.persistence).toBe('unsupported')
+    }
+
+    const roundTripRoutes = editorRoutes.filter(
+      (route) => route.meta?.editorCapability?.persistence === 'round-trip'
+    )
+    for (const route of roundTripRoutes) {
+      expect(route.meta?.editorCapability?.mergeSupport).not.toBe('unsupported')
     }
   })
 

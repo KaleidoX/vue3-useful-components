@@ -31,10 +31,6 @@ defineOptions({
   name: 'FormItem'
 })
 const props = defineProps({
-  modelValue: {
-    type: String,
-    default: ''
-  },
   label: String,
   placeholder: String,
   autocomplete: {
@@ -63,7 +59,7 @@ const props = defineProps({
   }
 })
 
-const value = defineModel('modelValue')
+const value = defineModel<string>({ default: '' })
 
 const emit = defineEmits(['focus', 'focusin', 'focusout'])
 </script>
