@@ -1,8 +1,8 @@
-import type { BaseEditor } from 'slate-vue3/core'
+import type { BaseEditor, Descendant } from 'slate'
 import type { DOMEditor } from 'slate-vue3/dom'
-import type { HistoryEditor } from 'slate-vue3/history'
+import type { HistoryEditor } from 'slate-history'
 
-declare module 'slate-vue3/core' {
+declare module 'slate' {
   interface CustomTypes {
     Editor: BaseEditor & DOMEditor & HistoryEditor
     Element: {

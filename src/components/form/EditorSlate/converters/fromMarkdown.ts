@@ -1,4 +1,4 @@
-import type { Descendant } from 'slate-vue3/core'
+import type { Descendant } from 'slate'
 
 export function fromMarkdown(md: string): Descendant[] {
   const lines = md.split('\n')

@@ -3,7 +3,7 @@ import { toHtml } from '../converters/toHtml'
 import { toMarkdown } from '../converters/toMarkdown'
 import { fromHtml } from '../converters/fromHtml'
 import { fromMarkdown } from '../converters/fromMarkdown'
-import type { Descendant } from 'slate-vue3/core'
+import type { Descendant } from 'slate'
 
 const testNodes: Descendant[] = [
   { type: 'heading', level: 1, children: [{ text: '标题' }] },

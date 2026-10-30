@@ -1,4 +1,4 @@
-import { Editor, Transforms, Range } from 'slate-vue3/core'
+import { Editor, Transforms, Range } from 'slate'
 import type { SlateEditor } from '../types'
 
 /**

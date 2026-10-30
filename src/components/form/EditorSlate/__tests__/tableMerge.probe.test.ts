@@ -1,5 +1,5 @@
-import { createEditor } from 'slate-vue3/core'
-import { withHistory } from 'slate-vue3/history'
+import { createEditor } from 'slate'
+import { withHistory } from 'slate-history'
 import { describe, expect, it } from 'vitest'
 
 import { tableMergeFixture } from '@/views/form/fixtures/tableMergeFixture'

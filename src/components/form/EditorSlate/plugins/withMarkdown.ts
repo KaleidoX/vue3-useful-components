@@ -1,4 +1,4 @@
-import { Editor, Transforms, Range, Element as SlateElement } from 'slate-vue3/core'
+import { Editor, Transforms, Range, Element as SlateElement } from 'slate'
 import { MARKDOWN_SHORTCUTS } from '../constants'
 import type { SlateEditor } from '../types'
 

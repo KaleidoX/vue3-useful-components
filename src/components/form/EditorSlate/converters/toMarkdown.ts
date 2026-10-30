@@ -1,4 +1,4 @@
-import type { Descendant } from 'slate-vue3/core'
+import type { Descendant } from 'slate'
 
 export function toMarkdown(nodes: Descendant[]): string {
   return nodes.map((node) => serializeToMd(node, 0)).join('\n\n')

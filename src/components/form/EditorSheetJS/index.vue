@@ -87,12 +87,15 @@ function handleImport(e: Event) {
   if (!file) return
   const reader = new FileReader()
   reader.onload = (ev) => {
-    const wb = XLSX.read(ev.target!.result, { type: 'binary' })
+    const wb = XLSX.read(ev.target!.result, {
+      type: 'array',
+      ...(file.name.toLowerCase().endsWith('.csv') ? { codepage: 65001 } : {})
+    })
     const ws = wb.Sheets[wb.SheetNames[0]]
     data.value = XLSX.utils.sheet_to_json<string[]>(ws, { header: 1 })
     emit('imported', data.value)
   }
-  reader.readAsBinaryString(file)
+  reader.readAsArrayBuffer(file)
 }
 
 function handleExport() {

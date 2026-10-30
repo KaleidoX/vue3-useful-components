@@ -9,14 +9,11 @@
 import type { CSSProperties, PropType } from 'vue'
 import 'quill/dist/quill.snow.css'
 import Quill, { Delta } from 'quill'
-import type { QuillOptions } from 'quill'
+import type { QuillOptions, Range } from 'quill'
+import type Uploader from 'quill/modules/uploader'
 import { TableUp } from 'quill-table-up'
 import 'quill-table-up/index.css'
 import 'quill-table-up/table-creator.css'
-import 'quill-image-uploader/dist/quill.imageUploader.min.css'
-// import ImageUploader from 'quill-image-uploader/src/quill.imageUploader.js'
-// @ts-expect-error 缺少ts类型
-import ImageUploader from 'quill-image-uploader'
 import '@enzedonline/quill-blot-formatter2/dist/css/quill-blot-formatter2.css'
 import BlotFormatter from '@enzedonline/quill-blot-formatter2'
 // import Mention from 'quill-mention/dist/quill.mention.esm.js'
@@ -39,9 +36,6 @@ defineOptions({
 if (!Quill.imports[`modules/${TableUp.moduleName}`]) {
   Quill.register({ [`modules/${TableUp.moduleName}`]: TableUp }, true)
 }
-if (!Quill.imports['modules/imageUploader']) {
-  Quill.register('modules/imageUploader', ImageUploader)
-}
 if (!Quill.imports['modules/blotFormatter']) {
   Quill.register('modules/blotFormatter', BlotFormatter)
 }
@@ -59,11 +53,11 @@ const getQuill = () => {
   return quill
 }
 
-function getModule(moduleName: 'imageUploader'): ImageUploader
+function getModule(moduleName: 'uploader' | 'imageUploader'): Uploader
 function getModule(moduleName: 'blotFormatter'): BlotFormatter
 function getModule(moduleName: 'mention'): Mention
 function getModule(moduleName: string) {
-  return getQuill().getModule(moduleName)
+  return getQuill().getModule(moduleName === 'imageUploader' ? 'uploader' : moduleName)
 }
 
 const props = defineProps({
@@ -147,20 +141,28 @@ const options: QuillOptions = {
   readOnly: props.readOnly,
   modules: {
     toolbar,
-    imageUploader: {
-      upload: (file: File) => {
-        return new Promise((resolve, reject) => {
-          if (!handleBeforeUpload(file)) {
-            return reject('error')
-          }
-          uploadImage(file)
-            .then((res) => {
-              resolve(formatUploadBase(res.url))
-            })
-            .catch((err) => {
-              reject(err)
-            })
-        })
+    uploader: {
+      mimetypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml'],
+      async handler(this: { quill: Quill }, range: Range, files: File[]) {
+        const instance = this.quill
+        const images = await Promise.all(
+          files.filter(handleBeforeUpload).map(async (file) => {
+            try {
+              const result = await uploadImage(file)
+              return formatUploadBase(result.url)
+            } catch {
+              ElMessage.error({ message: '图片上传失败，请重试' })
+              return null
+            }
+          })
+        )
+        const urls = images.filter((url): url is string => url !== null)
+        if (quill !== instance || urls.length === 0) return
+
+        const update = new Delta().retain(range.index).delete(range.length)
+        for (const url of urls) update.insert({ image: url })
+        instance.updateContents(update, Quill.sources.USER)
+        instance.setSelection(range.index + urls.length, 0, Quill.sources.SILENT)
       }
     },
     blotFormatter: {},
@@ -226,7 +228,7 @@ watch(
 
 // 上传前校检格式和大小
 function handleBeforeUpload(file: File) {
-  const type = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg']
+  const type = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml']
   const isJPG = type.includes(file.type)
   //检验文件格式
   if (!isJPG) {
@@ -244,7 +246,6 @@ function handleBeforeUpload(file: File) {
   return true
 }
 // 获取内容
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getContents() {
   const quill = getQuill()
   if (quill) {

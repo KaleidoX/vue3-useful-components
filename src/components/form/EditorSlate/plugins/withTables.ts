@@ -1,6 +1,6 @@
-import { Transforms } from 'slate-vue3/core'
+import { Transforms } from 'slate'
 import type { SlateEditor } from '../types'
-import type { Descendant } from 'slate-vue3/core'
+import type { Descendant } from 'slate'
 
 export function withTables(editor: SlateEditor): SlateEditor {
   const { normalizeNode } = editor

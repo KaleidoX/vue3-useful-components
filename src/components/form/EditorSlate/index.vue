@@ -28,10 +28,10 @@
 
 <script lang="ts" setup>
 import type { CSSProperties } from 'vue'
-import { createEditor, Transforms } from 'slate-vue3/core'
+import { createEditor, Transforms } from 'slate'
 import { Slate, Editable } from 'slate-vue3'
 import { withDOM } from 'slate-vue3/dom'
-import { withHistory } from 'slate-vue3/history'
+import { withHistory } from 'slate-history'
 import { renderElement } from './renders/renderElement'
 import { renderLeaf } from './renders/renderLeaf'
 import { renderPlaceholder } from './renders/renderPlaceholder'
@@ -45,7 +45,7 @@ import { toHtml } from './converters/toHtml'
 import { toMarkdown } from './converters/toMarkdown'
 import { fromHtml } from './converters/fromHtml'
 import { fromMarkdown } from './converters/fromMarkdown'
-import type { Descendant } from 'slate-vue3/core'
+import type { Descendant } from 'slate'
 
 defineOptions({ name: 'EditorSlate' })
 

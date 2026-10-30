@@ -1,5 +1,5 @@
-import { Editor, Node, Path, Transforms, type Location } from 'slate-vue3/core'
-import { HistoryEditor } from 'slate-vue3/history'
+import { Editor, Node, Path, Transforms, type Location } from 'slate'
+import { HistoryEditor } from 'slate-history'
 import type { SlateEditor } from '../types'
 
 type CellPath = [number, number, number]

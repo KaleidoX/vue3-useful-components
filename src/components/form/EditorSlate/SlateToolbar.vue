@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Editor, Transforms, Element as SlateElement } from 'slate-vue3/core'
+import { Editor, Transforms, Element as SlateElement } from 'slate'
 import { TOOLBAR_BUTTONS } from './constants'
 import type { SlateEditor } from './types'
 import { mergeSelectedTableCells, splitSelectedTableCell } from './plugins/tableMerge'

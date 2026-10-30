@@ -1,6 +1,6 @@
-import type { BaseEditor } from 'slate-vue3/core'
+import type { BaseEditor } from 'slate'
 import type { DOMEditor } from 'slate-vue3/dom'
-import type { HistoryEditor } from 'slate-vue3/history'
+import type { HistoryEditor } from 'slate-history'
 
 export type SlateEditor = BaseEditor &
   DOMEditor &

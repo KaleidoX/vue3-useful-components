@@ -84,18 +84,21 @@ const preset = createFullPreset({
   font: { fonts: STARTER_FONTS }
 })
 
-const toolbar: ToolbarConfig = props.simple
-  ? {
-      groups: [[new CodeBlockPlugin()], [new ImagePlugin()]],
-      overflow: ToolbarOverflowBehavior.Flow
-    }
-  : {
-      groups: preset.toolbar,
-      overflow: ToolbarOverflowBehavior.Flow
-    }
+const toolbarGroups = props.simple
+  ? [[new CodeBlockPlugin()], [new ImagePlugin()]]
+  : preset.toolbar
+const toolbar: ToolbarConfig = {
+  groups: toolbarGroups,
+  overflow: ToolbarOverflowBehavior.Flow
+}
+const toolbarPluginIds = new Set(toolbarGroups.flat().map((plugin) => plugin.id))
 
 const options: NotectlEditorConfig = {
   ...preset,
+  plugins: [
+    ...preset.plugins,
+    ...preset.toolbar.flat().filter((plugin) => !toolbarPluginIds.has(plugin.id))
+  ],
   theme: ThemePreset.Light,
   placeholder: props.placeholder,
   toolbar: toolbar

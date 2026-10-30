@@ -1,4 +1,4 @@
-import type { Text } from 'slate-vue3/core'
+import type { Text } from 'slate'
 import type { VNodeChild } from 'vue'
 
 export const codeWrapper = (leaf: Text, content: VNodeChild) => {

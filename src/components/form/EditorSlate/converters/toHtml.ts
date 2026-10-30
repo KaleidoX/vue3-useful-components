@@ -1,4 +1,4 @@
-import type { Descendant } from 'slate-vue3/core'
+import type { Descendant } from 'slate'
 
 export function toHtml(nodes: Descendant[]): string {
   return nodes.map((node) => serializeNode(node)).join('')
