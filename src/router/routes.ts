@@ -447,6 +447,15 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
         name: 'PerfPanel',
         component: () => import('@/views/perf/PerfView.vue'),
         meta: routeMeta('性能监控面板')
+      },
+      {
+        path: 'markdown-benchmark',
+        name: 'PerfMarkdownBenchmark',
+        component: () => import('@/views/perf/MarkdownBenchmarkView.vue'),
+        meta: routeMeta(
+          'Markdown 流式渲染对比',
+          'markstream-vue 与 vue-stream-markdown 在相同语料下的绘制性能对比'
+        )
       }
     ]
   },

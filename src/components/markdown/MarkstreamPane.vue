@@ -1,0 +1,72 @@
+<template>
+  <div ref="containerRef" class="markstream-pane">
+    <MarkdownRender
+      :content="content"
+      :final="final"
+      :fade="false"
+      :typewriter="false"
+      :show-tooltips="false"
+      :is-dark="false"
+      :viewport-priority="virtualization"
+      :defer-nodes-until-visible="virtualization"
+      :batch-rendering="virtualization"
+      :node-virtual="virtualization ? 'auto' : false"
+      :render-code-blocks-as-pre="true"
+      :smooth-streaming="false"
+      @render-final="onRenderFinal"
+    />
+  </div>
+</template>
+
+<script lang="ts" setup>
+import MarkdownRender from 'markstream-vue'
+import 'markstream-vue/index.css'
+
+/**
+ * markstream-vue 的统一封装。
+ *
+ * 与对照库保持同等条件的部分：关闭淡入动画、打字机光标与悬浮提示，
+ * 代码块强制走纯 <pre>（未安装 stream-diffs，避免其内部回退路径干扰测量）。
+ *
+ * virtualization 开关控制该库自带的视口优先、延迟挂载、批处理渲染与节点虚拟化：
+ * 默认开启（库的出厂行为），关闭后即为「一次性渲染全部节点」的基线口径。
+ */
+defineOptions({
+  name: 'MarkdownBenchmarkMarkstreamPane'
+})
+
+const props = withDefaults(
+  defineProps<{
+    content: string
+    final: boolean
+    virtualization?: boolean
+  }>(),
+  {
+    virtualization: true
+  }
+)
+
+const emit = defineEmits<{ settled: [] }>()
+
+const containerRef = ref<HTMLElement | null>(null)
+
+function onRenderFinal() {
+  if (!props.final) return
+  emit('settled')
+}
+
+defineExpose({
+  getContainer: () => containerRef.value
+})
+</script>
+
+<style scoped>
+/*
+ * markstream 的 index.css 里有若干未限定作用域的选择器（.container / .dark 等），
+ * 本页用独立类名承载容器，不复用这些通用类，避免与项目样式互相污染。
+ */
+.markstream-pane {
+  height: 100%;
+  overflow: auto;
+}
+</style>
