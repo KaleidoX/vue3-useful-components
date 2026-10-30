@@ -456,6 +456,12 @@ export const previewRouteGroups: PreviewRouteGroup[] = [
           'Markdown 流式渲染对比',
           'markstream-vue 与 vue-stream-markdown 在相同语料下的绘制性能对比'
         )
+      },
+      {
+        path: 'mermaid-benchmark',
+        name: 'PerfMermaidBenchmark',
+        component: () => import('@/views/perf/MermaidBenchmarkView.vue'),
+        meta: routeMeta('Mermaid 渲染引擎对比', 'mermaid.js 与 pele 在相同图表源码下的渲染成本对比')
       }
     ]
   },
